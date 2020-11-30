@@ -1,5 +1,5 @@
 import React from "react"
-import { ImageProps } from "./shared"
+import { ImageProps } from "./Image.shared"
 
 export interface WebImageProps extends ImageProps {
   onLoad?: (event: any) => void
