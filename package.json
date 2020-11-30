@@ -12,6 +12,10 @@
     "styled-components": "^5.2.1",
     "styled-system": "^5.1.5"
   },
+  "scripts": {
+    "start": "tsc --watch",
+    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}' '*.{js,ts,tsx,md,graphql}' --ignore-path ./.prettierignore"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.6.0",
