@@ -9,7 +9,12 @@
     "react-native-fade-in-image": "^1.5.0",
     "react-native-fast-image": "^8.3.4",
     "react-native-web": "^0.14.8",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "styled-system": "^5.1.5"
+  },
+  "scripts": {
+    "start": "tsc --watch",
+    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}' '*.{js,ts,tsx,md,graphql}' --ignore-path ./.prettierignore"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
