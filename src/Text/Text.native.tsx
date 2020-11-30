@@ -1,6 +1,6 @@
 import React from "react"
-import { View } from "react-native"
+import { Text as RNText } from "react-native"
 
 export const Text = () => {
-  return <View>Hello Native</View>
+  return <RNText>Hello Native</RNText>
 }
