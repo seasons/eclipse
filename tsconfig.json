@@ -4,6 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["react", "react-native"],
     "allowJs": true,
+    "declaration": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
