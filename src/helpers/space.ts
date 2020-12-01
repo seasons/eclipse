@@ -1,4 +1,4 @@
-import { SpacingUnit, themeProps } from "../lib/theme"
+import { SpacingUnit, themeProps } from "theme/theme"
 
 /**
  * A helper to easily access space values when not in a styled-components or

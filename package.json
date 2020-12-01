@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "main": "build/index.js",
   "license": "MIT",
-  "scripts": {
-    "build": "rimraf build && tsc"
-  },
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "react": "^17.0.1",
@@ -20,7 +17,8 @@
   },
   "scripts": {
     "start": "tsc --watch",
-    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}' '*.{js,ts,tsx,md,graphql}' --ignore-path ./.prettierignore"
+    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}' '*.{js,ts,tsx,md,graphql}' --ignore-path ./.prettierignore",
+    "build": "rimraf build && tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
