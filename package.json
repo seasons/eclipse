@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "build/index.js",
   "license": "MIT",
   "dependencies": {
@@ -28,7 +28,8 @@
     "start": "yarn build:watch",
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}' '*.{js,ts,tsx,md,graphql}' --ignore-path ./.prettierignore",
     "build": "rimraf build && tsc && tsc-alias",
-    "build:watch": "concurrently --kill-others 'tsc -w' 'tsc-alias -w'"
+    "build:watch": "concurrently --kill-others 'tsc -w' 'tsc-alias -w'",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
