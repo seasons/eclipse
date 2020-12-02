@@ -3,13 +3,13 @@ import { TouchableWithoutFeedback } from "react-native"
 import { animated, Spring } from "react-spring/renderprops-native.cjs"
 import styled from "styled-components/native"
 
-import { CheckIcon } from "icons/CheckIcon"
-import { Box, BoxProps } from "elements/Box"
-import { Flex } from "elements/Flex"
-import { Spacer } from "elements/Spacer"
-import { Spinner } from "components/Spinner"
-import { themeProps } from "theme/theme"
-import { Sans } from "elements/Typography"
+import { CheckIcon } from "@/icons/CheckIcon"
+import { Box, BoxProps } from "@/elements/Box"
+import { Flex } from "@/elements/Flex"
+import { Spacer } from "@/elements/Spacer"
+import { Spinner } from "@/components/Spinner"
+import { themeProps } from "@/theme/theme"
+import { Sans } from "@/elements/Typography"
 
 enum DisplayState {
   Default = "default",

@@ -1,4 +1,4 @@
-import { themeProps } from "theme/theme"
+import { themeProps } from "@/theme/theme"
 import { FontFamily } from "./Typography"
 
 /**

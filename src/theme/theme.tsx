@@ -3,7 +3,7 @@ import { ThemeProvider } from "styled-components"
 
 import { createMuiTheme, ThemeOptions, ThemeProvider as MuiThemeProvider } from "@material-ui/core"
 
-import { fontFamily } from "elements/Typography/Typography"
+import { fontFamily } from "@/elements/Typography/Typography"
 import palette from "./palette"
 import typography from "./typography"
 

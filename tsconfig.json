@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["react", "react-native"],
+    "types": ["react", "react-native", "node"],
     "allowJs": true,
     "declaration": true,
     "skipLibCheck": true,
@@ -13,9 +13,12 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react",
-    "baseUrl": "./src",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    },
     "isolatedModules": false,
-    "outDir": "build"
+    "outDir": "./build"
   },
   "exclude": ["node_modules", "build"]
 }

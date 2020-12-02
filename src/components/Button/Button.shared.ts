@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import { css } from "styled-components"
 
-import { themeProps } from "theme/theme"
+import { themeProps } from "@/theme/theme"
 import { BoxProps } from "../../elements/Box"
 
 /**

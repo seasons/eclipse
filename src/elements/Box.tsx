@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components/primitives"
 import {
   background,
   BackgroundProps,
@@ -65,7 +65,7 @@ export interface BoxProps
  * Box is just a `View` or `div` (depending on the platform) with common styled-systems
  * hooks.
  */
-export const Box = styled.div<BoxProps>`
+export const Box = styled.View<BoxProps>`
   ${background};
   ${bottom};
   ${display};

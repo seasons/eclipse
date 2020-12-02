@@ -1,7 +1,6 @@
-// @ts-ignore
 import React, { useEffect, useState } from "react"
 import styled, { keyframes } from "styled-components"
-import { color } from "helpers"
+import { color } from "@/helpers"
 import { getSize, SpinnerProps } from "./Spinner.shared"
 
 const spin = keyframes`

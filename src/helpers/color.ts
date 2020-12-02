@@ -1,4 +1,4 @@
-import { Color, themeProps } from "theme/theme"
+import { Color, themeProps } from "@/theme/theme"
 
 /**
  * A helper to easily access colors when not in a styled-components or

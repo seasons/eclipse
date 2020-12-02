@@ -2,9 +2,9 @@ import React, { Component } from "react"
 import styled, { css } from "styled-components"
 import { borderRadius, borders, height, space, textAlign, width } from "styled-system"
 
-import { themeProps } from "theme/theme"
+import { themeProps } from "@/theme/theme"
 import { Spinner } from "../Spinner"
-import { Sans, SansProps } from "elements/Typography"
+import { Sans, SansProps } from "@/elements/Typography"
 import { ButtonBaseProps, ButtonProps, defaultSize, defaultVariant } from "./Button.shared"
 
 export interface WebButtonProps extends ButtonProps {

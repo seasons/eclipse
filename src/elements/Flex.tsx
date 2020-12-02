@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components/primitives"
 import {
   alignContent,
   AlignContentProps,
@@ -69,7 +69,7 @@ export interface FlexProps
 /**
  * A utility component that encapsulates flexbox behavior
  */
-export const Flex = styled.div<FlexProps>`
+export const Flex = styled.View<FlexProps>`
   display: flex;
   ${alignContent};
   ${alignItems};

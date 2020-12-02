@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react"
-import styled, { StyledComponent } from "styled-components"
+import styled, { StyledComponent } from "styled-components/primitives"
 import {
   color,
   ColorProps,
@@ -17,7 +17,7 @@ import {
   TextAlignProps,
 } from "styled-system"
 
-import { DisplaySize, SansSize, themeProps, TypeSizes } from "theme/theme"
+import { DisplaySize, SansSize, themeProps, TypeSizes } from "@/theme/theme"
 import { determineFontSizes } from "./determineFontSizes"
 
 /**
@@ -123,7 +123,7 @@ export interface TextProps
 }
 
 /** Base Text component for typography */
-export const Text = styled.p<TextProps>`
+export const Text = styled.Text<TextProps>`
   ${({ fontFamily }) => fontFamily && renderFontValue(fontFamily)};
   text-align: ${(props) => props.textAlign || "left"};
   ${fontSize};
