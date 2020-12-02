@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "build/index.js",
   "license": "MIT",
   "dependencies": {
@@ -24,6 +24,9 @@
     "react": ">=16.8.0",
     "react-dom": "@>=16.6.0"
   },
+  "files": [
+    "/build"
+  ],
   "scripts": {
     "start": "yarn build:watch",
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}' '*.{js,ts,tsx,md,graphql}' --ignore-path ./.prettierignore",
