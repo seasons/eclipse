@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Components library for harvest and flare",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
