@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Components library for harvest and flare",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -23,12 +23,13 @@
     "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "prepare": "bob build",
+    "prepare": "bob build && yarn rewrite-paths",
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
-    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,graphql}' '*.{js,ts,tsx,graphql}' --ignore-path ./.prettierignore"
+    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,graphql}' '*.{js,ts,tsx,graphql}' --ignore-path ./.prettierignore",
+    "rewrite-paths": "tsc-alias --dir lib"
   },
   "keywords": [
     "react-native",
@@ -79,6 +80,7 @@
     "styled-bootstrap-grid": "^3.1.0",
     "styled-components": "^5.2.1",
     "styled-system": "^5.1.5",
+    "tsc-alias": "^1.1.5",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
@@ -108,7 +110,7 @@
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
     },
-    "npm": {
+    "yarn": {
       "publish": true
     },
     "github": {
