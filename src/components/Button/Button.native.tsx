@@ -292,16 +292,21 @@ export class Button extends Component<ButtonProps, ButtonState> {
       disabled,
       loading,
       Icon,
-      selected = false,
       ...rest
     } = this.props
     const { px, size, height } = this.getSize()
     const buttonHeight = this.props.height ?? height
     const variantColors = getColorsForVariant(this.props.variant)
     const { current, previous } = this.state
-    const from = disabled ? variantColors[DisplayState.Disabled] : variantColors[previous]
-    const to = disabled ? variantColors[DisplayState.Disabled] : variantColors[current]
-    const overridenBg = backgroundColor ? { backgroundColor, borderColor: backgroundColor } : {}
+    const from = disabled
+      ? variantColors[DisplayState.Disabled]
+      : variantColors[previous]
+    const to = disabled
+      ? variantColors[DisplayState.Disabled]
+      : variantColors[current]
+    const overridenBg = backgroundColor
+      ? { backgroundColor, borderColor: backgroundColor }
+      : {}
     return (
       <Spring native from={from} to={to}>
         {(props) => (
@@ -325,13 +330,27 @@ export class Button extends Component<ButtonProps, ButtonState> {
               <AnimatedContainer
                 disabled={disabled}
                 {...rest}
-                style={{ ...props, ...overridenBg, borderRadius, height: buttonHeight }}
+                style={{
+                  ...props,
+                  ...overridenBg,
+                  borderRadius,
+                  height: buttonHeight,
+                }}
                 px={px}
               >
                 {!loading && (
-                  <Flex flexDirection="row" flexWrap="nowrap" alignItems="center">
+                  <Flex
+                    flexDirection="row"
+                    flexWrap="nowrap"
+                    alignItems="center"
+                  >
                     {!!Icon && (
-                      <Flex flexDirection="row" flexWrap="nowrap" alignItems="center" pb="4px">
+                      <Flex
+                        flexDirection="row"
+                        flexWrap="nowrap"
+                        alignItems="center"
+                        pb="4px"
+                      >
                         <Icon />
                         <Spacer mr={1} />
                       </Flex>
@@ -340,14 +359,23 @@ export class Button extends Component<ButtonProps, ButtonState> {
                       {children}
                     </Sans>
                     {showCheckMark && (
-                      <Flex flexDirection="row" flexWrap="nowrap" alignItems="center">
+                      <Flex
+                        flexDirection="row"
+                        flexWrap="nowrap"
+                        alignItems="center"
+                      >
                         <Spacer mr={0.5} />
                         <CheckIcon color={to.color} />
                       </Flex>
                     )}
                   </Flex>
                 )}
-                {loading && <Spinner size={this.props.size} color={this.spinnerColor as any} />}
+                {loading && (
+                  <Spinner
+                    size={this.props.size}
+                    color={this.spinnerColor as any}
+                  />
+                )}
               </AnimatedContainer>
             </Flex>
           </TouchableWithoutFeedback>

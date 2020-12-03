@@ -1,5 +1,5 @@
-import { ButtonSize } from "@/components/Button/Button.shared"
-import { Color } from "@/theme/theme"
+import type { ButtonSize } from "@/components/Button/Button.shared"
+import type { Color } from "@/theme/theme"
 
 export interface SpinnerProps {
   /** Delay before spinner appears */

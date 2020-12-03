@@ -1,5 +1,5 @@
 import { color } from "@/helpers/color"
-import { Color } from "@/theme/theme"
+import type { Color } from "@/theme/theme"
 import React from "react"
 import { Animated, Easing, View } from "react-native"
 import styled from "styled-components/native"

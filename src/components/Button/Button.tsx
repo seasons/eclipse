@@ -1,11 +1,23 @@
 import React, { Component } from "react"
 import styled, { css } from "styled-components"
-import { borderRadius, borders, height, space, textAlign, width } from "styled-system"
+import {
+  borderRadius,
+  borders,
+  height,
+  space,
+  textAlign,
+  width,
+} from "styled-system"
 
 import { themeProps } from "@/theme/theme"
 import { Spinner } from "../Spinner"
 import { Sans, SansProps } from "@/elements/Typography"
-import { ButtonBaseProps, ButtonProps, defaultSize, defaultVariant } from "./Button.shared"
+import {
+  ButtonBaseProps,
+  ButtonProps,
+  defaultSize,
+  defaultVariant,
+} from "./Button.shared"
 
 export interface WebButtonProps extends ButtonProps {
   /** The underlying type of button */
@@ -162,6 +174,7 @@ export class Button extends Component<WebButtonProps> {
           }};
         `
       default:
+        return null
     }
   }
 
@@ -191,21 +204,33 @@ export class ButtonBase extends Component<ButtonBaseProps & SansProps> {
   }
 
   render() {
-    const { block, children, loading, disabled, color, size, weight, onClick, ...rest } = this.props
+    const {
+      block,
+      children,
+      loading,
+      disabled,
+      size,
+      weight,
+      ...rest
+    } = this.props
 
     const loadingClass = loading ? "loading" : ""
     const disabledClass = disabled ? "disabled" : ""
     const blockClass = block ? "block" : ""
     return (
       <Container
-        {...rest}
+        {...(rest as any)}
         className={[blockClass, loadingClass, disabledClass].join(" ")}
         onClick={this.onClick}
         disabled={disabled}
       >
         {loading && <Spinner size={this.props.buttonSize} />}
         {typeof children === "string" ? (
-          <Sans weight={weight || "medium"} size={size} style={{ textAlign: "center" }}>
+          <Sans
+            weight={weight || "medium"}
+            size={size}
+            style={{ textAlign: "center" }}
+          >
             {children}
           </Sans>
         ) : (
@@ -237,6 +262,7 @@ const Container = styled.button<ButtonBaseProps>`
         transition: 0.25s ease;
       `
     }
+    return ""
   }};
 
   ${(props) => props.variantStyles};

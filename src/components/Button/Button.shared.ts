@@ -1,8 +1,8 @@
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 import { css } from "styled-components"
 
 import { themeProps } from "@/theme/theme"
-import { BoxProps } from "../../elements/Box"
+import type { BoxProps } from "../../elements/Box"
 
 /**
  * Spec: zpl.io/2j8Knq6
@@ -119,6 +119,7 @@ export function getColorsForVariant(variant: ButtonVariant) {
         },
       }
     default:
+      return {}
   }
 }
 

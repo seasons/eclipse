@@ -1,10 +1,13 @@
 import { themeProps } from "@/theme/theme"
-import { FontFamily } from "./Typography"
+import type { FontFamily } from "./Typography"
 
 /**
  * Determines which font sizes/line heights to use for typography.
  */
-export function determineFontSizes(fontType: keyof FontFamily, size: string | string[]) {
+export function determineFontSizes(
+  fontType: keyof FontFamily,
+  size: string | string[]
+) {
   if (!Array.isArray(size)) {
     const match = themeProps.typeSizes[fontType][size]
     return {
@@ -19,7 +22,10 @@ export function determineFontSizes(fontType: keyof FontFamily, size: string | st
       (accumulator, current) => {
         return {
           fontSize: [...(accumulator.fontSize ?? []), `${current.fontSize}px`],
-          lineHeight: [...(accumulator.lineHeight ?? []), `${current.lineHeight}px`],
+          lineHeight: [
+            ...(accumulator.lineHeight ?? []),
+            `${current.lineHeight}px`,
+          ],
         }
       },
       { fontSize: [], lineHeight: [] }

@@ -26,7 +26,7 @@ export const Spinner: React.FC<SpinnerProps> = (props) => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [])
+  }, [props.delay])
 
   if (!show) {
     return null

@@ -1,15 +1,7 @@
-import {
-  borderRadius,
+import type {
   BorderRadiusProps,
-  height,
   HeightProps,
-  maxWidth,
-  MaxWidthProps,
-  ResponsiveValue,
-  space,
   SpaceProps,
-  system,
-  width,
   WidthProps,
 } from "styled-system"
 
@@ -22,4 +14,9 @@ export interface BaseImageProps {
   style?: object
 }
 
-export interface ImageProps extends BaseImageProps, SpaceProps, WidthProps, HeightProps, BorderRadiusProps {}
+export interface ImageProps
+  extends BaseImageProps,
+    SpaceProps,
+    WidthProps,
+    HeightProps,
+    BorderRadiusProps {}

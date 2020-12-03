@@ -17,7 +17,12 @@ import {
   TextAlignProps,
 } from "styled-system"
 
-import { DisplaySize, SansSize, themeProps, TypeSizes } from "@/theme/theme"
+import type {
+  DisplaySize,
+  SansSize,
+  themeProps,
+  TypeSizes,
+} from "@/theme/theme"
 import { determineFontSizes } from "./determineFontSizes"
 
 /**
@@ -96,7 +101,9 @@ export const renderFontValue = (fontValue: FontValue) => {
   } else {
     return [`font-family: ${fontValue.fontFamily}`]
       .concat(fontValue.fontStyle ? `font-style: ${fontValue.fontStyle}` : [])
-      .concat(fontValue.fontWeight ? `font-weight: ${fontValue.fontWeight}` : [])
+      .concat(
+        fontValue.fontWeight ? `font-weight: ${fontValue.fontWeight}` : []
+      )
       .join(";\n")
   }
 }
@@ -204,29 +211,34 @@ function createStyledText<P extends StyledTextProps>(
   selectFontFamilyType: typeof _selectFontFamilyType = _selectFontFamilyType
 ): StyledComponent<any, any, any, any> {
   // @ts-ignore
-  return styled<P>(({ size, weight, italic, element, ...textProps }: StyledTextProps) => {
-    const fontFamilyType = selectFontFamilyType(_fontWeight(weight), italic)
-    // This is mostly to narrow the type of `fontFamilyType` to remove `null`.
-    if (fontFamilyType === null) {
-      throw new Error("Did not expect `fontType` to be `null`.")
+  return styled<P>(
+    ({ size, weight, italic, element, ...textProps }: StyledTextProps) => {
+      const fontFamilyType = selectFontFamilyType(_fontWeight(weight), italic)
+      // This is mostly to narrow the type of `fontFamilyType` to remove `null`.
+      if (fontFamilyType === null) {
+        throw new Error("Did not expect `fontType` to be `null`.")
+      }
+      const styles =
+        fontType === "display"
+          ? { letterSpacing: "-1px", ...textProps.style }
+          : textProps.style
+      return (
+        <Text
+          fontFamily={fontFamilyType && fontFamily[fontType][fontFamilyType]}
+          {...determineFontSizes(fontType, size)}
+          // styled-components supports calling the prop `as`, but there are
+          //  issues when passing it into this component named `as`. See
+          //  https://github.com/styled-components/styled-components/issues/2448
+          //  for context.
+          // So we are naming it `element` on the way into this component, and
+          //  renaming it to `as` when we pass it to through.
+          {...(element ? { as: element } : {})}
+          {...textProps}
+          style={styles}
+        />
+      )
     }
-    const styles = fontType === "display" ? { letterSpacing: "-1px", ...textProps.style } : textProps.style
-    return (
-      <Text
-        fontFamily={fontFamilyType && fontFamily[fontType][fontFamilyType]}
-        {...determineFontSizes(fontType, size)}
-        // styled-components supports calling the prop `as`, but there are
-        //  issues when passing it into this component named `as`. See
-        //  https://github.com/styled-components/styled-components/issues/2448
-        //  for context.
-        // So we are naming it `element` on the way into this component, and
-        //  renaming it to `as` when we pass it to through.
-        {...(element ? { as: element } : {})}
-        {...textProps}
-        style={styles}
-      />
-    )
-  })``
+  )``
 }
 
 /**

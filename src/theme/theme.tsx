@@ -1,7 +1,11 @@
 import React from "react"
 import { ThemeProvider } from "styled-components"
 
-import { createMuiTheme, ThemeOptions, ThemeProvider as MuiThemeProvider } from "@material-ui/core"
+import {
+  createMuiTheme,
+  ThemeOptions,
+  ThemeProvider as MuiThemeProvider,
+} from "@material-ui/core"
 
 import { fontFamily } from "@/elements/Typography/Typography"
 import palette from "./palette"
@@ -172,9 +176,15 @@ export const themeProps = {
 
   mediaQueries: {
     xl: `(min-width: ${breakpoints.xl}px)`,
-    lg: `(min-width: ${breakpoints.lg}px) and (max-width: ${breakpoints.xl - 1}px)`,
-    md: `(min-width: ${breakpoints.md}px) and (max-width: ${breakpoints.lg - 1}px)`,
-    sm: `(min-width: ${breakpoints.sm}px) and (max-width: ${breakpoints.md - 1}px)`,
+    lg: `(min-width: ${breakpoints.lg}px) and (max-width: ${
+      breakpoints.xl - 1
+    }px)`,
+    md: `(min-width: ${breakpoints.md}px) and (max-width: ${
+      breakpoints.lg - 1
+    }px)`,
+    sm: `(min-width: ${breakpoints.sm}px) and (max-width: ${
+      breakpoints.md - 1
+    }px)`,
     xs: `(max-width: ${breakpoints.sm - 1}px)`,
     /** Determines if the input device has the notion of hover, e.g. mouse. */
     hover: `not all and (pointer: coarse), not all and (-moz-touch-enabled: 1)`,
@@ -207,7 +217,11 @@ export const themeProps = {
  */
 const GridThemeProvider = ({ children }) => {
   const StyledGrid = require("styled-bootstrap-grid")
-  return <StyledGrid.GridThemeProvider gridTheme={themeProps.grid}>{children}</StyledGrid.GridThemeProvider>
+  return (
+    <StyledGrid.GridThemeProvider gridTheme={themeProps.grid}>
+      {children}
+    </StyledGrid.GridThemeProvider>
+  )
 }
 
 export const Theme = (props) => {
@@ -246,4 +260,6 @@ export type TypeSizes = typeof themeProps.typeSizes
 /** All available sizes for our serif font */
 export type SansSize = keyof TypeSizes["sans"] | Array<keyof TypeSizes["sans"]>
 
-export type DisplaySize = keyof TypeSizes["display"] | Array<keyof TypeSizes["display"]>
+export type DisplaySize =
+  | keyof TypeSizes["display"]
+  | Array<keyof TypeSizes["display"]>

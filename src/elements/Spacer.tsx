@@ -1,5 +1,5 @@
 import React from "react"
-import { HeightProps, SpaceProps, WidthProps } from "styled-system"
+import type { HeightProps, SpaceProps, WidthProps } from "styled-system"
 import { Box } from "./"
 
 export interface SpacerProps extends SpaceProps, WidthProps, HeightProps {}
@@ -7,7 +7,7 @@ export interface SpacerProps extends SpaceProps, WidthProps, HeightProps {}
 /**
  * A component used to inject space where it's needed
  */
-export const Spacer: React.SFC<SpacerProps & { id?: string }> = props => {
+export const Spacer: React.SFC<SpacerProps & { id?: string }> = (props) => {
   return <Box {...props} />
 }
 

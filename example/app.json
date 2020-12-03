@@ -1,0 +1,22 @@
+{
+  "name": "@seasons/eclipse-example",
+  "displayName": "Eclipse Example",
+  "expo": {
+    "name": "@seasons/eclipse-example",
+    "slug": "seasons-eclipse-example",
+    "description": "Example app for @seasons/eclipse",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

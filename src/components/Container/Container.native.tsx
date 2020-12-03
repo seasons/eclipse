@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Flex } from "@/elements/Flex"
 import { Theme } from "@/theme/theme"
 
-import { ContainerProps } from "./Container.shared"
+import type { ContainerProps } from "./Container.shared"
 
 export const Container: React.FC<ContainerProps> = ({
   children,
