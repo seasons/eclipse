@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Components library for harvest and flare",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -68,7 +68,6 @@
     "prettier": "^2.0.5",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "release-it": "^13.5.8",
     "react-native-fade-in-image": "^1.5.0",
     "react-native-fast-image": "^8.3.4",
     "react-native-safe-area-context": "^3.1.9",
@@ -76,6 +75,7 @@
     "react-native-web": "^0.14.8",
     "react-primitives": "^0.8.1",
     "react-spring": "^8.0.27",
+    "release-it": "^13.5.8",
     "styled-bootstrap-grid": "^3.1.0",
     "styled-components": "^5.2.1",
     "styled-system": "^5.1.5",
