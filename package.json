@@ -29,7 +29,7 @@
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,graphql}' '*.{js,ts,tsx,graphql}' --ignore-path ./.prettierignore",
-    "rewrite-paths": "tsc-alias --dir lib"
+    "rewrite-paths": "tsc-alias --dir lib/commonjs && tsc-alias --dir lib/module"
   },
   "keywords": [
     "react-native",

@@ -3,7 +3,7 @@
     "baseUrl": "src",
     "paths": {
       "@seasons/eclipse": ["./index"],
-      "@/*": ["*"]
+      "@/*": ["./*"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
