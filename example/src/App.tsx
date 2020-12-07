@@ -5,7 +5,7 @@ import { Box } from "@seasons/eclipse"
 export default function App() {
   return (
     <Box style={styles.container}>
-      <Text>Typography</Text>
+      <Text>Typography Test</Text>
     </Box>
   )
 }

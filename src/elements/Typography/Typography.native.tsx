@@ -1,5 +1,6 @@
 import React, { CSSProperties } from "react"
-import styled, { StyledComponent } from "styled-components"
+import styled from "styled-components/native"
+import type { StyledComponent } from "styled-components"
 import {
   color,
   ColorProps,
@@ -130,7 +131,7 @@ export interface TextProps
 }
 
 /** Base Text component for typography */
-export const Text = styled.p<TextProps>`
+export const Text = styled.Text<TextProps>`
   ${({ fontFamily }) => fontFamily && renderFontValue(fontFamily)};
   text-align: ${(props) => props.textAlign || "left"};
   ${fontSize};
