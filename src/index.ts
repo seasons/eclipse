@@ -1,2 +1,5 @@
-export { Text } from "./Text"
-export { Image } from "./Image"
+export * from "./elements"
+export * from "./components"
+export * from "./helpers"
+
+export * from "./theme/theme"
