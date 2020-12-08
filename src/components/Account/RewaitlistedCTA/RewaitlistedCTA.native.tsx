@@ -3,7 +3,7 @@ import { Box, Flex, Sans, Spacer } from "@/elements"
 import { space } from "@/helpers/space"
 import React from "react"
 import { Linking, Dimensions } from "react-native"
-import { HourMinuteSecondCountdown } from "../HourMinuteSecondCountdown"
+import { Countdown } from "@/components"
 import type { DateTime } from "luxon"
 
 const learnMoreMailToLink =
@@ -24,7 +24,7 @@ export const RewaitlistedCTA: React.FC<{
   return (
     <Box pb={1}>
       <Flex alignItems="center" pb={3}>
-        <HourMinuteSecondCountdown targetDate={targetAuthorizationDate} />
+        <Countdown targetDate={targetAuthorizationDate} />
       </Flex>
       <Sans size="5" color="black100" textAlign="center">
         You're back on the waitlist

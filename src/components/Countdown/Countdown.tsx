@@ -10,7 +10,7 @@ const formatDisplayDuration = (targetDate: DateTime) => {
   return duration.toFormat("hh:mm:ss")
 }
 
-export const HourMinuteSecondCountdown: React.FC<{
+export const Countdown: React.FC<{
   targetDate: DateTime
 }> = ({ targetDate }) => {
   const [displayDuration, setDisplayDuration] = React.useState(
