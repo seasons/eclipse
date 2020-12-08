@@ -55,35 +55,6 @@ export const RewaitlistedCTA: React.FC<{
           Request Access
         </Button>
       </Flex>
-      {/* <Flex alignItems="center" pb={3}>
-    <HourMinuteSecondCountdown targetDate={targetAuthorizationDate} />
-  </Flex>
-  <Sans size="2" color="black100" textAlign="center">
-    You're in. Let's choose your plan
-  </Sans>
-  <Spacer mb={1} />
-  <Sans size="1" color="black50" textAlign="center">
-    You have{" "}
-    <SansUnderline size="1" color="black50">
-      {authorizationDuration.get("hours") === 1
-        ? `${authorizationDuration.toFormat("h")} hour`
-        : `${authorizationDuration.toFormat("h")} hours`}
-    </SansUnderline>{" "}
-    to secure your spot. If we don't hear from you, your invite will go to the next person and{" "}
-    <SansUnderline size="1" color="black50">
-      you'll be waitlisted
-    </SansUnderline>
-    .
-  </Sans>
-  <Spacer mb={3} />
-  <Flex flexDirection="row" justifyContent="space-between" alignItems="center">
-    <Button variant="primaryWhite" width={twoButtonWidth} onPress={onPressLearnMore}>
-      Learn more
-    </Button>
-    <Button variant="primaryBlack" width={twoButtonWidth} onPress={onPressChoosePlan}>
-      Choose plan
-    </Button>
-  </Flex> */}
     </Box>
   )
 }
