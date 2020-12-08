@@ -32,7 +32,7 @@ export const RewaitlistedCTA: React.FC<{
       <Spacer mb={1} />
       <Sans size="4" color="black50" textAlign="center">
         Unfortunately, your sign-up window has closed and we've passed along
-        your invite, if you'd still like to join, request access below.
+        your invite. If you'd still like to join, request access below.
       </Sans>
       <Spacer mb={3} />
       <Flex
