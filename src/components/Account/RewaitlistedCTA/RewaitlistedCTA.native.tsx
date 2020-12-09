@@ -6,10 +6,8 @@ import { Linking, Dimensions } from "react-native"
 import { Countdown } from "@/components"
 import type { DateTime } from "luxon"
 
-const learnMoreMailToLink =
-  "mailto:membership@seasons.nyc?subject=Learn%20More%20about%20Membership&body=I'd%20like%20to%20learn%20more%20about%20membership!"
-const requestAccessMailToLink =
-  "mailto:membership@seasons.nyc?subject=Request%20Access&body=I'm%20ready%20to%20subscribe%20and%20would%20like%20to%20request%20access!"
+const learnMoreMailToLink = "https://szns.co/learnMore"
+const requestAccessMailToLink = "https://szns.co/requestAccess"
 
 export const RewaitlistedCTA: React.FC<{
   authorizedAt: DateTime
