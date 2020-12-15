@@ -5,8 +5,12 @@ import { DateTime, Duration } from "luxon"
 const formatDisplayDuration = (targetDate: DateTime) => {
   const duration =
     targetDate.isValid && targetDate.valueOf() > Date.now()
-      ? targetDate.diffNow(["hours", "minutes", "seconds"])
+      ? targetDate.diffNow(["days", "hours", "minutes", "seconds"])
       : Duration.fromMillis(0)
+  const twoDays = Duration.fromObject({ days: 2 })
+  if (duration >= twoDays) {
+    return `${duration.days} days`
+  }
   return duration.toFormat("hh:mm:ss")
 }
 

@@ -1,1 +1,1 @@
-export { RewaitlistedCTA } from "./RewaitlistedCTA.native"
+export { RewaitlistedCTA } from "./RewaitlistedCTA"
