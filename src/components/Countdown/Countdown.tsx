@@ -16,7 +16,9 @@ const formatDisplayDuration = (targetDate: DateTime) => {
 
 export const Countdown: React.FC<{
   targetDate: DateTime
-}> = ({ targetDate }) => {
+  underline?: boolean
+  display?: "inline" | "block"
+}> = ({ targetDate, underline = false, display = "block" }) => {
   const [displayDuration, setDisplayDuration] = React.useState(
     formatDisplayDuration(targetDate)
   )
@@ -31,5 +33,19 @@ export const Countdown: React.FC<{
     }
   }, [])
 
-  return <Display size="9">{displayDuration}</Display>
+  let style = {} as any
+  if (underline) {
+    style.textDecoration = "underline"
+  }
+
+  let inlineProps = { element: "span", fontSize: "inherit" }
+  return (
+    <Display
+      size="9"
+      style={style}
+      {...(display === "inline" ? inlineProps : {})}
+    >
+      {displayDuration}
+    </Display>
+  )
 }
