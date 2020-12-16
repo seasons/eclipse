@@ -1,9 +1,8 @@
 import React from "react"
-import { Box, Flex, Sans, Spacer } from "@/elements"
+import { Box, Sans, Flex, Spacer } from "@/elements"
 import type { DateTime } from "luxon"
 import { Duration } from "luxon"
-import { Countdown, Button } from "@/components"
-import styled from "styled-components"
+import { Countdown, TwoButtonCTA } from "@/components" //
 
 export const AuthorizedCTA: React.FC<{
   authorizedAt: DateTime
@@ -36,6 +35,7 @@ export const AuthorizedCTA: React.FC<{
       return `a limited window`
     }
   }
+  const captionSansProps = { size: "4", color: "black50", textAlign: "center" }
   return (
     <Box pb={1}>
       <Flex alignItems="center" justifyContent="center" pb={3}>
@@ -45,29 +45,22 @@ export const AuthorizedCTA: React.FC<{
         You're in. Let's choose your plan
       </Sans>
       <Spacer mb={1} />
-      <Sans size="4" color="black50" textAlign="center">
-        You have <Underline>{getDetailTextTime()}</Underline> to secure your
-        spot. If we don't hear from you, your invite will go to the next person
-        and <Underline>you'll be waitlisted</Underline>.
+      <Sans {...captionSansProps}>
+        You have{" "}
+        <Sans {...captionSansProps} underline inline>
+          {getDetailTextTime()}
+        </Sans>{" "}
+        to secure your spot. If we don't hear from you, your invite will go to
+        the next person and{" "}
+        <Sans {...captionSansProps} underline inline>
+          you'll be waitlisted.
+        </Sans>
       </Sans>
       <Spacer mb={3} />
-      <Flex
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Button variant="primaryWhite" block onClick={onPressLearnMore}>
-          Learn more
-        </Button>
-        <Spacer ml={2} />
-        <Button variant="primaryBlack" block onClick={onPressChoosePlan}>
-          Choose plan
-        </Button>
-      </Flex>
+      <TwoButtonCTA
+        buttonOneProps={{ children: "Learn more", onClick: onPressLearnMore }}
+        buttonTwoProps={{ children: "Choose plan", onClick: onPressChoosePlan }}
+      />
     </Box>
   )
 }
-
-const Underline = styled.span`
-  text-decoration: underline;
-`

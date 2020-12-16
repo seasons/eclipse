@@ -108,6 +108,7 @@ export interface TextProps
   fontFamily?: string
   style?: CSSProperties
   numberOfLines?: number
+  underline?: boolean
 }
 
 /** Base Text component for typography */
@@ -121,6 +122,7 @@ export const Text = styled.Text<TextProps>`
   ${space};
   ${textAlign};
   ${verticalAlign};
+  ${(p) => "textDecorationLine: " + (p.underline ? "underline" : "none")};
 `
 
 /**
