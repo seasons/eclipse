@@ -11,8 +11,14 @@ export const RewaitlistedCTA: React.FC<RewaitlistedCTAProps> = (props) => {
   return (
     <RewaitlistedCTATemplate
       {...props}
-      onPressLearnMore={() => Linking.openURL(learnMoreMailToLink)}
-      onPressRequestAccess={() => Linking.openURL(requestAccessMailToLink)}
+      onPressLearnMore={() => {
+        Linking.openURL(learnMoreMailToLink)
+        props.onPressLearnMore?.()
+      }}
+      onPressRequestAccess={() => {
+        Linking.openURL(requestAccessMailToLink)
+        props.onPressRequestAccess?.()
+      }}
     />
   )
 }
