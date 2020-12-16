@@ -24,6 +24,18 @@ export const AuthorizedCTA: React.FC<{
       ? targetAuthorizationDate.diff(authorizedAt, "hours")
       : Duration.fromMillis(0)
 
+  const getDetailTextTime = () => {
+    const hoursInAuthWindow = authorizationDuration.get("hours")
+    if (hoursInAuthWindow === 1) {
+      return `${authorizationDuration.toFormat("h")} hour`
+    } else if (hoursInAuthWindow <= 48) {
+      return `${authorizationDuration.toFormat("h")} hours`
+    } else if (hoursInAuthWindow > 48) {
+      return `${authorizationDuration.toFormat("d")} days`
+    } else {
+      return `a limited window`
+    }
+  }
   return (
     <Box pb={1}>
       <Flex alignItems="center" justifyContent="center" pb={3}>
@@ -34,14 +46,9 @@ export const AuthorizedCTA: React.FC<{
       </Sans>
       <Spacer mb={1} />
       <Sans size="4" color="black50" textAlign="center">
-        You have{" "}
-        <Underline>
-          {authorizationDuration.get("hours") === 1
-            ? `${authorizationDuration.toFormat("h")} hour`
-            : `${authorizationDuration.toFormat("h")} hours`}
-        </Underline>{" "}
-        to secure your spot. If we don't hear from you, your invite will go to
-        the next person and <Underline>you'll be waitlisted</Underline>.
+        You have <Underline>{getDetailTextTime()}</Underline> to secure your
+        spot. If we don't hear from you, your invite will go to the next person
+        and <Underline>you'll be waitlisted</Underline>.
       </Sans>
       <Spacer mb={3} />
       <Flex
