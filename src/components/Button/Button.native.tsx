@@ -246,7 +246,7 @@ export class Button extends Component<ButtonProps, ButtonState> {
 
   getSize(): {
     height: number | string
-    size: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7"
+    size: "0" | "1" | "2" | "3" | "4"
     px: number
   } {
     switch (this.props.size) {
