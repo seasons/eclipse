@@ -25,7 +25,7 @@ export const Countdown: React.FC<{
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [targetDate])
 
   return <Display size="9">{displayDuration}</Display>
 }
