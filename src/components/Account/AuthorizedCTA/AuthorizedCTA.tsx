@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Sans, Flex, Spacer } from "@/elements"
 import type { DateTime } from "luxon"
 import { Duration } from "luxon"
-import { Countdown, TwoButtonCTA } from "@/components" //
+import { Countdown, ButtonBar } from "@/components" //
 
 export const AuthorizedCTA: React.FC<{
   authorizedAt: DateTime
@@ -57,9 +57,15 @@ export const AuthorizedCTA: React.FC<{
         </Sans>
       </Sans>
       <Spacer mb={3} />
-      <TwoButtonCTA
-        buttonOneProps={{ children: "Learn more", onClick: onPressLearnMore }}
-        buttonTwoProps={{ children: "Choose plan", onClick: onPressChoosePlan }}
+      <ButtonBar
+        primaryButtonProps={{
+          children: "Choose plan",
+          onClick: onPressChoosePlan,
+        }}
+        secondaryButtonProps={{
+          children: "Learn more",
+          onClick: onPressLearnMore,
+        }}
       />
     </Box>
   )

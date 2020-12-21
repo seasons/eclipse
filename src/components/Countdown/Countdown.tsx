@@ -9,7 +9,7 @@ const formatDisplayDuration = (targetDate: DateTime) => {
       : Duration.fromMillis(0)
   const twoDays = Duration.fromObject({ days: 2 })
   if (duration >= twoDays) {
-    return `${duration.days} days left`
+    return `${duration.days + 1} days left`
   }
   return duration.toFormat("hh:mm:ss")
 }

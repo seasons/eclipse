@@ -1,6 +1,6 @@
 import { Box, Flex, Sans, Spacer } from "@/elements"
 import React from "react"
-import { Countdown, TwoButtonCTA } from "@/components"
+import { Countdown, ButtonBar } from "@/components"
 import type { DateTime } from "luxon"
 
 export const learnMoreMailToLink = "https://szns.co/learnMore"
@@ -37,14 +37,14 @@ export const RewaitlistedCTATemplate: React.FC<RewaitlistedCTAProps> = ({
         your invite. If you'd still like to join, request access below.
       </Sans>
       <Spacer mb={3} />
-      <TwoButtonCTA
-        buttonOneProps={{
-          onClick: onPressLearnMore,
-          children: "Learn more",
-        }}
-        buttonTwoProps={{
+      <ButtonBar
+        primaryButtonProps={{
           onClick: onPressRequestAccess,
           children: "Request Access",
+        }}
+        secondaryButtonProps={{
+          onClick: onPressLearnMore,
+          children: "Learn more",
         }}
       />
     </Box>
