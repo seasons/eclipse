@@ -37,7 +37,7 @@ export const Countdown: React.FC<CountdownProps> = ({
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [targetDate])
 
   let style = {} as any
   if (underline) {

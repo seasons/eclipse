@@ -246,14 +246,14 @@ export class Button extends Component<ButtonProps, ButtonState> {
 
   getSize(): {
     height: number | string
-    size: "0" | "1" | "2" | "3"
+    size: "0" | "1" | "2" | "3" | "4"
     px: number
   } {
     switch (this.props.size) {
       case "small":
         return { height: 36, size: "3", px: 21 }
       default:
-        return { height: 48, size: "3", px: 30 }
+        return { height: 48, size: "4", px: 30 }
     }
   }
 
