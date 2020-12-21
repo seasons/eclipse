@@ -7,7 +7,7 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from "@material-ui/core"
 
-import { fontFamily } from "@/elements/Typography/Typography"
+import { fontFamily } from "@/theme/fonts"
 import palette from "./palette"
 import typography from "./typography"
 

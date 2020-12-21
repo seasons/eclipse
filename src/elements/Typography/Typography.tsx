@@ -24,57 +24,7 @@ import type {
   TypeSizes,
 } from "@/theme/theme"
 import { determineFontSizes } from "./determineFontSizes"
-
-/**
- * Type definition for font objects
- */
-export interface FontDefinition {
-  fontFamily: string
-  fontWeight?: string | number
-  fontStyle?: string
-}
-
-/**
- * Type definition for font value properties which can either
- * be an object for complex definitions or a string for single entries.
- */
-export type FontValue = string | FontDefinition
-
-/**
- * Defines the shape of the font family
- */
-export interface FontFamilyProps {
-  sans: {
-    thin: FontValue
-    regular: FontValue
-    medium: FontValue
-    bold: FontValue
-  }
-  serif: {
-    medium: FontValue
-  }
-  display: {
-    regular: FontValue
-  }
-}
-
-/**
- * A map of the font families and their settings
- */
-export const fontFamily: FontFamilyProps = {
-  sans: {
-    thin: "'ProximaNova-Thin', sans-serif",
-    regular: "'ProximaNova-Medium', sans-serif",
-    medium: "'ProximaNova-Medium', sans-serif",
-    bold: "'ProximaNova-Bold', sans-serif",
-  },
-  serif: {
-    medium: "",
-  },
-  display: {
-    regular: "'Apercu-Mono', sans-serif",
-  },
-}
+import { fontFamily, FontValue } from "@/theme/fonts"
 
 export interface VerticalAlignProps {
   verticalAlign?:
@@ -181,6 +131,8 @@ interface StyledTextProps extends Partial<TextProps> {
   size: string | string[]
   weight?: null | FontWeights
   italic?: boolean
+  underline?: boolean
+  inline?: boolean
 }
 
 export interface DisplayProps extends Partial<TextProps> {
@@ -191,6 +143,7 @@ export interface DisplayProps extends Partial<TextProps> {
    * to `regular`.
    */
   weight?: null | "regular"
+  inline?: boolean
 }
 
 /**
@@ -212,16 +165,31 @@ function createStyledText<P extends StyledTextProps>(
 ): StyledComponent<any, any, any, any> {
   // @ts-ignore
   return styled<P>(
-    ({ size, weight, italic, element, ...textProps }: StyledTextProps) => {
+    ({
+      size,
+      weight,
+      italic,
+      element,
+      underline,
+      inline,
+      ...textProps
+    }: StyledTextProps) => {
       const fontFamilyType = selectFontFamilyType(_fontWeight(weight), italic)
       // This is mostly to narrow the type of `fontFamilyType` to remove `null`.
       if (fontFamilyType === null) {
         throw new Error("Did not expect `fontType` to be `null`.")
       }
-      const styles =
-        fontType === "display"
-          ? { letterSpacing: "-1px", ...textProps.style }
-          : textProps.style
+
+      let styles = textProps.style ?? {}
+      if (fontType === "display") {
+        styles["letterSpacing"] = "-1px"
+      }
+      if (underline) {
+        styles["textDecoration"] = "underline"
+      }
+      if (inline) {
+        styles["display"] = "inline"
+      }
       return (
         <Text
           fontFamily={fontFamilyType && fontFamily[fontType][fontFamilyType]}
