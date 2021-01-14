@@ -5,6 +5,7 @@ import { FixedBackArrow } from "../FixedBackArrow/FixedBackArrow"
 import { Loader } from "../Loader/Loader"
 import type { CollectionProps } from "./Collection"
 import { useNavigation } from "@react-navigation/native"
+import { HeroImageCarousel } from "../HeroImageCarousel.tsx"
 
 export const SNAP_PADDING = 70
 
@@ -37,21 +38,22 @@ export const CollectionUI: React.FC<CollectionProps> = ({
     )
   }
 
-  // const images = data?.brand?.images
+  const images = data?.brand?.images
 
   return (
     <Container insetsBottom={false} insetsTop={false}>
       <FixedBackArrow onPress={onBackPressed} variant="whiteTransparent" />
+      <HeroImageCarousel
+        images={images}
+        currentImage={currentImage}
+        setCurrentImage={setCurrentImage}
+      />
     </Container>
   )
 }
 
 {
-  /* <BrandPhotos
-  images={images}
-  currentImage={currentImage}
-  setCurrentImage={setCurrentImage}
-/>
+  /*
 <BrandBottomSheet
   data={data}
   loading={loading}
