@@ -1,7 +1,7 @@
 export { Button } from "./Button"
 export { Container } from "./Container"
 export { Spinner } from "./Spinner"
-export { RewaitlistedCTA } from "./Account/RewaitlistedCTA"
+export { WaitlistedCTA } from "./Account/WaitlistedCTA"
 export { AuthorizedCTA } from "./Account/AuthorizedCTA"
 export { ButtonBar } from "./ButtonBar"
 export { Countdown } from "./Countdown"

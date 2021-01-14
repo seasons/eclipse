@@ -25,7 +25,7 @@ export const ButtonBarTemplate = ({
       >
         {secondaryButtonProps.children}
       </Button>
-      <Spacer ml={2} />
+      <Spacer ml={1} />
       <Button
         variant="primaryBlack"
         {...primaryButtonProps}

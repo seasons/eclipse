@@ -3,13 +3,17 @@ import { Linking } from "react-native-web"
 import {
   learnMoreMailToLink,
   requestAccessMailToLink,
-  RewaitlistedCTAProps,
-  RewaitlistedCTATemplate,
-} from "./RewaitlistedCTA.shared"
+  WaitlistedCTAProps,
+  WaitlistedCTATemplate,
+} from "./WaitlistedCTA.shared"
 
-export const RewaitlistedCTA: React.FC<RewaitlistedCTAProps> = (props) => {
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
+
+export const WaitlistedCTA: React.FC<
+  Optional<WaitlistedCTAProps, "onPressLearnMore" | "onPressRequestAccess">
+> = (props) => {
   return (
-    <RewaitlistedCTATemplate
+    <WaitlistedCTATemplate
       {...props}
       onPressLearnMore={() => {
         Linking.openURL(learnMoreMailToLink)

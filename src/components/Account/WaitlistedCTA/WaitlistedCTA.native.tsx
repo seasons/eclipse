@@ -1,15 +1,17 @@
 import React from "react"
 import { Linking } from "react-native"
 import {
-  RewaitlistedCTATemplate,
+  WaitlistedCTATemplate,
   learnMoreMailToLink,
   requestAccessMailToLink,
-  RewaitlistedCTAProps,
-} from "./RewaitlistedCTA.shared"
+  WaitlistedCTAProps,
+} from "./WaitlistedCTA.shared"
 
-export const RewaitlistedCTA: React.FC<RewaitlistedCTAProps> = (props) => {
+export const WaitlistedCTA: React.FC<
+  Omit<WaitlistedCTAProps, "onPressLearnMore" | "onPressRequestAccess">
+> = (props) => {
   return (
-    <RewaitlistedCTATemplate
+    <WaitlistedCTATemplate
       {...props}
       onPressLearnMore={() => Linking.openURL(learnMoreMailToLink)}
       onPressRequestAccess={() => Linking.openURL(requestAccessMailToLink)}
