@@ -6,6 +6,7 @@ import { Loader } from "../Loader/Loader"
 import type { CollectionProps } from "./Collection"
 import { useNavigation } from "@react-navigation/native"
 import { HeroImageCarousel } from "../HeroImageCarousel.tsx"
+import { CollectionBottomSheet } from "../CollectionBottomSheet"
 
 export const SNAP_PADDING = 70
 
@@ -15,6 +16,10 @@ export const CollectionUI: React.FC<CollectionProps> = ({
   loading,
   currentImage,
   setCurrentImage,
+  showPopUp,
+  hidePopUp,
+  refetchQueries,
+  authState,
 }) => {
   const navigation = useNavigation()
   console.log(data, fetchMore, loading, currentImage, setCurrentImage)
@@ -48,16 +53,16 @@ export const CollectionUI: React.FC<CollectionProps> = ({
         currentImage={currentImage}
         setCurrentImage={setCurrentImage}
       />
+      <CollectionBottomSheet
+        data={data}
+        loading={loading}
+        fetchMore={fetchMore}
+        currentImage={currentImage}
+        showPopUp={showPopUp}
+        hidePopUp={hidePopUp}
+        refetchQueries={refetchQueries}
+        authState={authState}
+      />
     </Container>
   )
-}
-
-{
-  /*
-<BrandBottomSheet
-  data={data}
-  loading={loading}
-  fetchMore={fetchMore}
-  currentImage={currentImage}
-/> */
 }

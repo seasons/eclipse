@@ -78,6 +78,7 @@
     "react-native-fade-in-image": "^1.5.0",
     "react-native-fast-image": "^8.3.4",
     "react-native-safe-area-context": "^3.1.9",
+    "react-native-scroll-bottom-sheet": "^0.7.0",
     "react-native-svg": "12.1.0",
     "react-native-web": "^0.14.8",
     "react-navigation": "^4.4.0",
@@ -97,7 +98,8 @@
     "react-native-animatable": "*",
     "react-navigation": "*",
     "react-native-fast-image": "*",
-    "react-tracking": "*"
+    "react-tracking": "*",
+    "react-native-scroll-bottom-sheet": "*"
   },
   "jest": {
     "preset": "react-native",

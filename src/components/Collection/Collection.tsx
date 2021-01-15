@@ -49,12 +49,19 @@ export interface CollectionProps {
   data: any
   fetchMore: (x: any) => void
   loading: boolean
+  showPopUp: () => void
+  hidePopUp: () => void
+  refetchQueries: any[]
+  authState: any
 }
 
 export const Collection: React.FC<{
   collectionID: string
-  onBackPressed: () => void
-}> = ({ collectionID }) => {
+  showPopUp: () => void
+  hidePopUp: () => void
+  refetchQueries: any[]
+  authState: any
+}> = ({ collectionID, showPopUp, hidePopUp, refetchQueries, authState }) => {
   const [currentImage, setCurrentImage] = useState(1)
   const { data, fetchMore, loading, error } = useQuery(GET_COLLECTION, {
     variables: {
@@ -76,6 +83,10 @@ export const Collection: React.FC<{
       data={data}
       currentImage={currentImage}
       setCurrentImage={setCurrentImage}
+      showPopUp={showPopUp}
+      hidePopUp={hidePopUp}
+      refetchQueries={refetchQueries}
+      authState={authState}
     />
   )
 }

@@ -1,21 +1,26 @@
+import React, { useMemo, useRef, useState } from "react"
 import { Box, Flex, Sans, Spacer } from "@/elements"
 import { color, space } from "@/helpers"
 import { DateTime } from "luxon"
-import React, { useMemo, useRef, useState } from "react"
 import { Dimensions, FlatList, Linking, TouchableOpacity } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet"
 import { CarouselPageDots } from "../CarouselPageDots"
 import { Handle } from "../Handle"
 import { ReadMore } from "../ReadMore"
+import { ProductGridItem } from "../ProductGridItem/ProductGridItem"
 
 const dimensions = Dimensions.get("window")
 
-interface BrandBottomSheetProps {
+interface CollectionBottomSheetProps {
   data: any
   loading: boolean
   fetchMore: any
   currentImage: number
+  showPopUp: () => void
+  hidePopUp: () => void
+  refetchQueries: any[]
+  authState: any
 }
 
 export const BRAND_SNAP_PADDING = 70
@@ -65,11 +70,15 @@ const MetaDataCarousel = ({ data }) => {
   )
 }
 
-export const BrandBottomSheet: React.FC<BrandBottomSheetProps> = ({
+export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
   data,
   loading,
   fetchMore,
   currentImage,
+  showPopUp,
+  hidePopUp,
+  refetchQueries,
+  authState,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
   const [flatListHeight, setFlatListHeight] = useState(0)
@@ -178,7 +187,7 @@ export const BrandBottomSheet: React.FC<BrandBottomSheetProps> = ({
             backgroundColor="black10"
           />
         )}
-        keyExtractor={(item, index) => item?.id + index}
+        keyExtractor={(item: any, index) => item?.id + index}
         data={products}
         numColumns={numColumns}
         onEndReachedThreshold={0.7}
@@ -210,12 +219,20 @@ export const BrandBottomSheet: React.FC<BrandBottomSheetProps> = ({
             })
           }
         }}
-        renderItem={({ item }, i) => (
-          <ProductGridItem
-            product={item}
-            addLeftSpacing={i % numColumns !== 0}
-          />
-        )}
+        // @ts-ignore
+        renderItem={({ item }: { item: any }, i) =>
+          (
+            <ProductGridItem
+              key={i}
+              product={item}
+              showPopUp={showPopUp}
+              hidePopUp={hidePopUp}
+              refetchQueries={refetchQueries}
+              authState={authState}
+              addLeftSpacing={i % numColumns !== 0}
+            />
+          ) as any
+        }
         onLayout={(e) => {
           if (!flatListHeight) {
             setFlatListHeight(e.nativeEvent.layout.height)

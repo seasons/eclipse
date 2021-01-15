@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native"
 import React, { RefObject } from "react"
 import { Dimensions, TouchableWithoutFeedback } from "react-native"
 import { FadeInImage } from "../FadeInImage"
+import { SaveProductButton } from "../SaveProductButton"
 import { VariantSizes } from "../VariantSizes"
 
 const ProductGridItemComponent: React.FC<{
@@ -13,7 +14,20 @@ const ProductGridItemComponent: React.FC<{
   product: any
   addLeftSpacing?: boolean
   showBrandName?: boolean
-}> = ({ flatListRef, product, addLeftSpacing, showBrandName }) => {
+  showPopUp: () => void
+  hidePopUp: () => void
+  refetchQueries: any[]
+  authState: any
+}> = ({
+  flatListRef,
+  product,
+  addLeftSpacing,
+  showBrandName,
+  showPopUp,
+  hidePopUp,
+  refetchQueries,
+  authState,
+}) => {
   const tracking = useTracking()
   const navigation = useNavigation()
 
@@ -68,6 +82,10 @@ const ProductGridItemComponent: React.FC<{
           </Box>
           <Box mt={0.5}>
             <SaveProductButton
+              showPopUp={showPopUp}
+              hidePopUp={hidePopUp}
+              refetchQueries={refetchQueries}
+              authState={authState}
               grayStroke
               height={16}
               width={12}

@@ -1,4 +1,3 @@
-import React from "react"
 import { Box, BoxProps } from "@/elements/Box"
 import { color } from "@/helpers/color"
 import type { Color } from "@/theme/theme"
