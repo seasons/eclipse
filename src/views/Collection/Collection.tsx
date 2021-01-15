@@ -43,6 +43,8 @@ export const GET_COLLECTION = gql`
   }
 `
 
+export const SNAP_PADDING = 70
+
 export interface CollectionProps {
   setCurrentImage: (index: number) => void
   currentImage: number
@@ -51,7 +53,6 @@ export interface CollectionProps {
   loading: boolean
   showPopUp: () => void
   hidePopUp: () => void
-  refetchQueries: any[]
   authState: any
 }
 
@@ -59,9 +60,8 @@ export const Collection: React.FC<{
   collectionID: string
   showPopUp: () => void
   hidePopUp: () => void
-  refetchQueries: any[]
   authState: any
-}> = ({ collectionID, showPopUp, hidePopUp, refetchQueries, authState }) => {
+}> = ({ collectionID, showPopUp, hidePopUp, authState }) => {
   const [currentImage, setCurrentImage] = useState(1)
   const { data, fetchMore, loading, error } = useQuery(GET_COLLECTION, {
     variables: {
@@ -85,7 +85,6 @@ export const Collection: React.FC<{
       setCurrentImage={setCurrentImage}
       showPopUp={showPopUp}
       hidePopUp={hidePopUp}
-      refetchQueries={refetchQueries}
       authState={authState}
     />
   )

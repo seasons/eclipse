@@ -6,6 +6,9 @@ import { SaveIcon } from "@/icons/SaveIcon"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { Box } from "@/elements/Box"
 import { useMutation } from "@apollo/client"
+import { GET_PRODUCT } from "@/queries/productQueries"
+import { GET_BAG } from "@/queries/bagQueries"
+import { GET_HOMEPAGE } from "@/queries/homeQueries"
 
 export const SAVE_ITEM = gql`
   mutation SaveItem($item: ID!, $save: Boolean!) {
@@ -29,7 +32,6 @@ export interface SaveProductButtonProps {
   noModal?: boolean
   showPopUp: () => void
   hidePopUp: () => void
-  refetchQueries: any[]
   authState: any
 }
 
@@ -43,7 +45,6 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   noModal,
   showPopUp,
   hidePopUp,
-  refetchQueries,
   authState,
 }) => {
   const navigation = useNavigation()
@@ -53,7 +54,21 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   const [enabled, setEnabled] = useState(isSaved)
   const tracking = useTracking()
   const [saveItem] = useMutation(SAVE_ITEM, {
-    refetchQueries,
+    refetchQueries: [
+      {
+        query: GET_PRODUCT,
+        variables: {
+          where: { id: product?.id },
+        },
+      },
+      {
+        query: GET_BAG,
+      },
+      {
+        query: GET_HOMEPAGE,
+        variables: { firstFitPics: 8, skipFitPics: 0 },
+      },
+    ],
   })
   const userHasSession = !!authState?.userSession
 

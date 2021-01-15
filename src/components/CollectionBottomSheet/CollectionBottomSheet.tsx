@@ -5,10 +5,11 @@ import { DateTime } from "luxon"
 import { Dimensions, FlatList, Linking, TouchableOpacity } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet"
-import { CarouselPageDots } from "../CarouselPageDots"
-import { Handle } from "../Handle"
-import { ReadMore } from "../ReadMore"
-import { ProductGridItem } from "../ProductGridItem/ProductGridItem"
+import { CarouselPageDots } from "@/components/CarouselPageDots"
+import { Handle } from "@/components/Handle"
+import { ReadMore } from "@/components/ReadMore"
+import { ProductGridItem } from "@/components/ProductGridItem/ProductGridItem"
+import { SNAP_PADDING } from "@/views/Collection/Collection"
 
 const dimensions = Dimensions.get("window")
 
@@ -19,11 +20,8 @@ interface CollectionBottomSheetProps {
   currentImage: number
   showPopUp: () => void
   hidePopUp: () => void
-  refetchQueries: any[]
   authState: any
 }
-
-export const BRAND_SNAP_PADDING = 70
 
 const MetaDataCarousel = ({ data }) => {
   return (
@@ -77,7 +75,6 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
   currentImage,
   showPopUp,
   hidePopUp,
-  refetchQueries,
   authState,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
@@ -98,7 +95,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
 
   const imageContentHeight = dimensions.width
   const topSnapPoint = 0
-  const secondSnapPoint = imageContentHeight - insets.top - BRAND_SNAP_PADDING
+  const secondSnapPoint = imageContentHeight - insets.top - SNAP_PADDING
 
   const snapPoints = hasImages
     ? [topSnapPoint, secondSnapPoint]
@@ -128,7 +125,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
   const content = useMemo(() => {
     return (
       <ScrollBottomSheet<string>
-        topInset={BRAND_SNAP_PADDING}
+        topInset={SNAP_PADDING}
         componentType="FlatList"
         enableOverScroll
         ListHeaderComponent={() => (
@@ -177,7 +174,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
         containerStyle={{
           backgroundColor: "white",
           borderRadius: 20,
-          marginTop: insets.top + BRAND_SNAP_PADDING,
+          marginTop: insets.top + SNAP_PADDING,
         }}
         snapPoints={snapPoints}
         initialSnapIndex={initialSnapPoint}
@@ -227,7 +224,6 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
               product={item}
               showPopUp={showPopUp}
               hidePopUp={hidePopUp}
-              refetchQueries={refetchQueries}
               authState={authState}
               addLeftSpacing={i % numColumns !== 0}
             />

@@ -5,9 +5,9 @@ import { TrackSchema, useTracking } from "@/helpers/track"
 import { useNavigation } from "@react-navigation/native"
 import React, { RefObject } from "react"
 import { Dimensions, TouchableWithoutFeedback } from "react-native"
-import { FadeInImage } from "../FadeInImage"
-import { SaveProductButton } from "../SaveProductButton"
-import { VariantSizes } from "../VariantSizes"
+import { FadeInImage } from "@/components/FadeInImage"
+import { SaveProductButton } from "@/components/SaveProductButton"
+import { VariantSizes } from "@/components/VariantSizes"
 
 const ProductGridItemComponent: React.FC<{
   flatListRef?: RefObject<any>
@@ -16,7 +16,6 @@ const ProductGridItemComponent: React.FC<{
   showBrandName?: boolean
   showPopUp: () => void
   hidePopUp: () => void
-  refetchQueries: any[]
   authState: any
 }> = ({
   flatListRef,
@@ -25,7 +24,6 @@ const ProductGridItemComponent: React.FC<{
   showBrandName,
   showPopUp,
   hidePopUp,
-  refetchQueries,
   authState,
 }) => {
   const tracking = useTracking()
@@ -84,7 +82,6 @@ const ProductGridItemComponent: React.FC<{
             <SaveProductButton
               showPopUp={showPopUp}
               hidePopUp={hidePopUp}
-              refetchQueries={refetchQueries}
               authState={authState}
               grayStroke
               height={16}

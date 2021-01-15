@@ -1,14 +1,14 @@
 import React, { useEffect } from "react"
 import { StatusBar } from "react-native"
-import { Container } from "../Container/Container"
-import { FixedBackArrow } from "../FixedBackArrow/FixedBackArrow"
-import { Loader } from "../Loader/Loader"
+import {
+  Container,
+  FixedBackArrow,
+  Loader,
+  HeroImageCarousel,
+  CollectionBottomSheet,
+} from "@/components"
 import type { CollectionProps } from "./Collection"
 import { useNavigation } from "@react-navigation/native"
-import { HeroImageCarousel } from "../HeroImageCarousel.tsx"
-import { CollectionBottomSheet } from "../CollectionBottomSheet"
-
-export const SNAP_PADDING = 70
 
 export const CollectionUI: React.FC<CollectionProps> = ({
   data,
@@ -18,7 +18,6 @@ export const CollectionUI: React.FC<CollectionProps> = ({
   setCurrentImage,
   showPopUp,
   hidePopUp,
-  refetchQueries,
   authState,
 }) => {
   const navigation = useNavigation()
@@ -60,7 +59,6 @@ export const CollectionUI: React.FC<CollectionProps> = ({
         currentImage={currentImage}
         showPopUp={showPopUp}
         hidePopUp={hidePopUp}
-        refetchQueries={refetchQueries}
         authState={authState}
       />
     </Container>

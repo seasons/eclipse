@@ -2,10 +2,10 @@ import React from "react"
 import { FlatList, Dimensions } from "react-native"
 import styled from "styled-components/native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { SNAP_PADDING } from "../Collection/CollectionUI.native"
 import { color } from "@/helpers/color"
 import { Box } from "@/elements"
 import { FadeInImage } from "../FadeInImage"
+import { SNAP_PADDING } from "@/views/Collection/Collection"
 
 const windowWidth = Dimensions.get("window").width
 const imageHeight = windowWidth
