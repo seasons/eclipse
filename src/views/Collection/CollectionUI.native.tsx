@@ -7,10 +7,10 @@ import {
   HeroImageCarousel,
   CollectionBottomSheet,
 } from "@/components"
-import type { CollectionProps } from "./Collection"
+import type { CollectionUIProps } from "./Collection"
 import { useNavigation } from "@react-navigation/native"
 
-export const CollectionUI: React.FC<CollectionProps> = ({
+export const CollectionUI: React.FC<CollectionUIProps> = ({
   data,
   fetchMore,
   loading,

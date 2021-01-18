@@ -1,3 +1,4 @@
+import type { PopUpData } from "@/types"
 import { gql, useQuery } from "@apollo/client"
 import React, { useState } from "react"
 import { CollectionUI } from "./CollectionUI"
@@ -45,20 +46,20 @@ export const GET_COLLECTION = gql`
 
 export const SNAP_PADDING = 70
 
-export interface CollectionProps {
+export interface CollectionUIProps {
   setCurrentImage: (index: number) => void
   currentImage: number
   data: any
   fetchMore: (x: any) => void
   loading: boolean
-  showPopUp: () => void
+  showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
 }
 
 export const Collection: React.FC<{
   collectionID: string
-  showPopUp: () => void
+  showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
 }> = ({ collectionID, showPopUp, hidePopUp, authState }) => {

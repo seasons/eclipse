@@ -1,5 +1,5 @@
-import { color } from "@/helpers/color"
 import React from "react"
+import { color } from "@/helpers/color"
 import { ImageProps, View } from "react-native"
 import FadeIn from "react-native-fade-in-image"
 import FastImage from "react-native-fast-image"

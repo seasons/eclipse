@@ -9,6 +9,7 @@ import { useMutation } from "@apollo/client"
 import { GET_PRODUCT } from "@/queries/productQueries"
 import { GET_BAG } from "@/queries/bagQueries"
 import { GET_HOMEPAGE } from "@/queries/homeQueries"
+import type { PopUpData } from "@/types"
 
 export const SAVE_ITEM = gql`
   mutation SaveItem($item: ID!, $save: Boolean!) {
@@ -30,7 +31,7 @@ export interface SaveProductButtonProps {
   height?: number
   width?: number
   noModal?: boolean
-  showPopUp: () => void
+  showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
 }

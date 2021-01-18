@@ -8,13 +8,14 @@ import { Dimensions, TouchableWithoutFeedback } from "react-native"
 import { FadeInImage } from "@/components/FadeInImage"
 import { SaveProductButton } from "@/components/SaveProductButton"
 import { VariantSizes } from "@/components/VariantSizes"
+import type { PopUpData } from "@/types"
 
 const ProductGridItemComponent: React.FC<{
   flatListRef?: RefObject<any>
   product: any
   addLeftSpacing?: boolean
   showBrandName?: boolean
-  showPopUp: () => void
+  showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
 }> = ({

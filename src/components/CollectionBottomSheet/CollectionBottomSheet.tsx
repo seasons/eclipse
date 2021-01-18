@@ -10,6 +10,7 @@ import { Handle } from "@/components/Handle"
 import { ReadMore } from "@/components/ReadMore"
 import { ProductGridItem } from "@/components/ProductGridItem/ProductGridItem"
 import { SNAP_PADDING } from "@/views/Collection/Collection"
+import type { PopUpData } from "@/types"
 
 const dimensions = Dimensions.get("window")
 
@@ -18,7 +19,7 @@ interface CollectionBottomSheetProps {
   loading: boolean
   fetchMore: any
   currentImage: number
-  showPopUp: () => void
+  showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
 }

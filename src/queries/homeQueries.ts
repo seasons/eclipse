@@ -158,6 +158,26 @@ export const GET_HOMEPAGE = gql`
         }
       }
     }
+    collections(
+      orderBy: updatedAt_DESC
+      placements: ["Homepage"]
+      where: { published: true }
+    ) {
+      id
+      title
+      products(first: 10) {
+        id
+        name
+        brand {
+          id
+          name
+        }
+        images(size: Thumb) {
+          id
+          url
+        }
+      }
+    }
     blogPosts(count: 5) {
       id
       url
@@ -169,7 +189,7 @@ export const GET_HOMEPAGE = gql`
       where: {
         AND: [{ tags_some: { name: "Vintage" } }, { status: Available }]
       }
-      first: 12
+      first: 10
       orderBy: publishedAt_DESC
     ) {
       id

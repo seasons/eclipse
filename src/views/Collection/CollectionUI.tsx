@@ -1,8 +1,8 @@
 import { Flex } from "@/elements"
 import React from "react"
-import type { CollectionProps } from "./Collection"
+import type { CollectionUIProps } from "./Collection"
 
-export const CollectionUI: React.FC<CollectionProps> = ({
+export const CollectionUI: React.FC<CollectionUIProps> = ({
   data,
   fetchMore,
   loading,
