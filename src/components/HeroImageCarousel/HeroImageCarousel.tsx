@@ -38,7 +38,7 @@ export const HeroImageCarousel = ({
     }
   }
 
-  if (images.length === 0) {
+  if (images?.length === 0) {
     return <BlackSpacer insetsTop={insets?.top || 0} />
   }
 

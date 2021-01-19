@@ -27,6 +27,7 @@ export const GET_COLLECTION = gql`
         where: { status: Available }
       ) {
         id
+        name
         images(size: Thumb) {
           id
           url
@@ -63,10 +64,11 @@ export const Collection: React.FC<{
   hidePopUp: () => void
   authState: any
 }> = ({ collectionID, showPopUp, hidePopUp, authState }) => {
+  console.log("collectionID", collectionID)
   const [currentImage, setCurrentImage] = useState(1)
   const { data, fetchMore, loading, error } = useQuery(GET_COLLECTION, {
     variables: {
-      id: collectionID,
+      collectionID,
       first: 10,
       skip: 0,
       orderBy: "publishedAt_DESC",

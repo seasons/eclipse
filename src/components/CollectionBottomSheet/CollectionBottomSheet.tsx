@@ -1,7 +1,6 @@
 import React, { useMemo, useRef, useState } from "react"
 import { Box, Flex, Sans, Spacer } from "@/elements"
 import { color, space } from "@/helpers"
-import { DateTime } from "luxon"
 import { Dimensions, FlatList, Linking, TouchableOpacity } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet"
@@ -15,13 +14,16 @@ import type { PopUpData } from "@/types"
 const dimensions = Dimensions.get("window")
 
 interface CollectionBottomSheetProps {
-  data: any
-  loading: boolean
-  fetchMore: any
   currentImage: number
   showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
+  images: any[]
+  products: any[]
+  description: string
+  title: string
+  onEndReached: () => void
+  metaData?: []
 }
 
 const MetaDataCarousel = ({ data }) => {
@@ -70,13 +72,16 @@ const MetaDataCarousel = ({ data }) => {
 }
 
 export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
-  data,
-  loading,
-  fetchMore,
+  images,
+  title,
+  description,
   currentImage,
   showPopUp,
   hidePopUp,
   authState,
+  products,
+  onEndReached,
+  metaData,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
   const [flatListHeight, setFlatListHeight] = useState(0)
@@ -85,45 +90,18 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
     ScrollBottomSheet<string>
   > = useRef(null)
 
-  const brand = data?.brand
-  const products = brand?.products
-  const description = brand?.description
-  const images = brand?.images
-
-  const hasImages = images?.length > 0
-
-  const numColumns = 2
-
   const imageContentHeight = dimensions.width
-  const topSnapPoint = 0
-  const secondSnapPoint = imageContentHeight - insets.top - SNAP_PADDING
-
-  const snapPoints = hasImages
-    ? [topSnapPoint, secondSnapPoint]
-    : [topSnapPoint]
-  const initialSnapPoint = hasImages ? 1 : 0
-
-  const metaData = []
-  if (brand?.basedIn) {
-    metaData.push({
-      title: "Headquarters",
-      text: brand?.basedIn,
-    })
-  }
-  if (brand?.websiteUrl) {
-    metaData.push({
-      title: "Website",
-      text: brand?.websiteUrl,
-    })
-  }
-  if (brand?.since) {
-    metaData.push({
-      title: "Since",
-      text: DateTime.fromISO(brand?.since).year,
-    })
-  }
 
   const content = useMemo(() => {
+    const numColumns = 2
+    const topSnapPoint = 0
+    const secondSnapPoint = imageContentHeight - insets.top - SNAP_PADDING
+    const hasImages = images?.length > 0
+    const snapPoints = hasImages
+      ? [topSnapPoint, secondSnapPoint]
+      : [topSnapPoint]
+    const initialSnapPoint = hasImages ? 1 : 0
+
     return (
       <ScrollBottomSheet<string>
         topInset={SNAP_PADDING}
@@ -136,12 +114,12 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
               flexDirection="row"
               alignItems="flex-start"
               flexWrap="nowrap"
-              justifyContent={!!hasImages ? "space-between" : "flex-start"}
+              justifyContent={hasImages ? "space-between" : "flex-start"}
             >
               <Sans size="7" style={{ textDecorationLine: "underline" }}>
-                {brand?.name}
+                {title}
               </Sans>
-              {!!hasImages && (
+              {hasImages && (
                 <Box pt={0.5}>
                   <CarouselPageDots
                     slideCount={images?.length}
@@ -189,34 +167,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
         data={products}
         numColumns={numColumns}
         onEndReachedThreshold={0.7}
-        onEndReached={() => {
-          if (!loading) {
-            fetchMore({
-              variables: {
-                skip: products.length,
-              },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!prev) {
-                  return []
-                }
-
-                if (!fetchMoreResult) {
-                  return prev
-                }
-
-                return Object.assign({}, prev, {
-                  brand: {
-                    ...prev.brand,
-                    products: [
-                      ...prev.brand.products,
-                      ...fetchMoreResult.brand.products,
-                    ],
-                  },
-                })
-              },
-            })
-          }
-        }}
+        onEndReached={onEndReached}
         // @ts-ignore
         renderItem={({ item }: { item: any }, i) =>
           (
@@ -242,12 +193,20 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
       />
     )
   }, [
+    imageContentHeight,
+    currentImage,
+    insets,
+    onEndReached,
+    images,
+    description,
     products,
+    hidePopUp,
+    showPopUp,
+    authState,
+    title,
     flatListHeight,
     readMoreExpanded,
     setReadMoreExpanded,
-    snapPoints,
-    initialSnapPoint,
     metaData,
   ])
 

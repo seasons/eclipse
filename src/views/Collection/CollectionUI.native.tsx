@@ -21,7 +21,6 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   authState,
 }) => {
   const navigation = useNavigation()
-  console.log(data, fetchMore, loading, currentImage, setCurrentImage)
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       StatusBar.setBarStyle("light-content")
@@ -42,7 +41,40 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
     )
   }
 
-  const images = data?.brand?.images
+  const collection = data?.collection
+  const images = collection?.images
+  const products = collection?.products
+  const description = collection?.descriptions?.[0]
+  const title = collection?.title
+
+  const onEndReached = () => {
+    if (!loading) {
+      fetchMore({
+        variables: {
+          skip: products.length,
+        },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!prev) {
+            return []
+          }
+
+          if (!fetchMoreResult) {
+            return prev
+          }
+
+          return Object.assign({}, prev, {
+            collection: {
+              ...prev.collection,
+              products: [
+                ...prev.collection.products,
+                ...fetchMoreResult.collection.products,
+              ],
+            },
+          })
+        },
+      })
+    }
+  }
 
   return (
     <Container insetsBottom={false} insetsTop={false}>
@@ -53,13 +85,15 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         setCurrentImage={setCurrentImage}
       />
       <CollectionBottomSheet
-        data={data}
-        loading={loading}
-        fetchMore={fetchMore}
+        products={products}
+        title={title}
+        images={images}
+        description={description}
         currentImage={currentImage}
         showPopUp={showPopUp}
         hidePopUp={hidePopUp}
         authState={authState}
+        onEndReached={onEndReached}
       />
     </Container>
   )
