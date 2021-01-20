@@ -52,13 +52,16 @@ const CustomerTraitsFragment = gql`
 export const GET_HOMEPAGE = gql`
   query Homepage($firstFitPics: Int!, $skipFitPics: Int) {
     homepage {
+      id
       sections {
+        id
         title
+        type
         tagData {
+          id
           tagName
           description
         }
-        type
         results {
           ... on Brand {
             id
@@ -124,6 +127,7 @@ export const GET_HOMEPAGE = gql`
       }
     }
     me {
+      id
       customer {
         id
         status
@@ -212,6 +216,7 @@ export const GET_HOMEPAGE = gql`
         ]
       }
     ) {
+      id
       ...HomePageProduct
     }
     justAddedTops: products(
@@ -226,6 +231,7 @@ export const GET_HOMEPAGE = gql`
         ]
       }
     ) {
+      id
       ...HomePageProduct
     }
     justAddedBottoms: products(
@@ -240,6 +246,7 @@ export const GET_HOMEPAGE = gql`
         ]
       }
     ) {
+      id
       ...HomePageProduct
     }
     fitPicsCount: fitPicsConnection(where: { status: Published }) {

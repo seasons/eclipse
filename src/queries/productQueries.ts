@@ -40,6 +40,7 @@ const commonProductVariantFragment = gql`
 export const GET_PRODUCT = gql`
   query GetProduct($where: ProductWhereInput!) {
     me {
+      id
       customer {
         id
         status
@@ -107,6 +108,7 @@ export const GET_PRODUCT = gql`
             name
           }
           variants {
+            id
             ...CommonProductVariant
           }
         }
@@ -114,11 +116,13 @@ export const GET_PRODUCT = gql`
       outerMaterials
       innerMaterials
       largeImages: images(size: Large) {
+        id
         imageId: id
         url
       }
       type
       variants {
+        id
         ...CommonProductVariant
       }
     }
@@ -140,11 +144,13 @@ export const GET_COLLECTION = gql`
         name
         description
         retailPrice
+        modelHeight
         modelSize {
+          id
           display
         }
-        modelHeight
         brand {
+          id
           name
         }
         images {

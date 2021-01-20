@@ -68,6 +68,7 @@ export const GET_BAG = gql`
       itemCount
     }
     me {
+      id
       customer {
         id
         status
