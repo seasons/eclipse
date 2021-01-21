@@ -2,7 +2,7 @@ import { Box } from "@/elements/Box"
 import { Flex } from "@/elements/Flex"
 import { color } from "@/helpers"
 import React from "react"
-import styled from "styled-components"
+import styled from "styled-components/native"
 
 interface Props {
   slideCount: number

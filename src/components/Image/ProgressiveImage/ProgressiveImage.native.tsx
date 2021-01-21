@@ -5,12 +5,14 @@ import FadeIn from "react-native-fade-in-image"
 import FastImage from "react-native-fast-image"
 import styled from "styled-components/native"
 
-interface FadeInImageProps extends ImageProps {
+interface ProgressiveImageProps extends ImageProps {
   radius?: boolean
   source: any
 }
 
-export const FadeInImage: React.FC<FadeInImageProps> = (props: any) => {
+export const ProgressiveImage: React.FC<ProgressiveImageProps> = (
+  props: any
+) => {
   return (
     <Container radius={props.radius}>
       <FadeIn>

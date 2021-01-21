@@ -1,106 +1,108 @@
-import { Flex, Sans, Spacer } from "@/elements"
-import { Box } from "@/elements/Box"
-import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
+import React from "react"
+import styled from "styled-components"
+import { Link } from "../Link"
+import { get } from "lodash"
+import { VariantSizes } from "../VariantSizes"
+import ContentLoader from "react-content-loader"
+import { ProgressiveImage } from "@/components"
+import { Box, Sans, Spacer } from "@/elements"
 import { TrackSchema, useTracking } from "@/helpers/track"
-import { useNavigation } from "@react-navigation/native"
-import React, { RefObject } from "react"
-import { Dimensions, TouchableWithoutFeedback } from "react-native"
-import { FadeInImage } from "@/components/FadeInImage"
-import { SaveProductButton } from "@/components/SaveProductButton"
-import { VariantSizes } from "@/components/VariantSizes"
-import type { PopUpData } from "@/types"
 
-const ProductGridItemComponent: React.FC<{
-  flatListRef?: RefObject<any>
+export const ProductGridItem: React.FC<{
   product: any
+  loading?: boolean
+  showName?: boolean
+  showPopUp?: (data: any) => void
+  hidePopUp?: () => void
+  authState?: any
   addLeftSpacing?: boolean
-  showBrandName?: boolean
-  showPopUp: (data: PopUpData) => any
-  hidePopUp: () => void
-  authState: any
-}> = ({
-  flatListRef,
-  product,
-  addLeftSpacing,
-  showBrandName,
-  showPopUp,
-  hidePopUp,
-  authState,
-}) => {
+}> = ({ product, loading, showName }) => {
+  const image = get(product, "images[0]", { url: "" })
   const tracking = useTracking()
-  const navigation = useNavigation()
+  let showBrand = true
 
-  const itemWidth = Dimensions.get("window").width / 2 - 2
-  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO
-  const image = product?.images?.[0]?.url
-  const productName = product?.name
   const brandName = product?.brand?.name
+  const brandSlug = product?.brand?.slug
+
+  if (showName || brandName === "Vintage") {
+    showBrand = false
+  }
+
+  if (!product || loading) {
+    return (
+      <Box m="2px">
+        <ContentLoader viewBox="0 0 100 125">
+          <rect x={0} y={0} width="100%" height="100%" />
+        </ContentLoader>
+        <Spacer mb="5px" />
+        <ContentLoader width="100%" height="42px">
+          <rect x={0} y={0} width="40%" height={12} />
+          <rect x={0} y={19} width={37} height={12} />
+        </ContentLoader>
+      </Box>
+    )
+  }
+
+  const Text = () => {
+    if (showBrand && brandName && brandSlug) {
+      return (
+        <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
+          <Sans size="2" mt="0.5">
+            {brandName}
+          </Sans>
+          <VariantSizes variants={product.variants} size="2" />
+        </Link>
+      )
+    } else {
+      return (
+        <>
+          {!!product?.name && (
+            <>
+              <Sans size="2" mt="0.5">
+                {product?.name}
+              </Sans>
+              <VariantSizes variants={product.variants} size="2" />
+            </>
+          )}
+        </>
+      )
+    }
+  }
 
   return (
-    <TouchableWithoutFeedback
+    <ProductContainer
       key={product.id}
-      onPress={() => {
+      onClick={() =>
         tracking.trackEvent({
           actionName: TrackSchema.ActionNames.ProductTapped,
           actionType: TrackSchema.ActionTypes.Tap,
+          productName: product.name,
           productSlug: product.slug,
           productId: product.id,
-          productName,
         })
-        navigation.navigate("Product", {
-          id: product.id,
-          slug: product.slug,
-          name: product.name,
-        })
-        if (!!flatListRef?.current) {
-          // If the flatList is passed down we scroll to the top when the page is reloaded
-          // this is used for when the product view is being reloaded with a new product
-          flatListRef?.current?.scrollToOffset?.({ animated: true, offset: 0 })
-        }
-      }}
+      }
     >
-      <Box mr={addLeftSpacing ? 0.5 : 0} mb={0.5} width={itemWidth}>
-        <FadeInImage
-          source={{ uri: image }}
-          style={{ width: itemWidth, height: imageHeight }}
-        />
-        <Flex
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="flex-start"
+      <Link href="/product/[Product]" as={`/product/${product.slug}`}>
+        <a
+          href={`/product/${product.slug}`}
+          style={{ textDecoration: "none", color: "inherit" }}
         >
-          <Box my={0.5} mx={1}>
-            {(!!productName || !!brandName) && (
-              <Sans size="2" style={{ maxWidth: itemWidth - 50 }}>
-                {!!showBrandName && brandName !== "Vintage"
-                  ? brandName
-                  : productName}
-              </Sans>
-            )}
-            <VariantSizes size="2" variants={product?.variants} />
-          </Box>
-          <Box mt={0.5}>
-            <SaveProductButton
-              showPopUp={showPopUp}
-              hidePopUp={hidePopUp}
-              authState={authState}
-              grayStroke
-              height={16}
-              width={12}
-              product={product}
-              onPressSaveButton={() => {
-                tracking.trackEvent({
-                  actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
-                  actionType: TrackSchema.ActionTypes.Tap,
-                })
-              }}
-            />
-          </Box>
-        </Flex>
-        <Spacer mb={0.5} />
-      </Box>
-    </TouchableWithoutFeedback>
+          <ProgressiveImage
+            imageUrl={image?.url}
+            size="small"
+            alt="product image"
+          />
+          <Spacer mb={1} />
+          <Text />
+        </a>
+      </Link>
+    </ProductContainer>
   )
 }
 
-export const ProductGridItem = React.memo(ProductGridItemComponent)
+const ProductContainer = styled(Box)`
+  margin: 2px;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+`

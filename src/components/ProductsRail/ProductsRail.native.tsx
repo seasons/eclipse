@@ -7,12 +7,12 @@ import {
   TouchableWithoutFeedback,
 } from "react-native"
 import { Box, Flex, Sans, Spacer } from "@/elements"
-import { FadeInImage } from "../FadeInImage/FadeInImage"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { space } from "@/helpers/space"
 import * as Animatable from "react-native-animatable"
 import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
 import { VariantSizes } from "../VariantSizes"
+import { ProgressiveImage } from "../Image/ProgressiveImage"
 
 export const ProductsRail: React.FC<{
   items: any[]
@@ -86,7 +86,8 @@ export const ProductsRail: React.FC<{
                 }
               >
                 <Box mr={0.5} style={{ width: slideWidth }}>
-                  <FadeInImage
+                  <ProgressiveImage
+                    // @ts-ignore
                     source={{ uri: image }}
                     style={{
                       width: slideWidth,

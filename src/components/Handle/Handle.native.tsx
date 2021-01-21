@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "@/elements/Box"
 import { color } from "@/helpers/color"
 import type { Color } from "@/theme/theme"
-import styled from "styled-components"
+import styled from "styled-components/native"
 
 export interface HandleProps extends BoxProps {
   backgroundColor?: Color

@@ -1,7 +1,7 @@
 import { Box, Flex, Sans } from "@/elements"
 import { color } from "@/helpers"
 import React from "react"
-import styled from "styled-components"
+import styled from "styled-components/native"
 
 export const VariantSizes: React.FC<{
   variants: any[]
@@ -26,7 +26,7 @@ export const VariantSizes: React.FC<{
   )
 }
 
-const Strikethrough = styled.div<{ size: "2" | "4" }>`
+const Strikethrough = styled.View<{ size: "2" | "4" }>`
   background-color: ${color("black25")};
   height: 2;
   width: 100%;

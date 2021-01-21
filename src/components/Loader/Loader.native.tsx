@@ -1,7 +1,7 @@
 import { Box } from "@/elements"
 import { themeProps } from "@/theme/theme"
 import React from "react"
-import styled from "styled-components"
+import styled from "styled-components/native"
 import { Spinner } from "../Spinner"
 
 type LoaderVariant = "whiteBackground" | "blackOpaque85"

@@ -4,6 +4,7 @@ import { TrackSchema, useTracking } from "@/helpers/track"
 import type { Color } from "@/theme/theme"
 import _ from "lodash"
 import React from "react"
+import { Text } from "react-native"
 
 interface Props {
   content: string
@@ -100,12 +101,12 @@ function truncate({
       if (node.type === Sans) {
         if (textDepth === 1 && maxChars === offset) {
           truncatedChildren.push(
-            <div>
+            <Text>
               {"... "}
               <Sans size="4" onPress={onExpand}>
                 Read&nbsp;more
               </Sans>
-            </div>
+            </Text>
           )
         }
         textDepth -= 1

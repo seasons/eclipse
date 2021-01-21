@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Sans, Flex, Spacer } from "@/elements"
 import type { DateTime } from "luxon"
 import { Duration } from "luxon"
-import { Countdown, ButtonBar } from "@/components" //
+import { Countdown, ButtonBar } from "@/components"
 
 export const AuthorizedCTA: React.FC<{
   authorizedAt: DateTime
