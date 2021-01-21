@@ -129,35 +129,3 @@ export const GET_PRODUCT = gql`
   }
   ${commonProductVariantFragment}
 `
-
-export const GET_COLLECTION = gql`
-  query GetCollection($collectionID: ID!) {
-    collection(where: { id: $collectionID }) {
-      id
-      slug
-      images
-      title
-      subTitle
-      products {
-        id
-        slug
-        name
-        description
-        retailPrice
-        modelHeight
-        modelSize {
-          id
-          display
-        }
-        brand {
-          id
-          name
-        }
-        images {
-          id
-          url
-        }
-      }
-    }
-  }
-`
