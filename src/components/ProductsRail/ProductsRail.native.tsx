@@ -13,13 +13,14 @@ import * as Animatable from "react-native-animatable"
 import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
 import { VariantSizes } from "../VariantSizes"
 import { ProgressiveImage } from "../Image/ProgressiveImage"
+import type { ProductsRailProps } from "./ProductsRail.shared"
 
-export const ProductsRail: React.FC<{
-  items: any[]
-  title?: string
-  onViewAll?: () => void
-  large?: boolean
-}> = ({ items, title, large, onViewAll }) => {
+export const ProductsRail: React.FC<ProductsRailProps> = ({
+  items,
+  title,
+  large,
+  onViewAll,
+}) => {
   const navigation = useNavigation()
   const [currentPage, setCurrentPage] = useState(1)
   const tracking = useTracking()

@@ -86,6 +86,7 @@ export const GET_BAG = gql`
             city
             state
             address1
+            address2
             zipCode
           }
         }

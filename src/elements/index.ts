@@ -3,3 +3,4 @@ export { Flex } from "./Flex"
 export { Spacer } from "./Spacer"
 
 export * from "./Typography"
+export * from "./Grid"

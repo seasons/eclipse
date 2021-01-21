@@ -5,12 +5,12 @@ import { CollectionUI } from "./CollectionUI"
 
 export const GET_COLLECTION = gql`
   query GetCollection(
-    $collectionID: ID!
+    $collectionSlug: String!
     $first: Int!
     $skip: Int!
     $orderBy: ProductOrderByInput!
   ) {
-    collection(where: { id: $collectionID }) {
+    collection(where: { slug: $collectionSlug }) {
       id
       slug
       title
@@ -59,16 +59,16 @@ export interface CollectionUIProps {
 }
 
 export const Collection: React.FC<{
-  collectionID: string
+  collectionSlug: string
   showPopUp: (data: PopUpData) => any
   hidePopUp: () => void
   authState: any
-}> = ({ collectionID, showPopUp, hidePopUp, authState }) => {
-  console.log("collectionID", collectionID)
+}> = ({ collectionSlug, showPopUp, hidePopUp, authState }) => {
+  console.log("collectionSlug", collectionSlug)
   const [currentImage, setCurrentImage] = useState(1)
   const { data, fetchMore, loading, error } = useQuery(GET_COLLECTION, {
     variables: {
-      collectionID,
+      collectionSlug,
       first: 10,
       skip: 0,
       orderBy: "publishedAt_DESC",
