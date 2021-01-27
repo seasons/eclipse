@@ -87,6 +87,7 @@
     "react-native-web": "^0.14.8",
     "react-navigation": "^4.4.0",
     "react-primitives": "^0.8.1",
+    "react-snaplist-carousel": "^3.2.2",
     "react-spring": "^8.0.27",
     "react-tracking": "^7.3.0",
     "release-it": "^13.5.8",
@@ -107,9 +108,11 @@
     "react-native-animatable": "*",
     "react-navigation": "*",
     "react-native-fast-image": "*",
+    "react-snaplist-carousel": "*",
     "react-tracking": "*",
     "react-native-scroll-bottom-sheet": "*",
-    "styled-bootstrap-grid": "*"
+    "styled-bootstrap-grid": "*",
+    "styled-system": "*"
   },
   "jest": {
     "preset": "react-native",

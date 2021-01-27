@@ -7,13 +7,13 @@ import { imageResize, ImageSize } from "@/helpers/imageResize"
 
 export interface ProgressiveImageProps {
   size: ImageSize
-  imageUrl: string
+  url: string
   aspectRatio?: number
   alt: string
 }
 
 export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
-  imageUrl,
+  url,
   size,
   aspectRatio = PRODUCT_ASPECT_RATIO,
   alt,
@@ -27,8 +27,8 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
     }
   }, [fullImageRef, loaded])
 
-  const initialImage = imageResize(imageUrl, "initial")
-  const fullImage = imageResize(imageUrl, size)
+  const initialImage = imageResize(url, "initial")
+  const fullImage = imageResize(url, size)
 
   return (
     <ImageWrapper aspectRatio={aspectRatio}>

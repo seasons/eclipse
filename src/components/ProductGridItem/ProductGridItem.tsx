@@ -87,11 +87,7 @@ export const ProductGridItem: React.FC<{
           href={`/product/${product.slug}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <ProgressiveImage
-            imageUrl={image?.url}
-            size="small"
-            alt="product image"
-          />
+          <ProgressiveImage url={image?.url} size="small" alt="product image" />
           <Spacer mb={1} />
           <Text />
         </a>

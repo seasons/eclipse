@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { StatusBar } from "react-native"
 import {
   Container,
@@ -14,12 +14,11 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   data,
   fetchMore,
   loading,
-  currentImage,
-  setCurrentImage,
   showPopUp,
   hidePopUp,
   authState,
 }) => {
+  const [currentImage, setCurrentImage] = useState(1)
   const navigation = useNavigation()
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {

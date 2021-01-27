@@ -100,12 +100,19 @@ function truncate({
       if (node.type === Sans) {
         if (textDepth === 1 && maxChars === offset) {
           truncatedChildren.push(
-            <div>
+            <span>
               {"... "}
-              <Sans size="4" onPress={onExpand}>
+              <span
+                onClick={onExpand}
+                style={{
+                  display: "inline",
+                  cursor: "pointer",
+                  color: color("black100"),
+                }}
+              >
                 Read&nbsp;more
-              </Sans>
-            </div>
+              </span>
+            </span>
           )
         }
         textDepth -= 1
