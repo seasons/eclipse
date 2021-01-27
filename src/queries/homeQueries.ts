@@ -168,6 +168,7 @@ export const GET_HOMEPAGE = gql`
       where: { published: true }
     ) {
       id
+      slug
       title
       products(first: 10) {
         id

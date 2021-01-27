@@ -163,24 +163,24 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
             backgroundColor="black10"
           />
         )}
-        keyExtractor={(item: any, index) => item?.id + index}
+        keyExtractor={(item: any, index) => item?.node?.id + index}
         data={products}
         numColumns={numColumns}
         onEndReachedThreshold={0.7}
         onEndReached={onEndReached}
         // @ts-ignore
-        renderItem={({ item }: { item: any }, i) =>
-          (
+        renderItem={({ item }: { item: any }, i) => {
+          const product = item?.node
+          return (
             <ProductGridItem
-              key={i}
-              product={item}
+              product={product}
               showPopUp={showPopUp}
               hidePopUp={hidePopUp}
               authState={authState}
               addLeftSpacing={i % numColumns !== 0}
             />
           ) as any
-        }
+        }}
         onLayout={(e) => {
           if (!flatListHeight) {
             setFlatListHeight(e.nativeEvent.layout.height)

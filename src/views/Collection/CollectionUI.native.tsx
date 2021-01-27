@@ -17,6 +17,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   showPopUp,
   hidePopUp,
   authState,
+  setProductCount,
 }) => {
   const [currentImage, setCurrentImage] = useState(1)
   const navigation = useNavigation()
@@ -42,7 +43,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
 
   const collection = data?.collection
   const images = collection?.images
-  const products = collection?.products
+  const products = collection?.products?.edges
   const description = collection?.descriptions?.[0]
   const title = collection?.title
 
@@ -52,25 +53,11 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         variables: {
           skip: products.length,
         },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          if (!prev) {
-            return []
-          }
-
-          if (!fetchMoreResult) {
-            return prev
-          }
-
-          return Object.assign({}, prev, {
-            collection: {
-              ...prev.collection,
-              products: [
-                ...prev.collection.products,
-                ...fetchMoreResult.collection.products,
-              ],
-            },
-          })
-        },
+      }).then((fetchMoreResult: any) => {
+        setProductCount(
+          products.length +
+            fetchMoreResult?.data?.collection?.products?.edges?.length
+        )
       })
     }
   }

@@ -5,6 +5,7 @@ import {
   ReadMore,
   Spinner,
 } from "@/components"
+import Head from "next/head"
 import { Box, Col, Flex, Grid, Row, Sans, Spacer } from "@/elements"
 import { debounce } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
@@ -28,8 +29,6 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   const images = collection?.images
 
   const imageContainer = useRef(null)
-
-  console.log("images", images)
 
   const onScroll = debounce(() => {
     const shouldLoadMore =
@@ -100,6 +99,24 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
 
   return (
     <>
+      <Head>
+        <title>{title ? `${title} Collection - Seasons` : "Seasons"}</title>
+        <meta content={description} name="description" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="twitter:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Seasons" />
+        <meta
+          property="og:url"
+          content={`https://www.seasons.nyc/collection/${collection?.slug}`}
+        />
+        <meta
+          property="og:image"
+          content="https://flare-public-assets.s3.amazonaws.com/logo.png"
+        />
+        <meta property="twitter:card" content="summary" />
+      </Head>
       <Box pt={[1, 5]}>
         <Grid px={[2, 2, 2, 5, 5]}>
           <Row>
@@ -176,25 +193,3 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
 const MediaWithHeight = styled(Media)`
   height: 100%;
 `
-
-{
-  /* <Head>
-<title>{title ? `${title} Collection - Seasons` : "Seasons"}</title>
-<meta content={description} name="description" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="twitter:description" content={description} />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Seasons" />
-<meta
-  property="og:url"
-  // FIXME:
-  content={`https://www.seasons.nyc/collection/`}
-/>
-<meta
-  property="og:image"
-  content="https://flare-public-assets.s3.amazonaws.com/logo.png"
-/>
-<meta property="twitter:card" content="summary" />
-</Head> */
-}

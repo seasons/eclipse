@@ -21,34 +21,35 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
 
   return (
     <Grid>
-      <Flex
-        flexDirection="row"
-        justifyContent={!!title ? "space-between" : "flex-end"}
-        px={[2, 2, 2, 5, 5]}
-      >
-        {title && <Display size="7">{title}</Display>}
-        {as ? (
-          <Link href={href} as={as}>
-            <Sans
-              size={["5", "6"]}
-              color="black50"
-              style={{ minWidth: "58px" }}
-            >
-              See all
-            </Sans>
-          </Link>
-        ) : (
-          <Link href={href}>
-            <Sans
-              size={["5", "6"]}
-              color="black50"
-              style={{ minWidth: "58px" }}
-            >
-              See all
-            </Sans>
-          </Link>
-        )}
-      </Flex>
+      <Box px={[2, 2, 2, 5, 5]}>
+        <Flex
+          flexDirection="row"
+          justifyContent={title ? "space-between" : "flex-end"}
+        >
+          {title && <Display size="7">{title}</Display>}
+          {as ? (
+            <Link href={href} as={as}>
+              <Sans
+                size={["5", "6"]}
+                color="black50"
+                style={{ minWidth: "58px" }}
+              >
+                See all
+              </Sans>
+            </Link>
+          ) : (
+            <Link href={href}>
+              <Sans
+                size={["5", "6"]}
+                color="black50"
+                style={{ minWidth: "58px" }}
+              >
+                See all
+              </Sans>
+            </Link>
+          )}
+        </Flex>
+      </Box>
       <Spacer mb={2} />
       <Box px={[0, 0, 0, 5, 5]}>
         <Row>
