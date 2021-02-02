@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Components library for harvest and flare",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -106,11 +106,11 @@
     "react-content-loader": "*",
     "react-native": "*",
     "react-native-animatable": "*",
-    "react-navigation": "*",
     "react-native-fast-image": "*",
+    "react-native-scroll-bottom-sheet": "*",
+    "react-navigation": "*",
     "react-snaplist-carousel": "*",
     "react-tracking": "*",
-    "react-native-scroll-bottom-sheet": "*",
     "styled-bootstrap-grid": "*",
     "styled-system": "*"
   },
