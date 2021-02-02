@@ -55,7 +55,6 @@ export const ImageCarousel: React.FC<{
           ref={snapList}
         >
           {imagesToUse?.map((image, index) => {
-            console.log("111", image)
             // imageURL is used for blogposts
             const url = image?.imageURL ?? image?.url
             const imageSRC = (!!url && imageResize(url, "large")) || ""
@@ -67,6 +66,11 @@ export const ImageCarousel: React.FC<{
                 key={url}
               >
                 <Box
+                  style={{
+                    backgroundColor: color("black04"),
+                    height: "100%",
+                    width: "100%",
+                  }}
                   onClick={() =>
                     goToSnapItem(index === images.length - 1 ? 0 : index + 1)
                   }
