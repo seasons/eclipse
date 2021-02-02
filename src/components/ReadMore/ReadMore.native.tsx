@@ -2,7 +2,6 @@ import { Flex, Sans } from "@/elements"
 import { color } from "@/helpers"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import type { Color } from "@/theme/theme"
-import _ from "lodash"
 import React from "react"
 import { Text } from "react-native"
 

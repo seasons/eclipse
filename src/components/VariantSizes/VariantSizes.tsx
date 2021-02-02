@@ -28,9 +28,9 @@ export const VariantSizes: React.FC<{
 
 const Strikethrough = styled.div<{ size: "2" | "4" }>`
   background-color: ${color("black25")};
-  height: 2;
+  height: 2px;
   width: 100%;
   position: absolute;
-  top: ${(p) => (p.size === "2" ? 7 : 11)};
+  top: ${(p) => (p.size === "2" ? "7px" : "11px")};
   left: 0;
 `
