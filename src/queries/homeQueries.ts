@@ -3,6 +3,7 @@ import gql from "graphql-tag"
 const HomePageProductFragment = gql`
   fragment HomePageProduct on Product {
     id
+    slug
     name
     modelSize {
       id
