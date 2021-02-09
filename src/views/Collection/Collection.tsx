@@ -34,6 +34,7 @@ export const GET_COLLECTION = gql`
         edges {
           node {
             id
+            slug
             name
             images(size: Thumb) {
               id
