@@ -77,10 +77,22 @@ export const OrderCustomerFragment = gql`
 export const GetCustomerQuery = gql`
   query GetCustomer {
     me {
+      id
       customer {
+        id
         ...OrderCustomerFragment
       }
     }
   }
   ${OrderCustomerFragment}
+`
+
+export const SubmitOrderMutation = gql`
+  mutation SubmitOrder($input: SubmitOrderInput!) {
+    submitOrder(input: $input) {
+      id
+      ...OrderFragment
+    }
+  }
+  ${OrderFragment}
 `

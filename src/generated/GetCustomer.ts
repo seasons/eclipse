@@ -51,12 +51,14 @@ export interface GetCustomer_me_customer_billingInfo {
 
 export interface GetCustomer_me_customer {
   __typename: "Customer";
+  id: string;
   detail: GetCustomer_me_customer_detail | null;
   billingInfo: GetCustomer_me_customer_billingInfo | null;
 }
 
 export interface GetCustomer_me {
   __typename: "Me";
+  id: string;
   customer: GetCustomer_me_customer | null;
 }
 

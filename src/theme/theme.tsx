@@ -30,7 +30,7 @@ export const themeProps = {
     black10: "#E5E5E5",
     black04: "#F6F6F6",
     white100: "#fff",
-    green: "#44524A",
+    green100: "#06BC6F",
     lightGreen: "#989F9B",
     blue: "#2B50DF",
     productBackgroundColor: "#E9E9EB",

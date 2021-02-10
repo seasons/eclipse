@@ -2465,6 +2465,10 @@ export interface SmsReceiptWhereInput {
   updatedAt_gte?: any | null;
 }
 
+export interface SubmitOrderInput {
+  orderID: string;
+}
+
 export interface TagWhereInput {
   AND?: TagWhereInput[] | null;
   OR?: TagWhereInput[] | null;

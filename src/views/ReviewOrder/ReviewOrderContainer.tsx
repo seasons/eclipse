@@ -1,34 +1,43 @@
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation, ApolloError } from "@apollo/client"
 import { ReviewOrder } from "./ReviewOrder"
-import { GetCustomerQuery } from "./queries"
-import { OrderFragment } from "@/generated/OrderFragment"
+import { GetCustomerQuery, SubmitOrderMutation } from "./queries"
 import React from "react"
+import { OrderFragment } from "@/generated/OrderFragment"
 import { GetCustomer } from "@/generated/GetCustomer"
+import { SubmitOrder, SubmitOrderVariables } from "@/generated/SubmitOrder"
 import { FixedBackArrow, Loader } from "@/components"
 import { useTracking, TrackSchema } from "@/helpers"
 
 type Props = {
   onBackPressed: () => void
   onOrderItemPressed: () => void
+  onOrderSubmitted: (resultOrder: OrderFragment) => void
+  onError: (error: Error | readonly ApolloError[]) => void
   order: OrderFragment
   windowWidth: number
 }
 
-export const OrderContainer: React.FC<Props> = ({
+export const ReviewOrderContainer: React.FC<Props> = ({
   order,
   onBackPressed,
   onOrderItemPressed,
+  onOrderSubmitted,
+  onError,
   windowWidth,
 }) => {
   const { data, loading } = useQuery<GetCustomer>(GetCustomerQuery)
+  const [submitOrder] = useMutation<SubmitOrder, SubmitOrderVariables>(
+    SubmitOrderMutation
+  )
+
   const tracking = useTracking()
   const [isSubmittingOrder, setIsSubmittingOrder] = React.useState(false)
 
   const customer = data?.me?.customer
 
-  const handleSubmitOrder = (_orderId: string) => {
+  const handleSubmitOrder = async (orderId: string) => {
     if (isSubmittingOrder) {
-      return false
+      return
     }
 
     tracking.trackEvent({
@@ -37,18 +46,25 @@ export const OrderContainer: React.FC<Props> = ({
     })
     setIsSubmittingOrder(true)
 
-    return false
-
-    // todo: submit order
-    /**
-    await submitOrder({
-      variables: {
-        input: {
-          orderID: order.id,
+    try {
+      const result = await submitOrder({
+        variables: {
+          input: {
+            orderID: orderId,
+          },
         },
-      },
-    })
-    **/
+      })
+
+      if (result.errors) {
+        return onError((result.errors as any) as readonly ApolloError[])
+      }
+
+      onOrderSubmitted(result.data.submitOrder)
+    } catch (e) {
+      return onError(e)
+    } finally {
+      setIsSubmittingOrder(false)
+    }
   }
 
   if (loading) {
