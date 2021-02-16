@@ -10,7 +10,10 @@ import {
   Separator,
 } from "@/components"
 import { ScrollView } from "react-native"
-import { OrderFragment } from "@/generated/OrderFragment"
+import {
+  OrderFragment,
+  OrderFragment_lineItems_productVariant_product,
+} from "@/generated/OrderFragment"
 import { CustomerOrderFragment } from "@/generated/CustomerOrderFragment"
 import { displayCurrency } from "@/helpers/currency"
 import { space } from "@/helpers/space"
@@ -18,7 +21,9 @@ import { space } from "@/helpers/space"
 type Props = {
   isSubmittingOrder: boolean
   onBackPressed: () => void
-  onOrderItemPressed: () => void
+  onOrderItemPressed: (
+    product: OrderFragment_lineItems_productVariant_product
+  ) => void
   onSubmitOrder: (orderId: string) => void
   order: OrderFragment
   customer: CustomerOrderFragment

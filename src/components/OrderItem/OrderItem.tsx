@@ -1,5 +1,8 @@
 import { Box, Flex, Sans } from "@/elements"
-import { OrderFragment_lineItems_productVariant } from "@/generated/OrderFragment"
+import {
+  OrderFragment_lineItems_productVariant,
+  OrderFragment_lineItems_productVariant_product,
+} from "@/generated/OrderFragment"
 import { ProgressiveImage } from "@/components"
 import React from "react"
 import { TouchableWithoutFeedback } from "react-native"
@@ -8,7 +11,7 @@ import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
 
 type OrderItemProps = {
   productVariant: OrderFragment_lineItems_productVariant
-  onPress: () => void
+  onPress: (product: OrderFragment_lineItems_productVariant_product) => void
 }
 
 export const OrderItem: React.FC<OrderItemProps> = ({
@@ -25,7 +28,7 @@ export const OrderItem: React.FC<OrderItemProps> = ({
 
   return (
     <Box key={product.id}>
-      <TouchableWithoutFeedback onPress={onPress}>
+      <TouchableWithoutFeedback onPress={() => onPress(product)}>
         <Container flexDirection="row">
           <Flex
             style={{ flex: 2 }}

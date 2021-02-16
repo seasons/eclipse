@@ -2,16 +2,27 @@ import { useQuery, useMutation, ApolloError } from "@apollo/client"
 import { ReviewOrder } from "./ReviewOrder"
 import { GetCustomerQuery, SubmitOrderMutation } from "./queries"
 import React from "react"
-import { OrderFragment } from "@/generated/OrderFragment"
-import { GetCustomer } from "@/generated/GetCustomer"
+import {
+  OrderFragment,
+  OrderFragment_lineItems_productVariant_product,
+} from "@/generated/OrderFragment"
+import { GetCustomer, GetCustomer_me_customer } from "@/generated/GetCustomer"
 import { SubmitOrder, SubmitOrderVariables } from "@/generated/SubmitOrder"
 import { FixedBackArrow, Loader } from "@/components"
 import { useTracking, TrackSchema } from "@/helpers"
 
 type Props = {
   onBackPressed: () => void
-  onOrderItemPressed: () => void
-  onOrderSubmitted: (resultOrder: OrderFragment) => void
+  onOrderItemPressed: (
+    product: OrderFragment_lineItems_productVariant_product
+  ) => void
+  onOrderSubmitted: ({
+    order,
+    customer,
+  }: {
+    order: OrderFragment
+    customer: GetCustomer_me_customer
+  }) => void
   onError: (error: Error | readonly ApolloError[]) => void
   order: OrderFragment
   windowWidth: number
@@ -59,7 +70,7 @@ export const ReviewOrderContainer: React.FC<Props> = ({
         return onError((result.errors as any) as readonly ApolloError[])
       }
 
-      onOrderSubmitted(result.data.submitOrder)
+      onOrderSubmitted({ order: result.data.submitOrder, customer })
     } catch (e) {
       return onError(e)
     } finally {

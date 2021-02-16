@@ -10,7 +10,10 @@ import {
   OrderItem,
 } from "@/components"
 import { Box, Flex, Sans, Spacer } from "@/elements"
-import { OrderFragment } from "@/generated/OrderFragment"
+import {
+  OrderFragment,
+  OrderFragment_lineItems_productVariant_product,
+} from "@/generated/OrderFragment"
 import { CustomerOrderFragment } from "@/generated/CustomerOrderFragment"
 import React from "react"
 import { ScrollView } from "react-native"
@@ -22,7 +25,9 @@ type Props = {
   customer: CustomerOrderFragment
   onBackPressed: () => void
   onDonePressed: () => void
-  onOrderItemPressed: () => void
+  onOrderItemPressed: (
+    product: OrderFragment_lineItems_productVariant_product
+  ) => void
 }
 
 export const OrderConfirmation: React.FC<Props> = ({
