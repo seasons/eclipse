@@ -8,23 +8,13 @@ import { CarouselPageDots } from "@/components/CarouselPageDots"
 import { Handle } from "@/components/Handle"
 import { ReadMore } from "@/components/ReadMore"
 import { ProductGridItem } from "@/components/ProductGridItem/ProductGridItem"
-import { SNAP_PADDING } from "@/views/Collection/Collection"
-import type { PopUpData } from "@/types"
+import {
+  CollectionBottomSheetProps,
+  SNAP_PADDING,
+} from "@/views/Collection/Collection"
+import { Spinner } from "../Spinner"
 
 const dimensions = Dimensions.get("window")
-
-interface CollectionBottomSheetProps {
-  currentImage: number
-  showPopUp: (data: PopUpData) => any
-  hidePopUp: () => void
-  authState: any
-  images: any[]
-  products: any[]
-  description: string
-  title: string
-  onEndReached: () => void
-  metaData?: []
-}
 
 const MetaDataCarousel = ({ data }) => {
   return (
@@ -82,6 +72,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
   products,
   onEndReached,
   metaData,
+  loading,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
   const [flatListHeight, setFlatListHeight] = useState(0)
@@ -119,7 +110,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
               <Sans size="7" style={{ textDecorationLine: "underline" }}>
                 {title}
               </Sans>
-              {hasImages && (
+              {images?.length > 1 && (
                 <Box pt={0.5}>
                   <CarouselPageDots
                     slideCount={images?.length}
@@ -149,7 +140,20 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
             <Spacer mb={3} />
           </Box>
         )}
-        ListFooterComponent={() => <Spacer mb={3} />}
+        ListFooterComponent={() => (
+          <Box>
+            {loading && (
+              <Flex
+                style={{ height: 40 }}
+                flexDirection="row"
+                justifyContent="center"
+              >
+                <Spinner />
+              </Flex>
+            )}
+            <Spacer mb={3} />
+          </Box>
+        )}
         containerStyle={{
           backgroundColor: "white",
           borderRadius: 20,
@@ -208,6 +212,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
     readMoreExpanded,
     setReadMoreExpanded,
     metaData,
+    loading,
   ])
 
   return <>{content}</>

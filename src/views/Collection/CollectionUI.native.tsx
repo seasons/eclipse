@@ -13,11 +13,11 @@ import { useNavigation } from "@react-navigation/native"
 export const CollectionUI: React.FC<CollectionUIProps> = ({
   data,
   fetchMore,
-  loading,
   showPopUp,
   hidePopUp,
   authState,
   setProductCount,
+  loading,
 }) => {
   const [currentImage, setCurrentImage] = useState(1)
   const navigation = useNavigation()
@@ -48,7 +48,10 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   const title = collection?.title
 
   const onEndReached = () => {
-    if (!loading) {
+    if (
+      !loading &&
+      products?.length < data?.collection?.productsAggregate?.aggregate?.count
+    ) {
       fetchMore({
         variables: {
           skip: products.length,
@@ -71,6 +74,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         setCurrentImage={setCurrentImage}
       />
       <CollectionBottomSheet
+        loading={loading}
         products={products}
         title={title}
         images={images}
