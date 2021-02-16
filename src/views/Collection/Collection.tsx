@@ -68,6 +68,20 @@ export interface CollectionUIProps {
   setProductCount?: (count: number) => void
 }
 
+export interface CollectionBottomSheetProps {
+  currentImage: number
+  showPopUp: (data: PopUpData) => any
+  hidePopUp: () => void
+  authState: any
+  images: any[]
+  products: any[]
+  description: string
+  title: string
+  onEndReached: () => void
+  metaData?: []
+  loading?: boolean
+}
+
 export const Collection: React.FC<{
   collectionSlug: string
   showPopUp?: (data: PopUpData) => any
