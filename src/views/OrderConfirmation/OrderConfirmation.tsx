@@ -16,7 +16,7 @@ import {
 } from "@/generated/OrderFragment"
 import { CustomerOrderFragment } from "@/generated/CustomerOrderFragment"
 import React from "react"
-import { ScrollView } from "react-native"
+import { ScrollView } from "./StyledOrderConfirmation"
 import { CheckCircled } from "@/icons/CheckCircled"
 
 type Props = {

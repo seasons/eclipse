@@ -2,7 +2,8 @@ import { Flex } from "@/elements"
 import { Button } from "@/components"
 import { ButtonProps } from "@/components/Button/Button.shared"
 import React from "react"
-import styled from "styled-components"
+import { KeyboardAvoidingView } from "react-native"
+import styled from "styled-components/native"
 import { space } from "@/helpers/space"
 
 interface Props extends ButtonProps {
@@ -12,16 +13,18 @@ interface Props extends ButtonProps {
 
 export const FixedButton: React.FC<Props> = (props) => {
   return (
-    <FlexWrapper
-      px={2}
-      rightAligned={props.rightAligned}
-      positionBottom={props.positionBottom ? props.positionBottom : space(2)}
-      alignContent="center"
-      justifyContent="center"
-      flexDirection="row"
-    >
-      <Button {...props}>{props.children}</Button>
-    </FlexWrapper>
+    <KeyboardAvoidingView behavior="padding">
+      <FlexWrapper
+        px={2}
+        rightAligned={props.rightAligned}
+        positionBottom={props.positionBottom ? props.positionBottom : space(2)}
+        alignContent="center"
+        justifyContent="center"
+        flexDirection="row"
+      >
+        <Button {...props}>{props.children}</Button>
+      </FlexWrapper>
+    </KeyboardAvoidingView>
   )
 }
 

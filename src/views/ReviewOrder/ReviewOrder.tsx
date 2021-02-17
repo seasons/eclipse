@@ -9,7 +9,7 @@ import {
   FixedButton,
   Separator,
 } from "@/components"
-import { ScrollView } from "react-native"
+import { ScrollView } from "./StyledReviewOrder"
 import {
   OrderFragment,
   OrderFragment_lineItems_productVariant_product,
