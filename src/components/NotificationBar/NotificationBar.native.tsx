@@ -3,36 +3,29 @@ import { Box } from "@/elements/Box"
 import React from "react"
 import styled from "styled-components/native"
 import { ChevronIcon } from "@/icons/ChevronIcon/ChevronIcon"
-import { TouchableOpacity } from "react-native"
+import { Pressable } from "react-native"
 
-export interface NotificationBarProps {
-  title: string
-  description: string
-  onClick: () => void
-  type: "P0" | "P1"
-}
-
-export const NotificationBar: React.FC<NotificationBarProps> = (
-  {
-    //   title,
-    //   description,
-    //   onClick,
-  }
-) => {
+export const NotificationBar: React.FC = () => {
   return (
-    <TouchableOpacity activeOpacity={0.8}>
-      <Container color="#B45455">
-        <Box>
-          <Sans size="4" color="white">
-            You have a past due invoice yao
-          </Sans>
-          <Sans size="4" color="#D8A8A9">
-            Tap here to update your billing info
-          </Sans>
-        </Box>
-        <ChevronIcon fillColor="#B45455" color="#D8A8A9" />
-      </Container>
-    </TouchableOpacity>
+    <Pressable
+      onPressIn={() => {
+        alert("You tapped aet!")
+      }}
+    >
+      {({ pressed }) => (
+        <Container color={pressed ? "#B56464" : "#B45455"}>
+          <Box>
+            <Sans size="4" color="white">
+              You have a past due invoice yao attae asde yoo
+            </Sans>
+            <Sans size="4" color="#D8A8A9">
+              Tap here to update your billing info
+            </Sans>
+          </Box>
+          <ChevronIcon fillColor="#B45455" color="#D8A8A9" />
+        </Container>
+      )}
+    </Pressable>
   )
 }
 
@@ -43,7 +36,7 @@ const Container = styled(Box)<{ color: string }>`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 84;
+  bottom: 0;
   overflow: hidden;
   z-index: 100;
   padding: 20px 15px 20px 15px;
