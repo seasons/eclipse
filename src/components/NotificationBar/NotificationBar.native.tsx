@@ -1,31 +1,19 @@
-import { Sans } from "@/elements"
 import { Box } from "@/elements/Box"
 import React from "react"
 import styled from "styled-components/native"
-import { ChevronIcon } from "@/icons/ChevronIcon/ChevronIcon"
 import { Pressable } from "react-native"
+import {
+  NotificationBarTemplate,
+  NotificationBarProps,
+} from "./NotificationBar.shared"
 
-export const NotificationBar: React.FC = () => {
+export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   return (
-    <Pressable
-      onPressIn={() => {
-        alert("You tapped aet!")
-      }}
-    >
-      {({ pressed }) => (
-        <Container color={pressed ? "#B56464" : "#B45455"}>
-          <Box>
-            <Sans size="4" color="white">
-              You have a past due invoice yao attae asde yoo
-            </Sans>
-            <Sans size="4" color="#D8A8A9">
-              Tap here to update your billing info
-            </Sans>
-          </Box>
-          <ChevronIcon fillColor="#B45455" color="#D8A8A9" />
-        </Container>
-      )}
-    </Pressable>
+    <NotificationBarTemplate
+      pressableComponent={Pressable}
+      containerComponent={Container}
+      {...props}
+    />
   )
 }
 
