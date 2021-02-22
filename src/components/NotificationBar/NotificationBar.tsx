@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import { Pressable } from "react-native-web"
 import {
   NotificationBarTemplate,
   NotificationBarProps,
@@ -9,7 +8,6 @@ import {
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   return (
     <NotificationBarTemplate
-      pressableComponent={Pressable}
       containerComponent={Container}
       type="web"
       {...props}

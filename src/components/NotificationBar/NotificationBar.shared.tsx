@@ -2,6 +2,7 @@ import React from "react"
 import { Box, Sans } from "@/elements"
 import { ChevronIcon } from "@/icons/ChevronIcon"
 import { gql, useQuery } from "@apollo/client"
+import { Pressable } from "@/components/ReactNative"
 
 const GET_NOTIFICATION_BAR = gql`
   query GetNotificationBar {
@@ -49,15 +50,11 @@ export interface NotificationBarProps {
 }
 
 interface NotificationBarTemplateProps extends NotificationBarProps {
-  pressableComponent: React.FC<{
-    onPressIn: null | ((event: any) => void)
-  }>
   containerComponent: React.FC<{ color: string }>
   type: "web" | "mobile"
 }
 
 export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
-  pressableComponent: Pressable,
   containerComponent: Container,
   onClick,
   type,

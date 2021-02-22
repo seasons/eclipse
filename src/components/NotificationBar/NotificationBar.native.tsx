@@ -1,7 +1,6 @@
 import { Box } from "@/elements/Box"
 import React from "react"
 import styled from "styled-components/native"
-import { Pressable } from "react-native"
 import {
   NotificationBarTemplate,
   NotificationBarProps,
@@ -10,7 +9,6 @@ import {
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   return (
     <NotificationBarTemplate
-      pressableComponent={Pressable}
       containerComponent={Container}
       type="mobile"
       {...props}
