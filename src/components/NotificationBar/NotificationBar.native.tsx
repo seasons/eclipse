@@ -12,6 +12,7 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
     <NotificationBarTemplate
       pressableComponent={Pressable}
       containerComponent={Container}
+      type="mobile"
       {...props}
     />
   )
