@@ -61,7 +61,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
 }) => {
   const { data } = useQuery(GET_NOTIFICATION_BAR)
   console.log(data)
-  if (!data) {
+  if (!data?.me?.notificationBar) {
     return null
   }
 
