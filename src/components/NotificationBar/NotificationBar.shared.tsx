@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Sans } from "@/elements"
 import { ChevronIcon } from "@/icons/ChevronIcon"
+import { CloseXIcon } from "@/icons/CloseXIcon"
 import { gql, useQuery } from "@apollo/client"
 import { Pressable } from "@/components/ReactNative"
 
@@ -9,6 +10,7 @@ const GET_NOTIFICATION_BAR = gql`
     me {
       id
       notificationBar {
+        icon
         web {
           title
           detail
@@ -70,6 +72,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const {
     me: {
       notificationBar: {
+        icon,
         web: { title: webTitle, detail: webDetail, route: webRoute },
         mobile: {
           title: mobileTitle,
@@ -103,24 +106,29 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     }
   }
 
+  const supportedIcons = ["Chevron", "CloseX"]
+
   return (
     <Pressable onPressIn={onPressIn}>
       {({ pressed }) => {
-        let bgColorWithState = pressed
+        const bgColorWithState = pressed
           ? backgroundColorPressed
           : backgroundColor
-        let titleFontColorWithState = pressed
+        const titleFontColorWithState = pressed
           ? titleFontColorPressed
           : titleFontColor
-        let detailFontColorWithState = pressed
+        const detailFontColorWithState = pressed
           ? detailFontColorPressed
           : detailFontColor
-        let iconFontColorWithState = pressed
+        const iconFontColorWithState = pressed
           ? iconStrokeColorPressed
           : iconStrokeColor
+        const renderChevron =
+          icon === "Chevron" || !supportedIcons.includes(icon) // default icon
+        const renderCloseX = icon === "CloseX"
         return (
           <Container color={bgColorWithState}>
-            <Box>
+            <Box paddingRight="20px">
               <Sans size="3" color={titleFontColorWithState}>
                 {isWebNotification && webTitle}
                 {isMobileNotification && mobileTitle}
@@ -130,10 +138,10 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
                 {isMobileNotification && mobileDetail}
               </Sans>
             </Box>
-            <ChevronIcon
-              fillColor={bgColorWithState}
-              color={iconFontColorWithState}
-            />
+            <Box>
+              {renderChevron && <ChevronIcon color={iconFontColorWithState} />}
+              {renderCloseX && <CloseXIcon color={iconFontColorWithState} />}
+            </Box>
           </Container>
         )
       }}
