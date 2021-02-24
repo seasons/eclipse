@@ -6,6 +6,7 @@ import { ProductBuyCTA_ProductVariantFragment as ProductVariantFragment } from "
 import { Flex, Sans, Spacer } from "@/elements"
 import { Button } from "@/components"
 import { UnderlinedSans } from "./StyledProductBuyCTA"
+import { FlexProps } from "styled-system"
 
 const ProductBuyNew: React.FC<{
   price: string
@@ -14,6 +15,7 @@ const ProductBuyNew: React.FC<{
   onBuyNew: () => void
   onNavigateToPartner: () => void
   buyButtonMutating: boolean
+  flexProps: FlexProps
 }> = ({
   price,
   brandName,
@@ -21,9 +23,10 @@ const ProductBuyNew: React.FC<{
   onNavigateToPartner,
   availableForSale,
   buyButtonMutating,
+  flexProps,
 }) => {
   return (
-    <Flex flexDirection="column" px={3} pb={3}>
+    <Flex flexDirection="column" {...flexProps}>
       <Sans color="black100" size="4" weight="medium">
         Available from Judy Turner
       </Sans>
@@ -32,6 +35,7 @@ const ProductBuyNew: React.FC<{
         variant="primaryBlack"
         block
         onPress={onBuyNew}
+        onClick={onBuyNew}
         disabled={!availableForSale || buyButtonMutating}
         loading={buyButtonMutating}
       >
@@ -55,8 +59,9 @@ const ProductBuyUsed: React.FC<{
   availableForSale: boolean
   onBuyUsed: () => void
   buyButtonMutating: boolean
-}> = ({ price, availableForSale, onBuyUsed, buyButtonMutating }) => (
-  <Flex flexDirection="column" px={3} pb={3}>
+  flexProps: FlexProps
+}> = ({ price, availableForSale, onBuyUsed, buyButtonMutating, flexProps }) => (
+  <Flex flexDirection="column" {...flexProps}>
     <Sans color="black100" size="4" weight="medium">
       Available from Seasons
     </Sans>
@@ -65,6 +70,7 @@ const ProductBuyUsed: React.FC<{
       variant="primaryBlack"
       block
       onPress={onBuyUsed}
+      onClick={onBuyUsed}
       loading={buyButtonMutating}
       disabled={buyButtonMutating || !availableForSale}
     >
@@ -78,20 +84,23 @@ const ProductBuyUsed: React.FC<{
   </Flex>
 )
 
-export const ProductBuyCTA: React.FC<{
-  product: ProductFragment
-  selectedVariant: ProductVariantFragment
-  onBuyUsed: () => void
-  onBuyNew: () => void
-  onNavigateToBrand: (href: string) => void
-  buyButtonMutating: boolean
-}> = ({
+export const ProductBuyCTA: React.FC<
+  {
+    product: ProductFragment
+    selectedVariant: ProductVariantFragment
+    onBuyUsed: () => void
+    onBuyNew: () => void
+    onNavigateToBrand: (href: string) => void
+    buyButtonMutating: boolean
+  } & FlexProps
+> = ({
   selectedVariant,
   onBuyUsed,
   onBuyNew,
   product,
   buyButtonMutating,
   onNavigateToBrand,
+  ...flexProps
 }) => {
   if (
     selectedVariant?.price?.buyUsedEnabled &&
@@ -105,6 +114,7 @@ export const ProductBuyCTA: React.FC<{
 
     return (
       <ProductBuyUsed
+        flexProps={flexProps}
         price={price}
         onBuyUsed={onBuyUsed}
         availableForSale={true}
@@ -137,6 +147,7 @@ export const ProductBuyCTA: React.FC<{
         availableForSale={availableForSale}
         onBuyNew={onBuyNew}
         onNavigateToPartner={handleNavigateToPartner}
+        flexProps={flexProps}
       />
     )
   }

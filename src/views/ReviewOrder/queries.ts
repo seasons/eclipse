@@ -1,7 +1,7 @@
 import gql from "graphql-tag"
 
 export const OrderFragment = gql`
-  fragment OrderFragment on Order {
+  fragment Order_OrderFragment on Order {
     id
     orderNumber
     subTotal
@@ -42,8 +42,8 @@ export const OrderFragment = gql`
   }
 `
 
-export const OrderCustomerFragment = gql`
-  fragment OrderCustomerFragment on Customer {
+export const CustomerFragment = gql`
+  fragment Order_CustomerFragment on Customer {
     detail {
       id
       phoneNumber
@@ -80,18 +80,18 @@ export const GetCustomerQuery = gql`
       id
       customer {
         id
-        ...OrderCustomerFragment
+        ...Order_CustomerFragment
       }
     }
   }
-  ${OrderCustomerFragment}
+  ${CustomerFragment}
 `
 
 export const SubmitOrderMutation = gql`
   mutation SubmitOrder($input: SubmitOrderInput!) {
     submitOrder(input: $input) {
       id
-      ...OrderFragment
+      ...Order_OrderFragment
     }
   }
   ${OrderFragment}
