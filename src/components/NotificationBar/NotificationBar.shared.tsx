@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Box, Sans } from "@/elements"
 import { ChevronIcon } from "@/icons/ChevronIcon"
 import { CloseXIcon } from "@/icons/CloseXIcon"
@@ -98,22 +98,10 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     }
   )
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
-  const [hasbeenClosed, setHasBeenClosed] = useState(false)
+  const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
+  const hasData = data?.me?.notificationBar
 
-  console.log(`render with hasUpdatedViewCount value of ${hasUpdatedViewCount}`)
-  useEffect(() => {
-    if (!data?.me?.notificationBar) {
-      return
-    }
-
-    // If it's a dismissable notif that's been clicked once before, note it accordingly
-    // so we don't re-render it
-    if (webRoute.dismissable && mobileRoute.dismissable && clickCount > 0) {
-      setHasBeenClosed(true)
-    }
-  }, [data])
-
-  if (!data?.me?.notificationBar) {
+  if (!hasData) {
     return null
   }
   const isWebNotification = type === "web"
@@ -148,17 +136,19 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
       },
     },
   } = data
+  const hasBeenClosedBefore =
+    webRoute.dismissable && mobileRoute.dismissable && clickCount > 0
 
   const onPressIn = () => {
     if (isMobileNotification) {
       if (mobileRoute.dismissable) {
-        setHasBeenClosed(true)
+        setHasBeenClosedNow(true)
       } else {
         onClick(mobileRoute)
       }
     } else if (isWebNotification) {
       if (webRoute.dismissable) {
-        setHasBeenClosed(true)
+        setHasBeenClosedNow(true)
       } else {
         onClick(webRoute)
       }
@@ -168,7 +158,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     })
   }
 
-  if (hasbeenClosed) {
+  if (hasBeenClosedBefore || hasbeenClosedNow) {
     return null
   }
 
@@ -178,6 +168,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     })
     setHasUpdatedViewCount(true)
   }
+
   return (
     <Pressable onPressIn={onPressIn}>
       {({ pressed }) => {
