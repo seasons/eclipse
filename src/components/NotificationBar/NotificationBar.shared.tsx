@@ -20,6 +20,7 @@ const GET_NOTIFICATION_BAR = gql`
           route {
             url
             drawerView
+            dismissable
           }
         }
         mobile {
@@ -29,6 +30,7 @@ const GET_NOTIFICATION_BAR = gql`
             route
             screen
             params
+            dismissable
           }
         }
         palette {
@@ -83,7 +85,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   onClick,
   type,
 }) => {
-  const { data, error } = useQuery(GET_NOTIFICATION_BAR)
+  const { data } = useQuery(GET_NOTIFICATION_BAR)
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -95,25 +97,19 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     }
   )
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
+  const [hasbeenClosed, setHasBeenClosed] = useState(false)
   useEffect(() => {
-    if (!data?.me?.notificationBar || hasUpdatedViewCount) {
+    if (!data?.me?.notificationBar) {
       return
     }
 
-    const {
-      me: {
-        notificationBar: { id: notificationBarId, viewCount },
-      },
-    } = data
-    updateNotificationBarReceipt({
-      variables: { notificationBarId, viewCount: viewCount + 1 },
-    })
-    setHasUpdatedViewCount(true)
+    // If it's a dismissable notif that's been clicked once before, note it accordingly
+    // so we don't re-render it
+    if (webRoute.dismissable && mobileRoute.dismissable && clickCount > 0) {
+      setHasBeenClosed(true)
+    }
   }, [data])
-  // const [hasbeenClosed, setHasBeenClosed] = useState(false)
 
-  console.log(data)
-  console.log(error)
   if (!data?.me?.notificationBar) {
     return null
   }
@@ -123,10 +119,10 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const {
     me: {
       notificationBar: {
-        // id: notificationBarId,
+        id: notificationBarId,
         icon,
-        // viewCount,
-        // clickCount,
+        clickCount,
+        viewCount,
         web: { title: webTitle, detail: webDetail, route: webRoute },
         mobile: {
           title: mobileTitle,
@@ -154,25 +150,34 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const onPressIn = () => {
     if (isMobileNotification) {
       if (mobileRoute.dismissable) {
-        // setHasBeenClosed(true)
+        setHasBeenClosed(true)
       } else {
         onClick(mobileRoute)
       }
     } else if (isWebNotification) {
       if (webRoute.dismissable) {
-        // setHasBeenClosed(true)
+        setHasBeenClosed(true)
       } else {
         onClick(webRoute)
       }
     }
+    updateNotificationBarReceipt({
+      variables: { notificationBarId, clickCount: clickCount + 1 },
+    })
   }
 
   const supportedIcons = ["Chevron", "CloseX"]
 
-  // if (hasbeenClosed) {
-  //   return null
-  // }
+  if (hasbeenClosed) {
+    return null
+  }
 
+  if (!hasUpdatedViewCount) {
+    updateNotificationBarReceipt({
+      variables: { notificationBarId, viewCount: viewCount + 1 },
+    })
+    setHasUpdatedViewCount(true)
+  }
   return (
     <Pressable onPressIn={onPressIn}>
       {({ pressed }) => {
