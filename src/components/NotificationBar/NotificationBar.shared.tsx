@@ -85,6 +85,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   onClick,
   type,
 }) => {
+  const supportedIcons = ["Chevron", "CloseX"]
   const { data } = useQuery(GET_NOTIFICATION_BAR)
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
@@ -98,6 +99,8 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   )
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
   const [hasbeenClosed, setHasBeenClosed] = useState(false)
+
+  console.log(`render with hasUpdatedViewCount value of ${hasUpdatedViewCount}`)
   useEffect(() => {
     if (!data?.me?.notificationBar) {
       return
@@ -113,7 +116,6 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   if (!data?.me?.notificationBar) {
     return null
   }
-
   const isWebNotification = type === "web"
   const isMobileNotification = type === "mobile"
   const {
@@ -165,8 +167,6 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
       variables: { notificationBarId, clickCount: clickCount + 1 },
     })
   }
-
-  const supportedIcons = ["Chevron", "CloseX"]
 
   if (hasbeenClosed) {
     return null
