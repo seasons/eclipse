@@ -1,78 +1,17 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Sans } from "@/elements"
 import { ChevronIcon } from "@/icons/ChevronIcon"
 import { CloseXIcon } from "@/icons/CloseXIcon"
-import { gql, useQuery, useMutation } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { Pressable } from "@/components/ReactNative"
+import {
+  GET_NOTIFICATION_BAR,
+  UPDATE_NOTIFICATION_BAR_RECEIPT,
+} from "@/queries/notifBarQueries"
 
-const GET_NOTIFICATION_BAR = gql`
-  query GetNotificationBar {
-    me {
-      id
-      notificationBar {
-        id
-        icon
-        viewCount
-        clickCount
-        web {
-          title
-          detail
-          route {
-            url
-            drawerView
-            dismissable
-          }
-        }
-        mobile {
-          title
-          detail
-          route {
-            route
-            screen
-            params
-            dismissable
-          }
-        }
-        palette {
-          default {
-            backgroundColor
-            titleFontColor
-            detailFontColor
-            iconStrokeColor
-          }
-          pressed {
-            backgroundColor
-            titleFontColor
-            detailFontColor
-            iconStrokeColor
-          }
-        }
-      }
-    }
-  }
-`
-
-const UPDATE_NOTIFICATION_BAR_RECEIPT = gql`
-  mutation UpdateNotificationBarReceipt(
-    $notificationBarId: NotificationBarID!
-    $viewCount: Int
-    $clickCount: Int
-  ) {
-    updateNotificationBarReceipt(
-      notification: {
-        notificationBarId: $notificationBarId
-        clickCount: $clickCount
-        viewCount: $viewCount
-      }
-    ) {
-      id
-      viewCount
-      clickCount
-    }
-  }
-`
 export interface NotificationBarProps {
   onClick?: (any) => void
+  isLoggedIn?: boolean
 }
 
 interface NotificationBarTemplateProps extends NotificationBarProps {
@@ -84,9 +23,12 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   containerComponent: Container,
   onClick,
   type,
+  isLoggedIn,
 }) => {
   const supportedIcons = ["Chevron", "CloseX"]
-  const { data } = useQuery(GET_NOTIFICATION_BAR)
+  const { data, refetch } = useQuery(GET_NOTIFICATION_BAR, {
+    onCompleted: () => console.log("queries GET_NOTIF_BAR"),
+  })
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -100,6 +42,10 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
   const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
   const hasData = data?.me?.notificationBar
+
+  useEffect(() => {
+    refetch()
+  }, [isLoggedIn])
 
   if (!hasData) {
     return null
