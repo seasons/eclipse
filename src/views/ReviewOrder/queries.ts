@@ -86,13 +86,3 @@ export const GetCustomerQuery = gql`
   }
   ${CustomerFragment}
 `
-
-export const SubmitOrderMutation = gql`
-  mutation SubmitOrder($input: SubmitOrderInput!) {
-    submitOrder(input: $input) {
-      id
-      ...Order_OrderFragment
-    }
-  }
-  ${OrderFragment}
-`

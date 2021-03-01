@@ -46,6 +46,7 @@ export const ReviewOrder: React.FC<Props> = ({
   const totalInDollars = order.total / 100
   const totalSalesTaxDollars = order.salesTaxTotal / 100
   const productVariantItems = order.lineItems?.filter((i) => !!i.productVariant)
+  const needsShipping = order?.lineItems?.some((item) => item.needShipping)
 
   return (
     <Container insetsTop insetsBottom={false} backgroundColor="white100">
@@ -67,7 +68,7 @@ export const ReviewOrder: React.FC<Props> = ({
           {!!order && (
             <Box mb={4}>
               <SectionHeader title="Purchase summary" />
-              {order?.lineItems?.map((item) => {
+              {order?.lineItems?.map((item, index) => {
                 const itemPriceInDollars = item?.price / 100
                 const displayName =
                   item.recordType === "Package"
@@ -78,7 +79,7 @@ export const ReviewOrder: React.FC<Props> = ({
                   <LineItem
                     leftText={displayName}
                     rightText={displayCurrency(itemPriceInDollars)}
-                    key={item?.productVariant?.id}
+                    key={item?.productVariant?.id ?? index}
                     windowWidth={windowWidth}
                   />
                 )
@@ -110,7 +111,7 @@ export const ReviewOrder: React.FC<Props> = ({
               </Sans>
             </Box>
           )}
-          {!!address && (
+          {!!address && needsShipping && (
             <Box mb={4}>
               <SectionHeader title="Shipping address" />
               <Sans size="4" color="black50" mt={1}>
@@ -138,7 +139,7 @@ export const ReviewOrder: React.FC<Props> = ({
             <Box mt={1} mb={4}>
               {productVariantItems?.map((item, i) => {
                 return (
-                  <Box key={item.productVariant?.id}>
+                  <Box key={i}>
                     <OrderItem
                       productVariant={item.productVariant}
                       onPress={onOrderItemPressed}

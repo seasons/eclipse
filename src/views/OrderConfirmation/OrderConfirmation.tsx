@@ -1,7 +1,6 @@
 import { TrackSchema, useTracking, color, space } from "@/helpers"
 import {
   Container,
-  FixedBackArrow,
   FixedButton,
   Separator,
   Loader,
@@ -23,7 +22,6 @@ type Props = {
   windowWidth: number
   order: OrderFragment
   customer: CustomerOrderFragment
-  onBackPressed: () => void
   onDonePressed: () => void
   onOrderItemPressed: (
     product: OrderFragment_lineItems_productVariant_product
@@ -34,7 +32,6 @@ export const OrderConfirmation: React.FC<Props> = ({
   windowWidth,
   order,
   customer,
-  onBackPressed,
   onDonePressed,
   onOrderItemPressed,
 }) => {
@@ -44,6 +41,7 @@ export const OrderConfirmation: React.FC<Props> = ({
   const productVariantItems = order?.lineItems?.filter(
     (i) => !!i.productVariant
   )
+  const needsShipping = order?.lineItems?.some((item) => item.needShipping)
 
   const handleDonePressed = () => {
     tracking.trackEvent({
@@ -56,7 +54,6 @@ export const OrderConfirmation: React.FC<Props> = ({
   if (!order) {
     return (
       <>
-        <FixedBackArrow onPress={onBackPressed} variant="whiteBackground" />
         <Loader />
       </>
     )
@@ -64,7 +61,6 @@ export const OrderConfirmation: React.FC<Props> = ({
 
   return (
     <Container insetsTop insetsBottom={false} backgroundColor="white100">
-      <FixedBackArrow onPress={onBackPressed} variant="whiteBackground" />
       <Flex style={{ flex: 1 }} px={2}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           <Spacer mb={80} />
@@ -72,13 +68,14 @@ export const OrderConfirmation: React.FC<Props> = ({
           <Spacer mb={4} />
           <Box pb={1}>
             <Sans size="7" color="black100">
-              We've got your order
+              {needsShipping ? "We've got your order" : "It's all yours"}
             </Sans>
           </Box>
           <Box mb={4}>
             <Sans size="4" color="black50">
-              We've emailed you a confirmation and we'll notify you when it's
-              out for delivery.
+              {needsShipping
+                ? "We've emailed you a confirmation and we'll notify you when it's out for delivery."
+                : "All you have to do is hold onto it and we'll reset your slot when we receive your return."}
             </Sans>
           </Box>
           {!!order && (
@@ -93,7 +90,7 @@ export const OrderConfirmation: React.FC<Props> = ({
               <Separator />
             </Box>
           )}
-          {!!address && (
+          {!!address && needsShipping && (
             <Box mb={1}>
               <Flex
                 flexDirection="row"
@@ -126,31 +123,41 @@ export const OrderConfirmation: React.FC<Props> = ({
               </Flex>
             </Box>
           )}
-          <Box mb={4}>
-            <Spacer mb={1} />
-            <Separator />
-            <Spacer mb={1} />
-            <Flex
-              flexDirection="row"
-              width="100%"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection="row" pr={2}>
-                <Sans size="4" color="black100">
-                  Delivery
-                </Sans>
+          {needsShipping && (
+            <Box mb={2}>
+              <Spacer mb={1} />
+              <Separator />
+              <Spacer mb={1} />
+              <Flex
+                flexDirection="row"
+                width="100%"
+                justifyContent="space-between"
+              >
+                <Flex flexDirection="row" pr={2}>
+                  <Sans size="4" color="black100">
+                    Delivery
+                  </Sans>
+                </Flex>
+                <Flex>
+                  <Sans
+                    size="4"
+                    color="black100"
+                    style={{ textAlign: "right" }}
+                  >
+                    5-day shipping
+                  </Sans>
+                  <Sans
+                    size="4"
+                    color="black100"
+                    style={{ textAlign: "right" }}
+                  >
+                    UPS Ground
+                  </Sans>
+                </Flex>
               </Flex>
-              <Flex>
-                <Sans size="4" color="black100" style={{ textAlign: "right" }}>
-                  5-day shipping
-                </Sans>
-                <Sans size="4" color="black100" style={{ textAlign: "right" }}>
-                  UPS Ground
-                </Sans>
-              </Flex>
-            </Flex>
-          </Box>
-          <Box mb={5}>
+            </Box>
+          )}
+          <Box mb={5} pt={2}>
             <SectionHeader
               title={productVariantItems?.length === 1 ? "Item" : "Items"}
             />

@@ -1,15 +1,13 @@
-import { useQuery, useMutation, ApolloError } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import { ReviewOrder } from "./ReviewOrder"
-import { GetCustomerQuery, SubmitOrderMutation } from "./queries"
+import { GetCustomerQuery } from "./queries"
 import React from "react"
 import {
   OrderFragment,
   OrderFragment_lineItems_productVariant_product,
 } from "@/generated/OrderFragment"
 import { GetCustomer, GetCustomer_me_customer } from "@/generated/GetCustomer"
-import { SubmitOrder, SubmitOrderVariables } from "@/generated/SubmitOrder"
 import { FixedBackArrow, Loader } from "@/components"
-import { useTracking, TrackSchema } from "@/helpers"
 
 type Props = {
   onBackPressed: () => void
@@ -22,8 +20,7 @@ type Props = {
   }: {
     order: OrderFragment
     customer: GetCustomer_me_customer
-  }) => void
-  onError: (error: Error | readonly ApolloError[]) => void
+  }) => Promise<void>
   order: OrderFragment
   windowWidth: number
 }
@@ -33,46 +30,20 @@ export const ReviewOrderContainer: React.FC<Props> = ({
   onBackPressed,
   onOrderItemPressed,
   onOrderSubmitted,
-  onError,
   windowWidth,
 }) => {
   const { data, loading } = useQuery<GetCustomer>(GetCustomerQuery)
-  const [submitOrder] = useMutation<SubmitOrder, SubmitOrderVariables>(
-    SubmitOrderMutation
-  )
 
-  const tracking = useTracking()
   const [isSubmittingOrder, setIsSubmittingOrder] = React.useState(false)
 
   const customer = data?.me?.customer
 
-  const handleSubmitOrder = async (orderId: string) => {
+  const handleSubmitOrder = async () => {
     if (isSubmittingOrder) {
       return
     }
-
-    tracking.trackEvent({
-      actionName: TrackSchema.ActionNames.PlaceOrderTapped,
-      actionType: TrackSchema.ActionTypes.Tap,
-    })
-    setIsSubmittingOrder(true)
-
     try {
-      const result = await submitOrder({
-        variables: {
-          input: {
-            orderID: orderId,
-          },
-        },
-      })
-
-      if (result.errors) {
-        return onError((result.errors as any) as readonly ApolloError[])
-      }
-
-      onOrderSubmitted({ order: result.data.submitOrder, customer })
-    } catch (e) {
-      return onError(e)
+      await onOrderSubmitted({ order, customer })
     } finally {
       setIsSubmittingOrder(false)
     }
