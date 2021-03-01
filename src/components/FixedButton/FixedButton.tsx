@@ -7,32 +7,30 @@ import { space } from "@/helpers/space"
 
 interface Props extends ButtonProps {
   positionBottom?: number
-  rightAligned?: boolean
 }
 
 export const FixedButton: React.FC<Props> = (props) => {
   return (
     <FlexWrapper
       px={2}
-      rightAligned={props.rightAligned}
       positionBottom={props.positionBottom ? props.positionBottom : space(2)}
       alignContent="center"
       justifyContent="center"
       flexDirection="row"
     >
-      <Button {...props}>{props.children}</Button>
+      <Button onClick={props.onPress} {...props}>
+        {props.children}
+      </Button>
     </FlexWrapper>
   )
 }
 
 const FlexWrapper = styled(Flex)<{
-  rightAligned: boolean
   positionBottom: number
 }>`
   position: absolute;
-  bottom: ${(p) => p.positionBottom};
+  bottom: ${(p) => p.positionBottom}px;
   z-index: 100;
   right: 0;
-  right: ${(p) => (p.rightAligned ? 0 : "auto")};
-  left: ${(p) => (p.rightAligned ? "auto" : 0)};
+  left: 0;
 `

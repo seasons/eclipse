@@ -8,7 +8,6 @@ import { space } from "@/helpers/space"
 
 interface Props extends ButtonProps {
   positionBottom?: number
-  rightAligned?: boolean
 }
 
 export const FixedButton: React.FC<Props> = (props) => {
@@ -16,7 +15,6 @@ export const FixedButton: React.FC<Props> = (props) => {
     <KeyboardAvoidingView behavior="padding">
       <FlexWrapper
         px={2}
-        rightAligned={props.rightAligned}
         positionBottom={props.positionBottom ? props.positionBottom : space(2)}
         alignContent="center"
         justifyContent="center"
@@ -29,13 +27,11 @@ export const FixedButton: React.FC<Props> = (props) => {
 }
 
 const FlexWrapper = styled(Flex)<{
-  rightAligned: boolean
   positionBottom: number
 }>`
   position: absolute;
   bottom: ${(p) => p.positionBottom};
   z-index: 100;
   right: 0;
-  right: ${(p) => (p.rightAligned ? 0 : "auto")};
-  left: ${(p) => (p.rightAligned ? "auto" : 0)};
+  left: 0;
 `

@@ -1,15 +1,17 @@
 import styled from "styled-components"
 import React, { useState, useRef, useEffect } from "react"
+import { ImageProps } from "react-native"
 import { Picture } from "@/components"
 import { color, PRODUCT_ASPECT_RATIO } from "@/helpers"
 import { Box } from "@/elements"
 import { imageResize, ImageSize } from "@/helpers/imageResize"
 
-export interface ProgressiveImageProps {
-  size: ImageSize
-  url: string
+export type ProgressiveImageProps = Omit<ImageProps, "source"> & {
+  size?: ImageSize
+  url?: string
+  source?: any
   aspectRatio?: number
-  alt: string
+  alt?: string
 }
 
 export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
@@ -17,6 +19,7 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   size,
   aspectRatio = PRODUCT_ASPECT_RATIO,
   alt,
+  source,
 }) => {
   const [loaded, setLoaded] = useState(false)
   const fullImageRef = useRef(null)
@@ -27,8 +30,9 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
     }
   }, [fullImageRef, loaded])
 
-  const initialImage = imageResize(url, "initial")
-  const fullImage = imageResize(url, size)
+  const imageUrl = source.uri || url
+  const initialImage = imageResize(imageUrl, "initial")
+  const fullImage = imageResize(imageUrl, size)
 
   return (
     <ImageWrapper aspectRatio={aspectRatio}>
