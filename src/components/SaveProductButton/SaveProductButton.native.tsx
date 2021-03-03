@@ -8,7 +8,7 @@ import { Box } from "@/elements/Box"
 import { useMutation } from "@apollo/client"
 import { GET_PRODUCT } from "@/queries/productQueries"
 import { GET_BAG } from "@/queries/bagQueries"
-import { GET_HOMEPAGE } from "@/queries/homeQueries"
+import { GET_HOMEPAGE_NATIVE } from "@/queries/homeQueries"
 import type { PopUpData } from "@/types"
 
 export const SAVE_ITEM = gql`
@@ -66,7 +66,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
         query: GET_BAG,
       },
       {
-        query: GET_HOMEPAGE,
+        query: GET_HOMEPAGE_NATIVE,
         variables: { firstFitPics: 8, skipFitPics: 0 },
       },
     ],
