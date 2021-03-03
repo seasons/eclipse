@@ -50,7 +50,7 @@ const CustomerTraitsFragment = gql`
   }
 `
 
-export const GET_HOMEPAGE = gql`
+export const GET_HOMEPAGE_NATIVE = gql`
   query Homepage($firstFitPics: Int!, $skipFitPics: Int) {
     banner: view(viewID: "Banner") {
       id
