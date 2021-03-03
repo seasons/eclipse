@@ -31,13 +31,13 @@ type Props = {
 }
 
 export const ReviewOrder: React.FC<Props> = ({
-  isSubmittingOrder,
   onBackPressed,
   onOrderItemPressed,
   onSubmitOrder,
   order,
   windowWidth,
   customer,
+  isSubmittingOrder,
 }) => {
   const phoneNumber = customer.detail?.phoneNumber
   const address = customer.detail?.shippingAddress

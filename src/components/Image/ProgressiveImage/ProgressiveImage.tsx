@@ -30,7 +30,7 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
     }
   }, [fullImageRef, loaded])
 
-  const imageUrl = source.uri || url
+  const imageUrl = source?.uri || url
   const initialImage = imageResize(imageUrl, "initial")
   const fullImage = imageResize(imageUrl, size)
 

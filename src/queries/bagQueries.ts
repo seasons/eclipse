@@ -13,6 +13,7 @@ export const BagItemFragment = gql`
       brand {
         id
         name
+        websiteUrl
       }
       images(size: Thumb) {
         id
@@ -24,6 +25,14 @@ export const BagItemFragment = gql`
         reservable
         displayShort
         displayLong
+        price {
+          buyUsedEnabled
+          buyUsedPrice
+          buyUsedAvailableForSale
+          buyNewEnabled
+          buyNewPrice
+          buyNewAvailableForSale
+        }
       }
     }
   }

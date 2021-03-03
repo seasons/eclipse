@@ -42,7 +42,9 @@ export const ReviewOrderContainer: React.FC<Props> = ({
     if (isSubmittingOrder) {
       return
     }
+
     try {
+      setIsSubmittingOrder(true)
       await onOrderSubmitted({ order, customer })
     } finally {
       setIsSubmittingOrder(false)

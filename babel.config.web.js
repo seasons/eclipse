@@ -1,5 +1,3 @@
-const path = require("path")
-
 module.exports = {
   presets: ["module:metro-react-native-babel-preset"],
   plugins: [
@@ -9,6 +7,7 @@ module.exports = {
         root: ["./src"],
         alias: {
           "react-native-svg": "react-native-svg-web-transform",
+          "styled-components/native": "styled-components",
         },
       },
     ],
