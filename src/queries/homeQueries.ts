@@ -52,6 +52,13 @@ const CustomerTraitsFragment = gql`
 
 export const GET_HOMEPAGE = gql`
   query Homepage($firstFitPics: Int!, $skipFitPics: Int) {
+    banner: view(viewID: "Banner") {
+      id
+      title
+      caption
+      type
+      properties
+    }
     homepage {
       id
       sections {
@@ -272,6 +279,32 @@ export const GET_HOMEPAGE = gql`
       image(size: Medium) {
         id
         url
+      }
+      includeInstagramHandle
+      user {
+        id
+        customer {
+          detail {
+            instagramHandle
+          }
+        }
+      }
+      products {
+        id
+        slug
+        name
+        isSaved
+        brand {
+          id
+          name
+        }
+        images {
+          id
+          url
+        }
+        variants(first: 1) {
+          id
+        }
       }
       createdAt
     }
