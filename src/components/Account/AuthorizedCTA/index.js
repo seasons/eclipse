@@ -1,0 +1,1 @@
+export { AuthorizedCTA } from "./AuthorizedCTA";

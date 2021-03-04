@@ -13,6 +13,7 @@ export const BagItemFragment = gql`
       brand {
         id
         name
+        websiteUrl
       }
       images(size: Thumb) {
         id
@@ -24,6 +25,14 @@ export const BagItemFragment = gql`
         reservable
         displayShort
         displayLong
+        price {
+          buyUsedEnabled
+          buyUsedPrice
+          buyUsedAvailableForSale
+          buyNewEnabled
+          buyNewPrice
+          buyNewAvailableForSale
+        }
       }
     }
   }
@@ -32,15 +41,6 @@ export const BagItemFragment = gql`
 export const CHECK_ITEMS = gql`
   mutation CheckItemsAvailability($items: [ID!]!) {
     checkItemsAvailability(items: $items)
-  }
-`
-
-export const GET_LOCAL_BAG = gql`
-  query GetLocalBag {
-    localBagItems @client {
-      productID
-      variantID
-    }
   }
 `
 
@@ -177,16 +177,6 @@ export const GET_BAG = gql`
     }
   }
   ${BagItemFragment}
-`
-
-export const ADD_OR_REMOVE_FROM_LOCAL_BAG = gql`
-  mutation AddOrRemoveFromLocalBag($productID: ID!, $variantID: ID!) {
-    addOrRemoveFromLocalBag(productID: $productID, variantID: $variantID)
-      @client {
-      productID
-      variantID
-    }
-  }
 `
 
 export const ADD_TO_BAG = gql`

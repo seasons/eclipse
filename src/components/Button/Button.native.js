@@ -1,0 +1,295 @@
+import React, { Component } from "react";
+import { TouchableWithoutFeedback } from "react-native";
+import { animated, Spring } from "react-spring/renderprops-native.cjs";
+import styled from "styled-components/native";
+import { CheckIcon } from "@/icons/CheckIcon";
+import { Box } from "@/elements/Box";
+import { Flex } from "@/elements/Flex";
+import { Spacer } from "@/elements/Spacer";
+import { Spinner } from "@/components/Spinner";
+import { themeProps } from "@/theme/theme";
+import { Sans } from "@/elements/Typography";
+var DisplayState;
+(function (DisplayState) {
+    DisplayState["Default"] = "default";
+    DisplayState["Pressed"] = "pressed";
+    DisplayState["Disabled"] = "disabled";
+})(DisplayState || (DisplayState = {}));
+/** Default button size */
+export const defaultSize = "large";
+export const defaultVariant = "primaryBlack";
+/**
+ * Returns various colors for each state given a button variant
+ * @param variant
+ */
+export function getColorsForVariant(variant) {
+    const { colors: { black100, white100, black50, black10, black85, black04 }, } = themeProps;
+    switch (variant) {
+        case "primaryBlack":
+            return {
+                default: {
+                    backgroundColor: black100,
+                    borderColor: black100,
+                    color: white100,
+                },
+                pressed: {
+                    backgroundColor: black50,
+                    borderColor: black50,
+                    color: white100,
+                },
+                disabled: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black50,
+                },
+            };
+        case "primaryWhite":
+            return {
+                default: {
+                    backgroundColor: white100,
+                    borderColor: black100,
+                    color: black100,
+                },
+                pressed: {
+                    backgroundColor: black50,
+                    borderColor: black100,
+                    color: black100,
+                },
+                disabled: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black50,
+                },
+            };
+        case "secondaryWhite":
+            return {
+                default: {
+                    backgroundColor: white100,
+                    borderColor: black10,
+                    color: black100,
+                },
+                pressed: {
+                    backgroundColor: black50,
+                    borderColor: black10,
+                    color: black100,
+                },
+                disabled: {
+                    backgroundColor: white100,
+                    borderColor: black10,
+                    color: black50,
+                },
+            };
+        case "tertiaryWhite":
+            return {
+                default: {
+                    backgroundColor: white100,
+                    borderColor: black10,
+                    color: black100,
+                },
+                pressed: {
+                    backgroundColor: black100,
+                    borderColor: black100,
+                    color: white100,
+                },
+                disabled: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black50,
+                },
+            };
+        case "primaryGray":
+            return {
+                default: {
+                    backgroundColor: black04,
+                    borderColor: black04,
+                    color: black100,
+                },
+                pressed: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black100,
+                },
+                disabled: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black100,
+                },
+            };
+        case "secondaryBlack":
+            return {
+                default: {
+                    backgroundColor: black100,
+                    borderColor: black85,
+                    color: white100,
+                },
+                pressed: {
+                    backgroundColor: black85,
+                    borderColor: black50,
+                    color: white100,
+                },
+                disabled: {
+                    backgroundColor: black85,
+                    borderColor: black85,
+                    color: white100,
+                },
+            };
+        case "tertiaryBlack":
+            return {
+                default: {
+                    backgroundColor: black85,
+                    borderColor: black85,
+                    color: white100,
+                },
+                pressed: {
+                    backgroundColor: black100,
+                    borderColor: black100,
+                    color: white100,
+                },
+                disabled: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black50,
+                },
+            };
+        default:
+            return {
+                default: {
+                    backgroundColor: black100,
+                    borderColor: black100,
+                    color: white100,
+                },
+                pressed: {
+                    backgroundColor: black85,
+                    borderColor: black85,
+                    color: white100,
+                },
+                disabled: {
+                    backgroundColor: black10,
+                    borderColor: black10,
+                    color: black100,
+                },
+            };
+    }
+}
+/** A button with various size and color settings */
+export class Button extends Component {
+    constructor(props) {
+        super(props);
+        this.onPress = (args) => {
+            if (this.props.disabled || this.props.loading) {
+                return;
+            }
+            if (this.props.onPress) {
+                // Did someone tap really fast? Flick the highlighted state
+                const { current } = this.state;
+                if (this.state.current === DisplayState.Default) {
+                    this.setState({
+                        previous: current,
+                        current: DisplayState.Pressed,
+                    });
+                    setTimeout(() => this.setState({
+                        previous: current,
+                        current: DisplayState.Default,
+                    }), 0.3);
+                }
+                else {
+                    // Was already selected
+                    this.setState({ current: DisplayState.Default });
+                }
+                this.props.onPress(args);
+            }
+        };
+        const { selected = false } = props;
+        this.state = {
+            previous: DisplayState.Default,
+            current: selected ? DisplayState.Pressed : DisplayState.Default,
+        };
+    }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { selected } = nextProps;
+        if (selected === undefined) {
+            return prevState;
+        }
+        const { current: currentState, previous: previousState } = prevState;
+        const previous = selected ? currentState : previousState;
+        const current = selected ? DisplayState.Pressed : DisplayState.Default;
+        return { previous, current };
+    }
+    get spinnerColor() {
+        return this.props.variant === "primaryWhite" ? "black100" : "white100";
+    }
+    getSize() {
+        switch (this.props.size) {
+            case "small":
+                return { height: 36, size: "3", px: 21 };
+            default:
+                return { height: 48, size: "4", px: 30 };
+        }
+    }
+    render() {
+        const { borderRadius = 28, backgroundColor, children, showCheckMark, disabled, loading, Icon, ...rest } = this.props;
+        const { px, size, height } = this.getSize();
+        const buttonHeight = this.props.height ?? height;
+        const variantColors = getColorsForVariant(this.props.variant);
+        const { current, previous } = this.state;
+        const from = disabled
+            ? variantColors[DisplayState.Disabled]
+            : variantColors[previous];
+        const to = disabled
+            ? variantColors[DisplayState.Disabled]
+            : variantColors[current];
+        const overridenBg = backgroundColor
+            ? { backgroundColor, borderColor: backgroundColor }
+            : {};
+        return (React.createElement(Spring, { native: true, from: from, to: to }, (props) => (React.createElement(TouchableWithoutFeedback, { onPress: this.onPress, onPressIn: () => {
+                this.setState({
+                    previous: DisplayState.Default,
+                    current: DisplayState.Pressed,
+                });
+            }, onPressOut: () => {
+                this.setState({
+                    previous: DisplayState.Pressed,
+                    current: DisplayState.Default,
+                });
+            }, disabled: disabled },
+            React.createElement(Flex, { flexDirection: "row" },
+                React.createElement(AnimatedContainer, Object.assign({ disabled: disabled }, rest, { style: {
+                        ...props,
+                        ...overridenBg,
+                        borderRadius,
+                        height: buttonHeight,
+                    }, px: px }),
+                    !loading && (React.createElement(Flex, { flexDirection: "row", flexWrap: "nowrap", alignItems: "center" },
+                        !!Icon && (React.createElement(Flex, { flexDirection: "row", flexWrap: "nowrap", alignItems: "center", pb: "4px" },
+                            React.createElement(Icon, null),
+                            React.createElement(Spacer, { mr: 1 }))),
+                        React.createElement(Sans, { color: to.color, size: size }, children),
+                        showCheckMark && (React.createElement(Flex, { flexDirection: "row", flexWrap: "nowrap", alignItems: "center" },
+                            React.createElement(Spacer, { mr: 0.5 }),
+                            React.createElement(CheckIcon, { color: to.color }))))),
+                    loading && (React.createElement(Spinner, { size: this.props.size, color: this.spinnerColor }))))))));
+    }
+}
+Button.defaultProps = {
+    size: defaultSize,
+    variant: defaultVariant,
+    theme: themeProps,
+};
+const Container = styled(Box) `
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  border-width: 1;
+  border-radius: 28;
+  width: ${(p) => {
+    if (p.width) {
+        return p.width;
+    }
+    else {
+        return p.block ? "100%" : "auto";
+    }
+}};
+`;
+const AnimatedContainer = animated(Container);

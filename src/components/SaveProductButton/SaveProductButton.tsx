@@ -1,18 +1,5 @@
-import gql from "graphql-tag"
 import React from "react"
 import type { PopUpData } from "@/types"
-
-export const SAVE_ITEM = gql`
-  mutation SaveItem($item: ID!, $save: Boolean!) {
-    saveProduct(item: $item, save: $save) {
-      id
-      productVariant {
-        id
-        isSaved
-      }
-    }
-  }
-`
 
 export interface SaveProductButtonProps {
   product: any
