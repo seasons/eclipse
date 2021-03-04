@@ -20,7 +20,7 @@ const Container = styled(Box)<{ color: string }>`
   border-bottom-left-radius: 28;
   border-bottom-right-radius: 28;
   background-color: ${(p) => p.color};
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
   bottom: 0;
