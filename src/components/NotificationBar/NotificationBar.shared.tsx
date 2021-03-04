@@ -146,7 +146,12 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
               </Sans>
             </Box>
             <Box>
-              {renderChevron && <ChevronIcon color={iconFontColorWithState} />}
+              {renderChevron && (
+                <ChevronIcon
+                  color={iconFontColorWithState}
+                  fillColor={bgColorWithState}
+                />
+              )}
               {renderCloseX && <CloseXIcon color={iconFontColorWithState} />}
             </Box>
           </Container>
