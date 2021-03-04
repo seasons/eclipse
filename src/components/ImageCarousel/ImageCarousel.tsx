@@ -10,16 +10,17 @@ import styled from "styled-components"
 import { Box, Flex } from "@/elements"
 import { imageResize } from "@/helpers/imageResize"
 import { Picture } from "../Image/Picture"
-import type { ImageCarouselProps } from "./ImageCarousel.shared"
+// import { Picture } from "../Image"
 
-export const ImageCarousel: React.FC<ImageCarouselProps> = ({
-  items,
-  pagerHorizontal,
-}) => {
+export const ImageCarousel: React.FC<{
+  images: any[]
+  maxWidth?: string
+  pagerHorizontal?: boolean
+}> = ({ images, maxWidth, pagerHorizontal }) => {
   const snapList = useRef(null)
   const [clientSide, setClientSide] = useState(false)
-  const firstItem = (!!items?.[0] && [items?.[0]]) || []
-  const [itemsToUse, setItemsToUse] = useState(firstItem)
+  const firstImage = (!!images?.[0] && [images?.[0]]) || []
+  const [imagesToUse, setImagesToUse] = useState(firstImage)
   const selected = useVisibleElements(
     { debounce: 10, ref: snapList },
     ([element]) => element
@@ -28,24 +29,24 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   useEffect(() => {
     if (typeof window !== "undefined" && !clientSide) {
       setClientSide(true)
-      setItemsToUse(items)
+      setImagesToUse(images)
     }
-  }, [setItemsToUse, setClientSide, clientSide, items])
+  }, [setImagesToUse, setClientSide, clientSide, images])
 
   useEffect(() => {
     if (clientSide) {
-      setItemsToUse(items)
+      setImagesToUse(images)
     }
-  }, [clientSide, items])
+  }, [clientSide, images])
 
-  if (!items) {
+  if (!images) {
     return null
   }
 
   return (
     <Flex
       flexDirection="row"
-      style={{ position: "relative", maxWidth: "auto" }}
+      style={{ position: "relative", maxWidth: maxWidth ? maxWidth : "auto" }}
     >
       <Wrapper>
         <SnapList
@@ -53,7 +54,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
           width={pagerHorizontal ? "100%" : "calc(100% - 16px)"}
           ref={snapList}
         >
-          {itemsToUse?.map((image, index) => {
+          {imagesToUse?.map((image, index) => {
             // imageURL is used for blogposts
             const url = image?.imageURL ?? image?.url
             const imageSRC = (!!url && imageResize(url, "large")) || ""
@@ -71,7 +72,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
                     width: "100%",
                   }}
                   onClick={() =>
-                    goToSnapItem(index === items.length - 1 ? 0 : index + 1)
+                    goToSnapItem(index === images.length - 1 ? 0 : index + 1)
                   }
                 >
                   <ImageWrapper>
@@ -90,7 +91,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
               pl={pagerHorizontal ? 0 : 1}
               width="100%"
             >
-              {itemsToUse?.map((_item, index) => {
+              {images.map((_image, index) => {
                 return (
                   <Box
                     key={index}

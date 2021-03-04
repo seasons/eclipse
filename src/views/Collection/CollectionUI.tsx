@@ -9,6 +9,7 @@ import Head from "next/head"
 import { Box, Col, Flex, Grid, Row, Sans, Spacer } from "@/elements"
 import { debounce } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
+// import Head from "next/head"
 import type { CollectionUIProps } from "./Collection"
 import styled from "styled-components"
 import { space } from "@/helpers"
@@ -138,7 +139,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
                   <BreadCrumb />
                   <Spacer mb={2} />
                   {images?.length > 0 && (
-                    <ImageCarousel items={images} pagerHorizontal />
+                    <ImageCarousel images={images} pagerHorizontal />
                   )}
                 </Box>
               </Media>
@@ -147,7 +148,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
               <Box pl={[0, 0, "136px", "136px", "136px"]} pt={[6, 6, 0, 0, 0]}>
                 <Media greaterThanOrEqual="md">
                   {images?.length > 0 && (
-                    <ImageCarousel items={images} pagerHorizontal />
+                    <ImageCarousel images={images} pagerHorizontal />
                   )}
                 </Media>
                 <Media lessThan="md">
