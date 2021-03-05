@@ -58,7 +58,7 @@ export class TabBar extends React.Component<TabBarProps, null> {
         key={name}
         accessible={true}
         accessibilityLabel={name}
-        accessibilityTraits="button"
+        // accessibilityTraits="button"
         onPress={() => (isTabDisabled ? null : onPressHandler(page))}
       >
         <TabButton

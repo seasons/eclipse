@@ -332,6 +332,7 @@ export const GET_HOMEPAGE_NATIVE = gql`
 export const HOME_QUERY_WEB = gql`
   query GetBrowseProducts {
     me {
+      id
       customer {
         id
         admissions {

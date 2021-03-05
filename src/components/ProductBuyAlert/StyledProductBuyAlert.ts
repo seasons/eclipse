@@ -1,5 +1,5 @@
 import { color } from "@/helpers"
-import styled from "styled-components/native"
+import styled from "styled-components"
 import { Flex, Sans } from "@/elements"
 
 export const Root = styled(Flex)`
