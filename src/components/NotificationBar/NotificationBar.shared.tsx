@@ -26,7 +26,9 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   isLoggedIn,
 }) => {
   const supportedIcons = ["Chevron", "CloseX"]
-  const { previousData, data = previousData, refetch } = useQuery(GET_NOTIFICATION_BAR)
+  const { previousData, data = previousData, refetch } = useQuery(
+    GET_NOTIFICATION_BAR
+  )
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -42,7 +44,6 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const hasData = data?.me?.notificationBar
 
   useEffect(() => {
-    console.log(`isLoggedIn changed to ${isLoggedIn}. Refetching`)
     refetch()
   }, [isLoggedIn])
 
