@@ -139,7 +139,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
                   <BreadCrumb />
                   <Spacer mb={2} />
                   {images?.length > 0 && (
-                    <ImageCarousel images={images} pagerHorizontal />
+                    <ImageCarousel items={images} pagerHorizontal />
                   )}
                 </Box>
               </Media>
@@ -148,7 +148,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
               <Box pl={[0, 0, "136px", "136px", "136px"]} pt={[6, 6, 0, 0, 0]}>
                 <Media greaterThanOrEqual="md">
                   {images?.length > 0 && (
-                    <ImageCarousel images={images} pagerHorizontal />
+                    <ImageCarousel items={images} pagerHorizontal />
                   )}
                 </Media>
                 <Media lessThan="md">

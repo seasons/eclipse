@@ -170,6 +170,22 @@ export const GET_HOMEPAGE_NATIVE = gql`
         }
       }
     }
+    featuredCollections: collections(
+      orderBy: updatedAt_DESC
+      where: { published: true }
+      first: 5
+    ) {
+      id
+      slug
+      title
+      subTitle
+      displayTextOverlay
+      textOverlayColor
+      images {
+        id
+        url
+      }
+    }
     collections(
       orderBy: updatedAt_DESC
       placements: [Homepage]
