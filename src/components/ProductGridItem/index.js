@@ -1,1 +1,0 @@
-export { ProductGridItem } from "./ProductGridItem";

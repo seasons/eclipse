@@ -1,1 +1,0 @@
-export { CarouselPageDots } from "./CarouselPageDots";

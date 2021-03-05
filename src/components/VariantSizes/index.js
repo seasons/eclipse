@@ -1,1 +1,0 @@
-export { VariantSizes } from "./VariantSizes";

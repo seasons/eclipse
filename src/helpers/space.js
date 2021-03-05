@@ -1,6 +1,0 @@
-import { themeProps } from "@/theme/theme";
-/**
- * A helper to easily access space values when not in a styled-components or
- * styled-systems context.
- */
-export const space = (spaceKey) => themeProps.space[spaceKey];
