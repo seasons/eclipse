@@ -26,7 +26,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   isLoggedIn,
 }) => {
   const supportedIcons = ["Chevron", "CloseX"]
-  const { data, refetch } = useQuery(GET_NOTIFICATION_BAR)
+  const { previousData, data = previousData, refetch } = useQuery(GET_NOTIFICATION_BAR)
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
