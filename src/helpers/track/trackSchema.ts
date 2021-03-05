@@ -143,6 +143,7 @@ export enum ActionNames {
 
   // Reservation
   PlaceOrderTapped = "Place Order Tapped",
+  CloseOrderConfirmationTapped = "Close Order Confirmation Tapped",
 
   // Reservation Confirmation
   ReservationConfirmationDoneButtonTapped = "Reservation Confirmation Done Button Tapped",
