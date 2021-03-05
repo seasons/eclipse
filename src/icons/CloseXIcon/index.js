@@ -1,1 +1,0 @@
-export { CloseXIcon } from "./CloseXIcon";
