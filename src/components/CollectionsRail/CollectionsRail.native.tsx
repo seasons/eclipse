@@ -72,7 +72,7 @@ export const CollectionsRail: React.FC<CollectionsRailProps> = ({
                   />
                   {showTextOverlay && (
                     <TextOverlay px={4}>
-                      {item.title && (
+                      {!!item.title && (
                         <Sans
                           size="2"
                           color={
@@ -83,7 +83,7 @@ export const CollectionsRail: React.FC<CollectionsRailProps> = ({
                           {item.title}
                         </Sans>
                       )}
-                      {item.subTitle && (
+                      {!!item.subTitle && (
                         <Sans
                           size="4"
                           color={
