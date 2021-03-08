@@ -79,7 +79,7 @@ export interface CollectionBottomSheetProps {
   title: string
   onEndReached: () => void
   metaData?: []
-  loading?: boolean
+  shouldLoadMore?: boolean
 }
 
 export const Collection: React.FC<{
