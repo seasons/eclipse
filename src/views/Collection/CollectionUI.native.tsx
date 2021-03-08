@@ -46,12 +46,12 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   const products = collection?.products?.edges
   const description = collection?.descriptions?.[0]
   const title = collection?.title
+  const shouldLoadMore =
+    !loading &&
+    products?.length < data?.collection?.productsAggregate?.aggregate?.count
 
   const onEndReached = () => {
-    if (
-      !loading &&
-      products?.length < data?.collection?.productsAggregate?.aggregate?.count
-    ) {
+    if (shouldLoadMore) {
       fetchMore({
         variables: {
           skip: products.length,
@@ -74,7 +74,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         setCurrentImage={setCurrentImage}
       />
       <CollectionBottomSheet
-        loading={loading}
+        shouldLoadMore={shouldLoadMore}
         products={products}
         title={title}
         images={images}
