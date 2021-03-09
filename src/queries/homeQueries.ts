@@ -374,7 +374,7 @@ export const HOME_QUERY_WEB = gql`
       }
     }
     justAddedTops: products(
-      first: 4
+      first: 3
       category: "tops"
       orderBy: publishedAt_DESC
       where: {
@@ -387,32 +387,8 @@ export const HOME_QUERY_WEB = gql`
     ) {
       ...HomePageProduct
     }
-    justAddedBottoms: products(
-      first: 4
-      category: "bottoms"
-      orderBy: publishedAt_DESC
-      where: {
-        AND: [{ variants_some: { id_not: null } }, { status: Available }]
-      }
-    ) {
-      ...HomePageProduct
-    }
-    justAddedOuterwear: products(
-      first: 4
-      category: "outerwear"
-      orderBy: publishedAt_DESC
-      where: {
-        AND: [
-          { variants_some: { id_not: null } }
-          { status: Available }
-          { tags_none: { name: "Vintage" } }
-        ]
-      }
-    ) {
-      ...HomePageProduct
-    }
     newArchival: products(
-      first: 4
+      first: 3
       orderBy: publishedAt_DESC
       where: {
         AND: [{ tags_some: { name: "Vintage" } }, { status: Available }]
