@@ -6,7 +6,7 @@ import { ProgressiveImage } from "../Image/ProgressiveImage"
 import { useState } from "react"
 import { space } from "@/helpers"
 import type { CollectionsRailProps } from "./CollectionsRail.shared"
-import { Box, Flex, Sans, Spacer } from "@/elements"
+import { Box, Sans, Spacer } from "@/elements"
 import styled from "styled-components/native"
 
 export const CollectionsRail: React.FC<CollectionsRailProps> = ({
@@ -36,14 +36,9 @@ export const CollectionsRail: React.FC<CollectionsRailProps> = ({
 
   return (
     <Box mb={3}>
-      <Flex
-        flexDirection="row"
-        flexWrap="nowrap"
-        justifyContent="space-between"
-        px={2}
-      >
+      <Box px={2}>
         <Sans size="4">{title}</Sans>
-      </Flex>
+      </Box>
       <Spacer mt={1} />
       <FlatList
         data={items}
@@ -51,6 +46,7 @@ export const CollectionsRail: React.FC<CollectionsRailProps> = ({
           const url = item?.images?.[0]?.url
           const showTextOverlay = item?.displayTextOverlay
           const textOverlayColor = item?.textOverlayColor
+
           return (
             <Animatable.View animation="fadeIn" duration={300}>
               <TouchableWithoutFeedback onPress={() => onPressItem(item)}>
