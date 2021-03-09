@@ -55,7 +55,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
         <Row>
           {items?.map((product, index) => {
             return (
-              <Col md="3" xs="6" sm="6" key={index}>
+              <Col md="4" xs="12" sm="12" key={index}>
                 <ProductGridItem product={product} />
               </Col>
             )
