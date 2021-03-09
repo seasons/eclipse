@@ -36,14 +36,9 @@ export const CollectionsRail: React.FC<CollectionsRailProps> = ({
 
   return (
     <Box mb={3}>
-      <Flex
-        flexDirection="row"
-        flexWrap="nowrap"
-        justifyContent="space-between"
-        px={2}
-      >
+      <Box px={2}>
         <Sans size="4">{title}</Sans>
-      </Flex>
+      </Box>
       <Spacer mt={1} />
       <FlatList
         data={items}
