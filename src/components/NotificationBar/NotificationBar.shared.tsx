@@ -4,6 +4,7 @@ import { ChevronIcon } from "@/icons/ChevronIcon"
 import { CloseXIcon } from "@/icons/CloseXIcon"
 import { useQuery, useMutation } from "@apollo/client"
 import { Pressable } from "@/components/ReactNative"
+import { useNotificationBarContext } from "./NotificationBarContext"
 import {
   GET_NOTIFICATION_BAR,
   UPDATE_NOTIFICATION_BAR_RECEIPT,
@@ -17,6 +18,7 @@ export interface NotificationBarProps {
 interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   type: "web" | "mobile"
+  show?: boolean
 }
 
 export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
@@ -29,6 +31,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const { previousData, data = previousData, refetch } = useQuery(
     GET_NOTIFICATION_BAR
   )
+  const { notificationBarState } = useNotificationBarContext()
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -42,12 +45,13 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
   const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
   const hasData = data?.me?.notificationBar
+  const show = notificationBarState.show
 
   useEffect(() => {
     refetch()
-  }, [isLoggedIn])
+  }, [isLoggedIn, refetch])
 
-  if (!hasData) {
+  if (!hasData || !show) {
     return null
   }
   const isWebNotification = type === "web"
