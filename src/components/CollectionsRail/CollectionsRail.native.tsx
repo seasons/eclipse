@@ -6,7 +6,7 @@ import { ProgressiveImage } from "../Image/ProgressiveImage"
 import { useState } from "react"
 import { space } from "@/helpers"
 import type { CollectionsRailProps } from "./CollectionsRail.shared"
-import { Box, Flex, Sans, Spacer } from "@/elements"
+import { Box, Sans, Spacer } from "@/elements"
 import styled from "styled-components/native"
 
 export const CollectionsRail: React.FC<CollectionsRailProps> = ({
