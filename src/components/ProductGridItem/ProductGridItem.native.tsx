@@ -3,22 +3,14 @@ import { Box } from "@/elements/Box"
 import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { useNavigation } from "@react-navigation/native"
-import React, { RefObject } from "react"
+import React from "react"
 import { Dimensions, TouchableWithoutFeedback } from "react-native"
 import { SaveProductButton } from "@/components/SaveProductButton"
 import { VariantSizes } from "@/components/VariantSizes"
-import type { PopUpData } from "@/types"
 import { ProgressiveImage } from "../Image/ProgressiveImage"
+import { ProductGridItemProps } from "./ProductGridItem.shared"
 
-const ProductGridItemComponent: React.FC<{
-  flatListRef?: RefObject<any>
-  product: any
-  addLeftSpacing?: boolean
-  showBrandName?: boolean
-  showPopUp: (data: PopUpData) => any
-  hidePopUp: () => void
-  authState: any
-}> = ({
+const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   flatListRef,
   product,
   addLeftSpacing,

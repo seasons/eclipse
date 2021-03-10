@@ -11,6 +11,7 @@ const HomePageProductFragment = gql`
     }
     brand {
       id
+      slug
       name
     }
     images(size: Thumb) {
@@ -344,47 +345,14 @@ export const HOME_QUERY_WEB = gql`
         }
       }
     }
-    paymentPlans(where: { status: "active" }) {
-      id
-      name
-      description
-      tagline
-      price
-      planID
-      tier
-      itemCount
-    }
-    blogPosts(count: 3) {
+    blogPosts(count: 1) {
       id
       url
       name
       author
       imageURL
     }
-    collections(
-      orderBy: updatedAt_DESC
-      placements: [Homepage]
-      where: { published: true }
-    ) {
-      id
-      slug
-      title
-      products(first: 4) {
-        ...HomePageProduct
-      }
-    }
-    justAddedTops: products(
-      first: 3
-      category: "tops"
-      orderBy: publishedAt_DESC
-      where: {
-        AND: [
-          { variants_some: { id_not: null } }
-          { status: Available }
-          { tags_none: { name: "Vintage" } }
-        ]
-      }
-    ) {
+    newestBrandProducts(first: 3) {
       ...HomePageProduct
     }
     newArchival: products(

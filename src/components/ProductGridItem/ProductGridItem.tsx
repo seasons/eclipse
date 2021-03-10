@@ -7,17 +7,21 @@ import ContentLoader from "react-content-loader"
 import { ProgressiveImage } from "@/components"
 import { Box, Sans, Spacer } from "@/elements"
 import { TrackSchema, useTracking } from "@/helpers/track"
+import { ProductGridItemProps } from "./ProductGridItem.shared"
 
-export const ProductGridItem: React.FC<{
-  product: any
-  loading?: boolean
-  showName?: boolean
-  showPopUp?: (data: any) => void
-  hidePopUp?: () => void
-  authState?: any
-  addLeftSpacing?: boolean
-}> = ({ product, loading, showName }) => {
-  const image = get(product, "images[0]", { url: "" })
+export const ProductGridItem: React.FC<ProductGridItemProps> = ({
+  product,
+  loading,
+  showName,
+  imageIndex,
+}) => {
+  const image = get(
+    product,
+    imageIndex ? `images[${imageIndex}]` : "images[0]",
+    {
+      url: "",
+    }
+  )
   const tracking = useTracking()
   let showBrand = true
 
