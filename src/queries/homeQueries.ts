@@ -11,9 +11,10 @@ const HomePageProductFragment = gql`
     }
     brand {
       id
+      slug
       name
     }
-    images(size: Thumb) {
+    images(size: XLarge) {
       id
       url
     }
@@ -194,7 +195,7 @@ export const GET_HOMEPAGE_NATIVE = gql`
       id
       slug
       title
-      products(first: 10) {
+      products(first: 10, orderBy: updatedAt_DESC) {
         id
         name
         brand {
@@ -344,75 +345,53 @@ export const HOME_QUERY_WEB = gql`
         }
       }
     }
-    paymentPlans(where: { status: "active" }) {
+    collections(orderBy: updatedAt_DESC, first: 1, where: { published: true }) {
       id
-      name
-      description
-      tagline
-      price
-      planID
-      tier
-      itemCount
+      slug
+      title
+      subTitle
+      images {
+        id
+        url
+      }
+      products(first: 3, orderBy: updatedAt_DESC) {
+        ...HomePageProduct
+      }
     }
-    blogPosts(count: 3) {
+    blogPosts(count: 1) {
       id
       url
       name
       author
       imageURL
     }
-    collections(
-      orderBy: updatedAt_DESC
-      placements: [Homepage]
-      where: { published: true }
-    ) {
+    newestBrandProducts(first: 3) {
+      ...HomePageProduct
+    }
+    fitPics(first: 5, orderBy: createdAt_DESC, where: { status: Published }) {
       id
-      slug
-      title
-      products(first: 4) {
-        ...HomePageProduct
+      author
+      location {
+        id
+        city
+        state
       }
-    }
-    justAddedTops: products(
-      first: 4
-      category: "tops"
-      orderBy: publishedAt_DESC
-      where: {
-        AND: [
-          { variants_some: { id_not: null } }
-          { status: Available }
-          { tags_none: { name: "Vintage" } }
-        ]
+      image(size: Medium) {
+        id
+        url
       }
-    ) {
-      ...HomePageProduct
-    }
-    justAddedBottoms: products(
-      first: 4
-      category: "bottoms"
-      orderBy: publishedAt_DESC
-      where: {
-        AND: [{ variants_some: { id_not: null } }, { status: Available }]
+      includeInstagramHandle
+      user {
+        id
+        customer {
+          detail {
+            instagramHandle
+          }
+        }
       }
-    ) {
-      ...HomePageProduct
-    }
-    justAddedOuterwear: products(
-      first: 4
-      category: "outerwear"
-      orderBy: publishedAt_DESC
-      where: {
-        AND: [
-          { variants_some: { id_not: null } }
-          { status: Available }
-          { tags_none: { name: "Vintage" } }
-        ]
-      }
-    ) {
-      ...HomePageProduct
     }
     newArchival: products(
-      first: 4
+      first: 3
       orderBy: publishedAt_DESC
       where: {
         AND: [{ tags_some: { name: "Vintage" } }, { status: Available }]

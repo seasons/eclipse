@@ -46,6 +46,7 @@ export const CollectionsRail: React.FC<CollectionsRailProps> = ({
           const url = item?.images?.[0]?.url
           const showTextOverlay = item?.displayTextOverlay
           const textOverlayColor = item?.textOverlayColor
+
           return (
             <Animatable.View animation="fadeIn" duration={300}>
               <TouchableWithoutFeedback onPress={() => onPressItem(item)}>

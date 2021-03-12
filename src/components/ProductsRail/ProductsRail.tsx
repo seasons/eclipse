@@ -2,12 +2,17 @@ import { Box, Col, Display, Flex, Grid, Row, Sans, Spacer } from "@/elements"
 import { Link, ProductGridItem } from "@/components"
 import React from "react"
 import type { ProductsRailProps } from "./ProductsRail.shared"
+import { space } from "@/helpers"
 
 export const ProductsRail: React.FC<ProductsRailProps> = ({
   items,
   title,
   tag,
   collectionSlug,
+  underlineTitleText,
+  underlineTitleOnClick,
+  imageIndex,
+  showProductName,
 }) => {
   let href = "/browse"
   let as
@@ -24,27 +29,40 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
       <Box px={[2, 2, 2, 5, 5]}>
         <Flex
           flexDirection="row"
+          alignItems="center"
           justifyContent={title ? "space-between" : "flex-end"}
         >
-          {title && <Display size="7">{title}</Display>}
+          {title && (
+            <Display size="8" style={{ paddingRight: space(1) + "px" }}>
+              {underlineTitleText ? `${title} ` : title}
+              {underlineTitleText && (
+                <span
+                  style={{ textDecoration: "underline", cursor: "pointer" }}
+                  onClick={underlineTitleOnClick}
+                >
+                  {underlineTitleText}
+                </span>
+              )}
+            </Display>
+          )}
           {as ? (
             <Link href={href} as={as}>
               <Sans
-                size={["5", "6"]}
-                color="black50"
-                style={{ minWidth: "58px" }}
+                size="4"
+                color="black100"
+                style={{ minWidth: "58px", textDecoration: "underline" }}
               >
-                See all
+                View all
               </Sans>
             </Link>
           ) : (
             <Link href={href}>
               <Sans
-                size={["5", "6"]}
-                color="black50"
-                style={{ minWidth: "58px" }}
+                size="4"
+                color="black100"
+                style={{ minWidth: "58px", textDecoration: "underline" }}
               >
-                See all
+                View all
               </Sans>
             </Link>
           )}
@@ -55,8 +73,12 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
         <Row>
           {items?.map((product, index) => {
             return (
-              <Col md="3" xs="6" sm="6" key={index}>
-                <ProductGridItem product={product} />
+              <Col md="4" xs="12" sm="12" key={index} pb={[2, 2, 2, 0, 0]}>
+                <ProductGridItem
+                  product={product}
+                  showName={showProductName}
+                  imageIndex={imageIndex}
+                />
               </Col>
             )
           })}
