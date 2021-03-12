@@ -14,7 +14,7 @@ const HomePageProductFragment = gql`
       slug
       name
     }
-    images(size: Thumb) {
+    images(size: XLarge) {
       id
       url
     }
@@ -195,7 +195,7 @@ export const GET_HOMEPAGE_NATIVE = gql`
       id
       slug
       title
-      products(first: 10) {
+      products(first: 10, orderBy: updatedAt_DESC) {
         id
         name
         brand {
@@ -345,6 +345,19 @@ export const HOME_QUERY_WEB = gql`
         }
       }
     }
+    collections(orderBy: updatedAt_DESC, first: 1, where: { published: true }) {
+      id
+      slug
+      title
+      subTitle
+      images {
+        id
+        url
+      }
+      products(first: 3, orderBy: updatedAt_DESC) {
+        ...HomePageProduct
+      }
+    }
     blogPosts(count: 1) {
       id
       url
@@ -354,6 +367,28 @@ export const HOME_QUERY_WEB = gql`
     }
     newestBrandProducts(first: 3) {
       ...HomePageProduct
+    }
+    fitPics(first: 5, orderBy: createdAt_DESC, where: { status: Published }) {
+      id
+      author
+      location {
+        id
+        city
+        state
+      }
+      image(size: Medium) {
+        id
+        url
+      }
+      includeInstagramHandle
+      user {
+        id
+        customer {
+          detail {
+            instagramHandle
+          }
+        }
+      }
     }
     newArchival: products(
       first: 3

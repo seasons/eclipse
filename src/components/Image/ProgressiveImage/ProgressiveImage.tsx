@@ -63,6 +63,10 @@ const FullImageWrapper = styled.div<{ loaded: boolean }>`
   transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1;
   background-color: ${color("white100")};
+
+  img {
+    width: 100%;
+  }
 `
 
 const InitialImageWrapper = styled.div`
