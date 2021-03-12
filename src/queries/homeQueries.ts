@@ -365,6 +365,16 @@ export const HOME_QUERY_WEB = gql`
       author
       imageURL
     }
+    paymentPlans(where: { status: "active" }) {
+      id
+      name
+      description
+      tagline
+      price
+      planID
+      tier
+      itemCount
+    }
     newestBrandProducts(first: 3) {
       ...HomePageProduct
     }
