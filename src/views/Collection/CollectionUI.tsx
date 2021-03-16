@@ -118,7 +118,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         <meta property="twitter:card" content="summary" />
       </Head>
       <Box pt={[1, 5]}>
-        <Grid px={[2, 2, 2, 5, 5]}>
+        <Grid px={[2, 2, 2, 2, 2]}>
           <Row>
             <Col md="6" sm="12">
               <MediaWithHeight greaterThanOrEqual="md">
@@ -158,7 +158,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
             </Col>
           </Row>
         </Grid>
-        <Grid px={[0, space(2) - 2, space(2) - 2, space(5) - 2, space(5) - 2]}>
+        <Grid px={[0, space(2) - 2, space(2) - 2, space(2) - 2, space(2) - 2]}>
           <Row ref={imageContainer}>
             {products?.map((product, i) => (
               <Col col sm="3" xs="6" key={i}>
