@@ -88,7 +88,7 @@ export const Collection: React.FC<{
   hidePopUp?: () => void
   authState?: any
 }> = ({ collectionSlug, showPopUp, hidePopUp, authState }) => {
-  const [productCount, setProductCount] = useState(10)
+  const [productCount, setProductCount] = useState(12)
   const {
     previousData,
     data = previousData,

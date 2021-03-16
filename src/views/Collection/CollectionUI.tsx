@@ -12,7 +12,6 @@ import React, { useEffect, useRef, useState } from "react"
 // import Head from "next/head"
 import type { CollectionUIProps } from "./Collection"
 import styled from "styled-components"
-import { space } from "@/helpers"
 
 export const CollectionUI: React.FC<CollectionUIProps> = ({
   data,
@@ -158,11 +157,11 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
             </Col>
           </Row>
         </Grid>
-        <Grid px={[0, space(2) - 2, space(2) - 2, space(2) - 2, space(2) - 2]}>
+        <Grid px={[0, "14px", "14px", "14px", "14px"]} pt={4}>
           <Row ref={imageContainer}>
             {products?.map((product, i) => (
               <Col col sm="3" xs="6" key={i}>
-                <Box pt={[2, 2, 5, 5, 5]} pb={[2, 5]}>
+                <Box pb={[2, 2]}>
                   <ProductGridItem
                     product={product?.node}
                     loading={!data}
