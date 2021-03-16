@@ -47,6 +47,9 @@ export const ReviewOrder: React.FC<Props> = ({
   const totalSalesTaxDollars = order.salesTaxTotal / 100
   const productVariantItems = order.lineItems?.filter((i) => !!i.productVariant)
   const needsShipping = order?.lineItems?.some((item) => item.needShipping)
+  const subText = needsShipping
+    ? "All orders will be processed Tuesdays and Thursdays between the hours of 12pm - 4pm EST. As a reminder, "
+    : "Any purchased items will live in your bag until your reservation is returned & processed. As a reminder, "
 
   return (
     <Container insetsTop insetsBottom={false} backgroundColor="white100">
@@ -61,8 +64,14 @@ export const ReviewOrder: React.FC<Props> = ({
           </Box>
           <Box mb={4}>
             <Sans size="4" color="black50">
-              Purchased items will live in your bag until your reservation is
-              returned & processed. We’ll reset.
+              {subText}
+              <Sans
+                size="4"
+                color="black50"
+                style={{ textDecorationLine: "underline" }}
+              >
+                all sales are final.
+              </Sans>
             </Sans>
           </Box>
           {!!order && (
