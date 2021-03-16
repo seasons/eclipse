@@ -26,7 +26,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
 
   return (
     <Grid>
-      <Box px={[2, 2, 2, 5, 5]}>
+      <Box px={[2, 2, 2, 2, 2]}>
         <Flex
           flexDirection="row"
           alignItems="center"
@@ -69,7 +69,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
         </Flex>
       </Box>
       <Spacer mb={2} />
-      <Box px={[0, 0, 0, 5, 5]}>
+      <Box px={[0, 0, 0, 2, 2]}>
         <Row>
           {items?.map((product, index) => {
             return (

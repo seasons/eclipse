@@ -380,7 +380,6 @@ export const HOME_QUERY_WEB = gql`
     }
     fitPics(first: 5, orderBy: createdAt_DESC, where: { status: Published }) {
       id
-      author
       location {
         id
         city
