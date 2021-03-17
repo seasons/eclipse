@@ -29,7 +29,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
       <Box px={[2, 2, 2, 2, 2]}>
         <Flex
           flexDirection="row"
-          alignItems="center"
+          alignItems="flex-end"
           justifyContent={title ? "space-between" : "flex-end"}
         >
           {title && (

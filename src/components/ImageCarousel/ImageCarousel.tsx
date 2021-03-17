@@ -87,20 +87,21 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
               pl={pagerHorizontal ? 0 : 1}
               width="100%"
             >
-              {imagesToUse?.map((_image, index) => {
-                return (
-                  <Box
-                    key={index}
-                    pt={pagerHorizontal ? 1 : 0.5}
-                    pl={pagerHorizontal ? 0.5 : 0}
-                  >
-                    <Pager
-                      active={selected === index}
-                      clientSide={clientSide}
-                    />
-                  </Box>
-                )
-              })}
+              {imagesToUse?.length > 1 &&
+                imagesToUse?.map((_image, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      pt={pagerHorizontal ? 1 : 0.5}
+                      pl={pagerHorizontal ? 0.5 : 0}
+                    >
+                      <Pager
+                        active={selected === index}
+                        clientSide={clientSide}
+                      />
+                    </Box>
+                  )
+                })}
             </Flex>
           </PagerAbsolute>
         </PagerWrapper>
