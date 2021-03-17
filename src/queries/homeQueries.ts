@@ -358,7 +358,7 @@ export const HOME_QUERY_WEB = gql`
         ...HomePageProduct
       }
     }
-    blogPosts(count: 1) {
+    blogPosts(count: 3) {
       id
       url
       name
