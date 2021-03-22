@@ -46,7 +46,7 @@ export const ProductBuyAlert: React.FC<Props> = ({
   const handleCreateDraftOrder = async (orderType: OrderType) => {
     setIsMutating(true)
     try {
-      onCreateDraftOrder(orderType)
+      await onCreateDraftOrder(orderType)
     } finally {
       setIsMutating(false)
     }
@@ -78,6 +78,7 @@ export const ProductBuyAlert: React.FC<Props> = ({
               onPress={() => handleCreateDraftOrder(OrderType.New)}
               onClick={() => handleCreateDraftOrder(OrderType.New)}
               loading={isMutating}
+              disabled={isMutating}
             >
               Buy new for{" "}
               {(tab.price / 100).toLocaleString("en-US", {
