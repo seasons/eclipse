@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.2.14",
+  "version": "1.2.15",
   "description": "Components library for harvest and flare",
   "main": "lib/commonjs/index",
   "react-native": "lib/module/index",
@@ -30,7 +30,7 @@
     "copy-watch:harvest": "cpx \"lib/**/*.{js,map,ts,tsx}\" ../harvest/node_modules/@seasons/eclipse/lib --watch --verbose",
     "copy-watch:flare": "cpx \"lib/**/*.{js,map,ts,tsx}\" ../flare/node_modules/@seasons/eclipse/lib --watch --verbose",
     "rewrite-paths": "tsc-alias --dir lib/commonjs && tsc-alias --dir lib/module",
-    "apollo:codegen": "apollo client:codegen --excludes **/clientQueries.ts --endpoint=http://localhost:4000 --target typescript --tagName gql --outputFlat src/generated",
+    "apollo:codegen": "rm -r src/generated && apollo client:codegen --excludes **/clientQueries.ts --endpoint=http://localhost:4000 --target typescript --tagName gql --outputFlat src/generated",
     "watch": "watch 'yarn prepare' ./src"
   },
   "keywords": [
@@ -59,6 +59,7 @@
     "@types/styled-system": "^5.1.6",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
+    "apollo": "^2.32.5",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-react-native-web": "^0.14.1",
     "babel-plugin-root-import": "^6.4.1",

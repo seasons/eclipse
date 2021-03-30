@@ -9,12 +9,14 @@ import {
   FixedButton,
   Separator,
 } from "@/components"
-import { ScrollView } from "./StyledReviewOrder"
+import { ScrollView, UnderlinedSans } from "./StyledReviewOrder"
 import {
-  OrderFragment,
-  OrderFragment_lineItems_productVariant_product,
-} from "@/generated/OrderFragment"
-import { CustomerOrderFragment } from "@/generated/CustomerOrderFragment"
+  Order_OrderFragment,
+  Order_OrderFragment_lineItems_productVariant_product,
+  Order_OrderFragment_lineItems_productVariant_product_brand,
+} from "@/generated/Order_OrderFragment"
+import { Order_CustomerFragment } from "@/generated/Order_CustomerFragment"
+import { OrderType } from "@/generated/globalTypes"
 import { displayCurrency } from "@/helpers/currency"
 import { space } from "@/helpers/space"
 
@@ -22,17 +24,72 @@ type Props = {
   isSubmittingOrder: boolean
   onBackPressed: () => void
   onOrderItemPressed: (
-    product: OrderFragment_lineItems_productVariant_product
+    product: Order_OrderFragment_lineItems_productVariant_product
   ) => void
+  onNavigateToBrand: (href: string) => void
   onSubmitOrder: (orderId: string) => void
-  order: OrderFragment
-  customer: CustomerOrderFragment
+  order: Order_OrderFragment
+  customer: Order_CustomerFragment
   windowWidth: number
+}
+
+const SubText = ({
+  needsShipping,
+  orderType,
+  brand,
+  onNavigateToBrand,
+}: {
+  needsShipping: boolean
+  orderType: OrderType
+  brand: Order_OrderFragment_lineItems_productVariant_product_brand
+  onNavigateToBrand: (href: string) => void
+}) => {
+  if (orderType === "New") {
+    const brandHost = new URL(brand.websiteUrl).host
+    const handleBrandPressed = () => onNavigateToBrand(brand.websiteUrl)
+    return (
+      <Sans size="4" color="black50">
+        All orders and returns wil be processed by{" "}
+        <UnderlinedSans
+          size="4"
+          color="black50"
+          onPress={handleBrandPressed}
+          onClick={handleBrandPressed}
+        >
+          {brand.name}
+        </UnderlinedSans>{" "}
+        via email and{" "}
+        <UnderlinedSans
+          size="4"
+          color="black50"
+          onPress={handleBrandPressed}
+          onClick={handleBrandPressed}
+        >
+          {brandHost}
+        </UnderlinedSans>
+        .
+      </Sans>
+    )
+  }
+
+  const usedSubText = needsShipping
+    ? "All orders will be processed Tuesdays and Thursdays between the hours of 12pm - 4pm EST. As a reminder, "
+    : "Any purchased items will live in your bag until your reservation is returned & processed. As a reminder, "
+
+  return (
+    <Sans size="4" color="black50">
+      {usedSubText}
+      <UnderlinedSans size="4" color="black50">
+        all sales are final.
+      </UnderlinedSans>
+    </Sans>
+  )
 }
 
 export const ReviewOrder: React.FC<Props> = ({
   onBackPressed,
   onOrderItemPressed,
+  onNavigateToBrand,
   onSubmitOrder,
   order,
   windowWidth,
@@ -44,12 +101,10 @@ export const ReviewOrder: React.FC<Props> = ({
   const paymentMethod = customer.billingInfo?.last_digits
   const paymentBrand = customer.billingInfo?.brand
   const totalInDollars = order.total / 100
+  const subTotalDollars = order.subTotal / 100
   const totalSalesTaxDollars = order.salesTaxTotal / 100
   const productVariantItems = order.lineItems?.filter((i) => !!i.productVariant)
   const needsShipping = order?.lineItems?.some((item) => item.needShipping)
-  const subText = needsShipping
-    ? "All orders will be processed Tuesdays and Thursdays between the hours of 12pm - 4pm EST. As a reminder, "
-    : "Any purchased items will live in your bag until your reservation is returned & processed. As a reminder, "
 
   return (
     <Container insetsTop insetsBottom={false} backgroundColor="white100">
@@ -63,16 +118,12 @@ export const ReviewOrder: React.FC<Props> = ({
             </Sans>
           </Box>
           <Box mb={4}>
-            <Sans size="4" color="black50">
-              {subText}
-              <Sans
-                size="4"
-                color="black50"
-                style={{ textDecorationLine: "underline" }}
-              >
-                all sales are final.
-              </Sans>
-            </Sans>
+            <SubText
+              needsShipping={needsShipping}
+              orderType={order.type}
+              brand={productVariantItems?.[0]?.productVariant?.product?.brand}
+              onNavigateToBrand={onNavigateToBrand}
+            />
           </Box>
           {!!order && (
             <Box mb={4}>
@@ -97,7 +148,7 @@ export const ReviewOrder: React.FC<Props> = ({
               <LineItem
                 leftText="Subtotal"
                 windowWidth={windowWidth}
-                rightText={displayCurrency(order.subTotal)}
+                rightText={displayCurrency(subTotalDollars)}
               />
               <LineItem
                 leftText="Sales tax"

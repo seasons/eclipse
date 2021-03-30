@@ -17,12 +17,23 @@ export interface BagItemProductVariant_product_brand {
   __typename: "Brand";
   id: string;
   name: string;
+  websiteUrl: string | null;
 }
 
 export interface BagItemProductVariant_product_images {
   __typename: "Image";
   id: string;
   url: string | null;
+}
+
+export interface BagItemProductVariant_product_variants_price {
+  __typename: "ProductVariantPrice";
+  buyUsedEnabled: boolean;
+  buyUsedPrice: number | null;
+  buyUsedAvailableForSale: boolean | null;
+  buyNewEnabled: boolean;
+  buyNewPrice: number | null;
+  buyNewAvailableForSale: boolean | null;
 }
 
 export interface BagItemProductVariant_product_variants {
@@ -32,6 +43,7 @@ export interface BagItemProductVariant_product_variants {
   reservable: number;
   displayShort: string | null;
   displayLong: string | null;
+  price: BagItemProductVariant_product_variants_price;
 }
 
 export interface BagItemProductVariant_product {

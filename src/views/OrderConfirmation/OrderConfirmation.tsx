@@ -10,21 +10,21 @@ import {
 } from "@/components"
 import { Box, Flex, Sans, Spacer } from "@/elements"
 import {
-  OrderFragment,
-  OrderFragment_lineItems_productVariant_product,
-} from "@/generated/OrderFragment"
-import { CustomerOrderFragment } from "@/generated/CustomerOrderFragment"
+  Order_OrderFragment,
+  Order_OrderFragment_lineItems_productVariant_product,
+} from "@/generated/Order_OrderFragment"
+import { Order_CustomerFragment } from "@/generated/Order_CustomerFragment"
 import React from "react"
 import { ScrollView } from "./StyledOrderConfirmation"
 import { CheckCircled } from "@/icons/CheckCircled"
 
 type Props = {
   windowWidth: number
-  order: OrderFragment
-  customer: CustomerOrderFragment
+  order: Order_OrderFragment
+  customer: Order_CustomerFragment
   onDonePressed: () => void
   onOrderItemPressed: (
-    product: OrderFragment_lineItems_productVariant_product
+    product: Order_OrderFragment_lineItems_productVariant_product
   ) => void
 }
 
@@ -41,7 +41,8 @@ export const OrderConfirmation: React.FC<Props> = ({
   const productVariantItems = order?.lineItems?.filter(
     (i) => !!i.productVariant
   )
-  const needsShipping = order?.lineItems?.some((item) => item.needShipping)
+  const needsShipping =
+    order?.lineItems?.some((item) => item.needShipping) && order.type !== "New"
 
   const handleDonePressed = () => {
     tracking.trackEvent({

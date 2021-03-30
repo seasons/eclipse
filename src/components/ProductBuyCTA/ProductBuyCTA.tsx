@@ -4,13 +4,14 @@ import { ProductBuyCTA_ProductFragment as ProductFragment } from "@/generated/Pr
 import { ProductBuyCTA_ProductVariantFragment as ProductVariantFragment } from "@/generated/ProductBuyCTA_ProductVariantFragment"
 
 import { Flex, Sans, Spacer } from "@/elements"
-import { Button } from "@/components"
+import { Button, ProductBuyTitleLine } from "@/components"
 import { UnderlinedSans } from "./StyledProductBuyCTA"
 import { FlexProps } from "styled-system"
 
 type ProductBuyNewProps = {
   price: string
   brandName: string
+  brandLogoUri?: any
   availableForSale: boolean
   onBuyNew: () => void
   onNavigateToPartner: () => void
@@ -22,6 +23,7 @@ const ProductBuyNew = React.forwardRef(
     {
       price,
       brandName,
+      brandLogoUri,
       onBuyNew,
       onNavigateToPartner,
       availableForSale,
@@ -32,9 +34,10 @@ const ProductBuyNew = React.forwardRef(
   ) => {
     return (
       <Flex flexDirection="column" {...flexProps} ref={ref as any}>
-        <Sans color="black100" size="4" weight="medium">
-          Available from Judy Turner
-        </Sans>
+        <ProductBuyTitleLine
+          brandName={brandName}
+          brandLogoUri={brandLogoUri}
+        />
         <Spacer mb={2} />
         <Button
           variant="primaryBlack"
@@ -44,7 +47,7 @@ const ProductBuyNew = React.forwardRef(
           disabled={!availableForSale || buyButtonMutating}
           loading={buyButtonMutating}
         >
-          {availableForSale ? `Buy new for ${price}` : "Sold Out"}
+          {availableForSale ? `Buy for ${price}` : "Sold Out"}
         </Button>
         <Spacer mb={2} />
         <Sans size="3" opacity={0.5} color="black100">
@@ -157,6 +160,7 @@ export const ProductBuyCTA: React.FC<
       })
       const availableForSale = selectedVariant?.price?.buyNewAvailableForSale
       const brandName = product?.brand?.name
+      const brandLogoUri = product?.brand?.logoImage?.url
       const handleNavigateToPartner = () => {
         const href = product?.brand?.websiteUrl
         if (href) {
@@ -170,6 +174,7 @@ export const ProductBuyCTA: React.FC<
           buyButtonMutating={buyButtonMutating}
           price={price}
           brandName={brandName}
+          brandLogoUri={brandLogoUri}
           availableForSale={availableForSale}
           onBuyNew={onBuyNew}
           onNavigateToPartner={handleNavigateToPartner}

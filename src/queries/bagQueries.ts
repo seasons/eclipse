@@ -1,4 +1,8 @@
 import gql from "graphql-tag"
+import {
+  ProductFragment as ProductBuyCTA_ProductVariantFragment,
+  ProductVariantFragment as ProductBuyCTA_ProductFragment,
+} from "@/components/ProductBuyCTA/queries"
 
 export const BagItemFragment = gql`
   fragment BagItemProductVariant on ProductVariant {
@@ -25,17 +29,13 @@ export const BagItemFragment = gql`
         reservable
         displayShort
         displayLong
-        price {
-          buyUsedEnabled
-          buyUsedPrice
-          buyUsedAvailableForSale
-          buyNewEnabled
-          buyNewPrice
-          buyNewAvailableForSale
-        }
+        ...ProductBuyCTA_ProductVariantFragment
       }
+      ...ProductBuyCTA_ProductFragment
     }
   }
+  ${ProductBuyCTA_ProductVariantFragment}
+  ${ProductBuyCTA_ProductFragment}
 `
 
 export const CHECK_ITEMS = gql`

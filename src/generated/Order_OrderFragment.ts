@@ -6,38 +6,39 @@
 import { OrderType, OrderStatus, OrderLineItemRecordType } from "./globalTypes";
 
 // ====================================================
-// GraphQL fragment: OrderFragment
+// GraphQL fragment: Order_OrderFragment
 // ====================================================
 
-export interface OrderFragment_lineItems_productVariant_product_brand {
+export interface Order_OrderFragment_lineItems_productVariant_product_brand {
   __typename: "Brand";
   id: string;
   name: string;
+  websiteUrl: string | null;
 }
 
-export interface OrderFragment_lineItems_productVariant_product_images {
+export interface Order_OrderFragment_lineItems_productVariant_product_images {
   __typename: "Image";
   id: string;
   url: string | null;
 }
 
-export interface OrderFragment_lineItems_productVariant_product {
+export interface Order_OrderFragment_lineItems_productVariant_product {
   __typename: "Product";
   id: string;
   slug: string;
   name: string;
-  brand: OrderFragment_lineItems_productVariant_product_brand;
-  images: OrderFragment_lineItems_productVariant_product_images[];
+  brand: Order_OrderFragment_lineItems_productVariant_product_brand;
+  images: Order_OrderFragment_lineItems_productVariant_product_images[];
 }
 
-export interface OrderFragment_lineItems_productVariant {
+export interface Order_OrderFragment_lineItems_productVariant {
   __typename: "ProductVariant";
   id: string;
   displayLong: string | null;
-  product: OrderFragment_lineItems_productVariant_product;
+  product: Order_OrderFragment_lineItems_productVariant_product;
 }
 
-export interface OrderFragment_lineItems {
+export interface Order_OrderFragment_lineItems {
   __typename: "OrderLineItem";
   id: string;
   price: number;
@@ -48,10 +49,10 @@ export interface OrderFragment_lineItems {
   taxName: string | null;
   taxPercentage: number | null;
   taxPrice: number | null;
-  productVariant: OrderFragment_lineItems_productVariant | null;
+  productVariant: Order_OrderFragment_lineItems_productVariant | null;
 }
 
-export interface OrderFragment {
+export interface Order_OrderFragment {
   __typename: "Order";
   id: string;
   orderNumber: string;
@@ -62,5 +63,5 @@ export interface OrderFragment {
   createdAt: any;
   updatedAt: any;
   salesTaxTotal: number;
-  lineItems: OrderFragment_lineItems[] | null;
+  lineItems: Order_OrderFragment_lineItems[] | null;
 }
