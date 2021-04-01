@@ -12,6 +12,7 @@ export type ProgressiveImageProps = Omit<ImageProps, "source"> & {
   source?: any
   aspectRatio?: number
   alt?: string
+  backgroundColor?: string
 }
 
 export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
@@ -70,6 +71,7 @@ const FullImageWrapper = styled.div<{ loaded: boolean }>`
 `
 
 const InitialImageWrapper = styled.div`
+  overflow: hidden;
   img {
     filter: blur(8px);
     transform: scale(1);

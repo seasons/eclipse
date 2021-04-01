@@ -31,6 +31,7 @@ export const OrderFragment = gql`
           brand {
             id
             name
+            websiteUrl
           }
           images(size: Thumb) {
             id

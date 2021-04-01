@@ -1,5 +1,5 @@
 export const displayCurrency = (value: number): string =>
-  (value || "").toLocaleString("en-US", {
+  (value || 0).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
   })

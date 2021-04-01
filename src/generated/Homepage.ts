@@ -3,11 +3,20 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { HomePageSectionType, Rating, QuestionType, CustomerStatus } from "./globalTypes";
+import { ViewType, HomePageSectionType, Rating, QuestionType, CustomerStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: Homepage
 // ====================================================
+
+export interface Homepage_banner {
+  __typename: "View";
+  id: string;
+  title: string;
+  caption: string | null;
+  type: ViewType | null;
+  properties: any | null;
+}
 
 export interface Homepage_homepage_sections_tagData {
   __typename: "ProductsByTagTagData";
@@ -222,9 +231,26 @@ export interface Homepage_me_savedItems {
 
 export interface Homepage_me {
   __typename: "Me";
-  id: string;
+  id: string | null;
   customer: Homepage_me_customer | null;
   savedItems: Homepage_me_savedItems[] | null;
+}
+
+export interface Homepage_featuredCollections_images {
+  __typename: "Image";
+  id: string;
+  url: string | null;
+}
+
+export interface Homepage_featuredCollections {
+  __typename: "Collection";
+  id: string;
+  slug: string;
+  title: string | null;
+  subTitle: string | null;
+  displayTextOverlay: boolean;
+  textOverlayColor: string | null;
+  images: Homepage_featuredCollections_images[] | null;
 }
 
 export interface Homepage_collections_products_brand {
@@ -287,6 +313,7 @@ export interface Homepage_justAddedOuterwear_modelSize {
 export interface Homepage_justAddedOuterwear_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
@@ -323,6 +350,7 @@ export interface Homepage_justAddedTops_modelSize {
 export interface Homepage_justAddedTops_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
@@ -359,6 +387,7 @@ export interface Homepage_justAddedBottoms_modelSize {
 export interface Homepage_justAddedBottoms_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
@@ -409,19 +438,68 @@ export interface Homepage_fitPics_image {
   url: string | null;
 }
 
+export interface Homepage_fitPics_user_customer_detail {
+  __typename: "CustomerDetail";
+  instagramHandle: string | null;
+}
+
+export interface Homepage_fitPics_user_customer {
+  __typename: "Customer";
+  detail: Homepage_fitPics_user_customer_detail | null;
+}
+
+export interface Homepage_fitPics_user {
+  __typename: "User";
+  id: string;
+  customer: Homepage_fitPics_user_customer | null;
+}
+
+export interface Homepage_fitPics_products_brand {
+  __typename: "Brand";
+  id: string;
+  name: string;
+}
+
+export interface Homepage_fitPics_products_images {
+  __typename: "Image";
+  id: string;
+  url: string | null;
+}
+
+export interface Homepage_fitPics_products_variants {
+  __typename: "ProductVariant";
+  id: string;
+}
+
+export interface Homepage_fitPics_products {
+  __typename: "Product";
+  id: string;
+  slug: string;
+  name: string;
+  isSaved: boolean | null;
+  brand: Homepage_fitPics_products_brand;
+  images: Homepage_fitPics_products_images[];
+  variants: Homepage_fitPics_products_variants[] | null;
+}
+
 export interface Homepage_fitPics {
   __typename: "FitPic";
   id: string;
   author: string;
   location: Homepage_fitPics_location | null;
   image: Homepage_fitPics_image;
+  includeInstagramHandle: boolean;
+  user: Homepage_fitPics_user;
+  products: Homepage_fitPics_products[] | null;
   createdAt: any;
 }
 
 export interface Homepage {
+  banner: Homepage_banner | null;
   homepage: Homepage_homepage | null;
   reservationFeedback: Homepage_reservationFeedback | null;
   me: Homepage_me | null;
+  featuredCollections: (Homepage_featuredCollections | null)[];
   collections: (Homepage_collections | null)[];
   blogPosts: Homepage_blogPosts[];
   archivalProducts: (Homepage_archivalProducts | null)[];

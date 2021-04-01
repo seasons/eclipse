@@ -26,28 +26,14 @@ export interface GetBrowseProducts_me_customer {
 
 export interface GetBrowseProducts_me {
   __typename: "Me";
+  id: string | null;
   customer: GetBrowseProducts_me_customer | null;
 }
 
-export interface GetBrowseProducts_paymentPlans {
-  __typename: "PaymentPlan";
-  id: string;
-  name: string | null;
-  description: string | null;
-  tagline: string | null;
-  price: number | null;
-  planID: string;
-  tier: PaymentPlanTier | null;
-  itemCount: number | null;
-}
-
-export interface GetBrowseProducts_blogPosts {
-  __typename: "BlogPost";
+export interface GetBrowseProducts_collections_images {
+  __typename: "Image";
   id: string;
   url: string | null;
-  name: string | null;
-  author: string | null;
-  imageURL: string | null;
 }
 
 export interface GetBrowseProducts_collections_products_modelSize {
@@ -59,6 +45,7 @@ export interface GetBrowseProducts_collections_products_modelSize {
 export interface GetBrowseProducts_collections_products_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
@@ -91,115 +78,105 @@ export interface GetBrowseProducts_collections {
   id: string;
   slug: string;
   title: string | null;
+  subTitle: string | null;
+  images: GetBrowseProducts_collections_images[] | null;
   products: GetBrowseProducts_collections_products[] | null;
 }
 
-export interface GetBrowseProducts_justAddedTops_modelSize {
+export interface GetBrowseProducts_blogPosts {
+  __typename: "BlogPost";
+  id: string;
+  url: string | null;
+  name: string | null;
+  author: string | null;
+  imageURL: string | null;
+}
+
+export interface GetBrowseProducts_paymentPlans {
+  __typename: "PaymentPlan";
+  id: string;
+  name: string | null;
+  description: string | null;
+  tagline: string | null;
+  price: number | null;
+  planID: string;
+  tier: PaymentPlanTier | null;
+  itemCount: number | null;
+}
+
+export interface GetBrowseProducts_newestBrandProducts_modelSize {
   __typename: "Size";
   id: string;
   display: string;
 }
 
-export interface GetBrowseProducts_justAddedTops_brand {
+export interface GetBrowseProducts_newestBrandProducts_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
-export interface GetBrowseProducts_justAddedTops_images {
+export interface GetBrowseProducts_newestBrandProducts_images {
   __typename: "Image";
   id: string;
   url: string | null;
 }
 
-export interface GetBrowseProducts_justAddedTops_variants {
+export interface GetBrowseProducts_newestBrandProducts_variants {
   __typename: "ProductVariant";
   id: string;
   reservable: number;
   displayShort: string | null;
 }
 
-export interface GetBrowseProducts_justAddedTops {
+export interface GetBrowseProducts_newestBrandProducts {
   __typename: "Product";
   id: string;
   slug: string;
   name: string;
-  modelSize: GetBrowseProducts_justAddedTops_modelSize | null;
-  brand: GetBrowseProducts_justAddedTops_brand;
-  images: GetBrowseProducts_justAddedTops_images[];
-  variants: GetBrowseProducts_justAddedTops_variants[] | null;
+  modelSize: GetBrowseProducts_newestBrandProducts_modelSize | null;
+  brand: GetBrowseProducts_newestBrandProducts_brand;
+  images: GetBrowseProducts_newestBrandProducts_images[];
+  variants: GetBrowseProducts_newestBrandProducts_variants[] | null;
 }
 
-export interface GetBrowseProducts_justAddedBottoms_modelSize {
-  __typename: "Size";
+export interface GetBrowseProducts_fitPics_location {
+  __typename: "Location";
   id: string;
-  display: string;
+  city: string | null;
+  state: string | null;
 }
 
-export interface GetBrowseProducts_justAddedBottoms_brand {
-  __typename: "Brand";
-  id: string;
-  name: string;
-}
-
-export interface GetBrowseProducts_justAddedBottoms_images {
+export interface GetBrowseProducts_fitPics_image {
   __typename: "Image";
   id: string;
   url: string | null;
 }
 
-export interface GetBrowseProducts_justAddedBottoms_variants {
-  __typename: "ProductVariant";
-  id: string;
-  reservable: number;
-  displayShort: string | null;
+export interface GetBrowseProducts_fitPics_user_customer_detail {
+  __typename: "CustomerDetail";
+  instagramHandle: string | null;
 }
 
-export interface GetBrowseProducts_justAddedBottoms {
-  __typename: "Product";
-  id: string;
-  slug: string;
-  name: string;
-  modelSize: GetBrowseProducts_justAddedBottoms_modelSize | null;
-  brand: GetBrowseProducts_justAddedBottoms_brand;
-  images: GetBrowseProducts_justAddedBottoms_images[];
-  variants: GetBrowseProducts_justAddedBottoms_variants[] | null;
+export interface GetBrowseProducts_fitPics_user_customer {
+  __typename: "Customer";
+  detail: GetBrowseProducts_fitPics_user_customer_detail | null;
 }
 
-export interface GetBrowseProducts_justAddedOuterwear_modelSize {
-  __typename: "Size";
+export interface GetBrowseProducts_fitPics_user {
+  __typename: "User";
   id: string;
-  display: string;
+  customer: GetBrowseProducts_fitPics_user_customer | null;
 }
 
-export interface GetBrowseProducts_justAddedOuterwear_brand {
-  __typename: "Brand";
+export interface GetBrowseProducts_fitPics {
+  __typename: "FitPic";
   id: string;
-  name: string;
-}
-
-export interface GetBrowseProducts_justAddedOuterwear_images {
-  __typename: "Image";
-  id: string;
-  url: string | null;
-}
-
-export interface GetBrowseProducts_justAddedOuterwear_variants {
-  __typename: "ProductVariant";
-  id: string;
-  reservable: number;
-  displayShort: string | null;
-}
-
-export interface GetBrowseProducts_justAddedOuterwear {
-  __typename: "Product";
-  id: string;
-  slug: string;
-  name: string;
-  modelSize: GetBrowseProducts_justAddedOuterwear_modelSize | null;
-  brand: GetBrowseProducts_justAddedOuterwear_brand;
-  images: GetBrowseProducts_justAddedOuterwear_images[];
-  variants: GetBrowseProducts_justAddedOuterwear_variants[] | null;
+  location: GetBrowseProducts_fitPics_location | null;
+  image: GetBrowseProducts_fitPics_image;
+  includeInstagramHandle: boolean;
+  user: GetBrowseProducts_fitPics_user;
 }
 
 export interface GetBrowseProducts_newArchival_modelSize {
@@ -211,6 +188,7 @@ export interface GetBrowseProducts_newArchival_modelSize {
 export interface GetBrowseProducts_newArchival_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
@@ -240,11 +218,10 @@ export interface GetBrowseProducts_newArchival {
 
 export interface GetBrowseProducts {
   me: GetBrowseProducts_me | null;
-  paymentPlans: (GetBrowseProducts_paymentPlans | null)[] | null;
-  blogPosts: GetBrowseProducts_blogPosts[];
   collections: (GetBrowseProducts_collections | null)[];
-  justAddedTops: (GetBrowseProducts_justAddedTops | null)[];
-  justAddedBottoms: (GetBrowseProducts_justAddedBottoms | null)[];
-  justAddedOuterwear: (GetBrowseProducts_justAddedOuterwear | null)[];
+  blogPosts: GetBrowseProducts_blogPosts[];
+  paymentPlans: (GetBrowseProducts_paymentPlans | null)[] | null;
+  newestBrandProducts: GetBrowseProducts_newestBrandProducts[] | null;
+  fitPics: GetBrowseProducts_fitPics[];
   newArchival: (GetBrowseProducts_newArchival | null)[];
 }
