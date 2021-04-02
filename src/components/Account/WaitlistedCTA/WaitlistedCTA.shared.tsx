@@ -12,6 +12,8 @@ export interface WaitlistedCTAProps {
   onPressLearnMore: () => void
   onPressRequestAccess: () => void
   version: "mobile" | "web"
+  title?: string
+  detail?: string
 }
 
 export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
@@ -20,6 +22,8 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
   onPressLearnMore,
   onPressRequestAccess,
   version,
+  title,
+  detail,
 }) => {
   const hasBeenAuthorized = !!authorizedAt
   let targetAuthorizationDate
@@ -48,7 +52,7 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
         color="black100"
         textAlign={hasBeenAuthorized ? "center" : "left"}
       >
-        {`You're ${hasBeenAuthorized ? "back " : ""}on the waitlist`}
+        {title || `You're ${hasBeenAuthorized ? "back " : ""}on the waitlist`}
       </Sans>
       <Spacer mb={1} />
       <Sans
@@ -56,7 +60,7 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
         color="black50"
         textAlign={hasBeenAuthorized ? "center" : "left"}
       >
-        {hasBeenAuthorized ? rewaitlistedCopy : waitlistedCopy}
+        {detail || (hasBeenAuthorized ? rewaitlistedCopy : waitlistedCopy)}
       </Sans>
       <Spacer mb={3} />
       <ButtonBar
