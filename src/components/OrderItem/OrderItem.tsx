@@ -1,16 +1,18 @@
 import { Box, Flex, Sans } from "@/elements"
 import {
-  OrderFragment_lineItems_productVariant,
-  OrderFragment_lineItems_productVariant_product,
-} from "@/generated/OrderFragment"
+  Order_OrderFragment_lineItems_productVariant,
+  Order_OrderFragment_lineItems_productVariant_product,
+} from "@/generated/Order_OrderFragment"
 import { ProgressiveImage } from "@/components"
 import { Container } from "./StyledOrderItem"
 import React from "react"
 import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
 
 type OrderItemProps = {
-  productVariant: OrderFragment_lineItems_productVariant
-  onPress: (product: OrderFragment_lineItems_productVariant_product) => void
+  productVariant: Order_OrderFragment_lineItems_productVariant
+  onPress: (
+    product: Order_OrderFragment_lineItems_productVariant_product
+  ) => void
 }
 
 export const OrderItem: React.FC<OrderItemProps> = ({

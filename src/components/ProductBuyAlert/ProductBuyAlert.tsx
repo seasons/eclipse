@@ -1,6 +1,6 @@
 import React from "react"
 import { Flex, Spacer, Sans } from "@/elements"
-import { TabBar, Button } from "@/components"
+import { TabBar, Button, ProductBuyTitleLine } from "@/components"
 import { OrderType } from "@/generated/globalTypes"
 import { UnderlinedSans, Root } from "./StyledProductBuyAlert"
 
@@ -13,9 +13,25 @@ export enum TabType {
 }
 
 export type Tab =
-  | { type: TabType.NEW; price: number; brandHref: string; brandName: string }
-  | { type: TabType.NEW_UNAVAILABLE; brandHref: string; brandName: string }
-  | { type: TabType.USED; price: number; brandHref: string; brandName: string }
+  | {
+      type: TabType.NEW
+      price: number
+      brandHref: string
+      brandName: string
+      brandLogoUri: string
+    }
+  | {
+      type: TabType.NEW_UNAVAILABLE
+      brandHref: string
+      brandName: string
+      brandLogoUri: string
+    }
+  | {
+      type: TabType.USED
+      price: number
+      brandHref: string
+      brandName: string
+    }
   | { type: TabType.USED_UNAVAILABLE }
 
 type Props = {
@@ -46,7 +62,7 @@ export const ProductBuyAlert: React.FC<Props> = ({
   const handleCreateDraftOrder = async (orderType: OrderType) => {
     setIsMutating(true)
     try {
-      onCreateDraftOrder(orderType)
+      await onCreateDraftOrder(orderType)
     } finally {
       setIsMutating(false)
     }
@@ -69,15 +85,21 @@ export const ProductBuyAlert: React.FC<Props> = ({
             flexDirection="column"
             alignItems="center"
             px="3"
-            py="4"
+            py="3"
             key={TabType.NEW}
           >
+            <ProductBuyTitleLine
+              brandName={tab.brandName}
+              brandLogoUri={tab.brandLogoUri}
+            />
+            <Spacer mb={3} />
             <Button
               variant="primaryBlack"
               block
               onPress={() => handleCreateDraftOrder(OrderType.New)}
               onClick={() => handleCreateDraftOrder(OrderType.New)}
               loading={isMutating}
+              disabled={isMutating}
             >
               Buy new for{" "}
               {(tab.price / 100).toLocaleString("en-US", {
@@ -113,6 +135,11 @@ export const ProductBuyAlert: React.FC<Props> = ({
             alignItems="center"
             key={TabType.NEW_UNAVAILABLE}
           >
+            <ProductBuyTitleLine
+              brandName={tab.brandName}
+              brandLogoUri={tab.brandLogoUri}
+            />
+            <Spacer mb={3} />
             <Button variant="secondaryOutline" block disabled>
               Sold Out
             </Button>

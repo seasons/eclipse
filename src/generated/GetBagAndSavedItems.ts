@@ -173,12 +173,23 @@ export interface GetBagAndSavedItems_me_bag_productVariant_product_brand {
   __typename: "Brand";
   id: string;
   name: string;
+  websiteUrl: string | null;
 }
 
 export interface GetBagAndSavedItems_me_bag_productVariant_product_images {
   __typename: "Image";
   id: string;
   url: string | null;
+}
+
+export interface GetBagAndSavedItems_me_bag_productVariant_product_variants_price {
+  __typename: "ProductVariantPrice";
+  buyUsedEnabled: boolean;
+  buyUsedPrice: number | null;
+  buyUsedAvailableForSale: boolean | null;
+  buyNewEnabled: boolean;
+  buyNewPrice: number | null;
+  buyNewAvailableForSale: boolean | null;
 }
 
 export interface GetBagAndSavedItems_me_bag_productVariant_product_variants {
@@ -188,6 +199,7 @@ export interface GetBagAndSavedItems_me_bag_productVariant_product_variants {
   reservable: number;
   displayShort: string | null;
   displayLong: string | null;
+  price: GetBagAndSavedItems_me_bag_productVariant_product_variants_price;
 }
 
 export interface GetBagAndSavedItems_me_bag_productVariant_product {
@@ -226,12 +238,23 @@ export interface GetBagAndSavedItems_me_savedItems_productVariant_product_brand 
   __typename: "Brand";
   id: string;
   name: string;
+  websiteUrl: string | null;
 }
 
 export interface GetBagAndSavedItems_me_savedItems_productVariant_product_images {
   __typename: "Image";
   id: string;
   url: string | null;
+}
+
+export interface GetBagAndSavedItems_me_savedItems_productVariant_product_variants_price {
+  __typename: "ProductVariantPrice";
+  buyUsedEnabled: boolean;
+  buyUsedPrice: number | null;
+  buyUsedAvailableForSale: boolean | null;
+  buyNewEnabled: boolean;
+  buyNewPrice: number | null;
+  buyNewAvailableForSale: boolean | null;
 }
 
 export interface GetBagAndSavedItems_me_savedItems_productVariant_product_variants {
@@ -241,6 +264,7 @@ export interface GetBagAndSavedItems_me_savedItems_productVariant_product_varian
   reservable: number;
   displayShort: string | null;
   displayLong: string | null;
+  price: GetBagAndSavedItems_me_savedItems_productVariant_product_variants_price;
 }
 
 export interface GetBagAndSavedItems_me_savedItems_productVariant_product {
@@ -269,7 +293,7 @@ export interface GetBagAndSavedItems_me_savedItems {
 
 export interface GetBagAndSavedItems_me {
   __typename: "Me";
-  id: string;
+  id: string | null;
   customer: GetBagAndSavedItems_me_customer | null;
   activeReservation: GetBagAndSavedItems_me_activeReservation | null;
   bag: GetBagAndSavedItems_me_bag[] | null;

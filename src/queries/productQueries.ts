@@ -90,7 +90,9 @@ export const GET_PRODUCT = gql`
         id
         slug
         name
-        logo
+        logo {
+          url
+        }
         since
         products(
           first: 5

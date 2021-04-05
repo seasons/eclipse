@@ -7,11 +7,19 @@
 // GraphQL fragment: ProductBuyCTA_ProductFragment
 // ====================================================
 
+export interface ProductBuyCTA_ProductFragment_brand_logoImage {
+  __typename: "Image";
+  url: string | null;
+  height: number | null;
+  width: number | null;
+}
+
 export interface ProductBuyCTA_ProductFragment_brand {
   __typename: "Brand";
   id: string;
   name: string;
   websiteUrl: string | null;
+  logoImage: ProductBuyCTA_ProductFragment_brand_logoImage | null;
 }
 
 export interface ProductBuyCTA_ProductFragment {

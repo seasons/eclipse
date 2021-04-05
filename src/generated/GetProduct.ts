@@ -46,7 +46,7 @@ export interface GetProduct_me_savedItems {
 
 export interface GetProduct_me {
   __typename: "Me";
-  id: string;
+  id: string | null;
   customer: GetProduct_me_customer | null;
   bag: GetProduct_me_bag[] | null;
   savedItems: GetProduct_me_savedItems[] | null;

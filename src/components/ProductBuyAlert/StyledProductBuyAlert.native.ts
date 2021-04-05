@@ -11,5 +11,4 @@ export const Root = styled(Flex)`
 
 export const UnderlinedSans = styled(Sans)`
   text-decoration: underline;
-  display: inline;
 `

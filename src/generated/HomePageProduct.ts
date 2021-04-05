@@ -16,6 +16,7 @@ export interface HomePageProduct_modelSize {
 export interface HomePageProduct_brand {
   __typename: "Brand";
   id: string;
+  slug: string;
   name: string;
 }
 
