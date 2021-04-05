@@ -170,7 +170,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
                 </Box>
               </Col>
             ))}
-            {loading && (
+            {!!aggregateCount && aggregateCount > products?.length && (
               <Box
                 mb={5}
                 style={{
