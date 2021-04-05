@@ -46,9 +46,8 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   const products = collection?.products?.edges
   const description = collection?.descriptions?.[0]
   const title = collection?.title
-  const shouldLoadMore =
-    !loading &&
-    products?.length < data?.collection?.productsAggregate?.aggregate?.count
+  const aggregateCount = data?.collection?.productsAggregate?.aggregate?.count
+  const shouldLoadMore = !loading && products?.length < aggregateCount
 
   const onEndReached = () => {
     if (shouldLoadMore) {
@@ -74,7 +73,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         setCurrentImage={setCurrentImage}
       />
       <CollectionBottomSheet
-        shouldLoadMore={shouldLoadMore}
+        aggregateCount={aggregateCount}
         products={products}
         title={title}
         images={images}
