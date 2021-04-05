@@ -48,10 +48,6 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
           where: { id: product?.id },
         },
       },
-      // {
-      //   query: GET_HOMEPAGE_NATIVE,
-      //   variables: { firstFitPics: 8, skipFitPics: 0 },
-      // },
       ...refetchQueries,
     ],
   })
