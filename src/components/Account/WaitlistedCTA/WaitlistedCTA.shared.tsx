@@ -12,6 +12,8 @@ export interface WaitlistedCTAProps {
   onPressLearnMore: () => void
   onPressRequestAccess: () => void
   version: "mobile" | "web"
+  title?: string
+  detail?: string
 }
 
 export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
@@ -20,6 +22,8 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
   onPressLearnMore,
   onPressRequestAccess,
   version,
+  title: _title,
+  detail: _detail,
 }) => {
   const hasBeenAuthorized = !!authorizedAt
   let targetAuthorizationDate
@@ -36,6 +40,10 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
   }`
   const rewaitlistedCopy = `Unfortunately, your sign-up window has closed and we've passed along your invite. If you'd still like to join, request access below.`
 
+  const title =
+    _title || `You're ${hasBeenAuthorized ? "back " : ""}on the waitlist`
+  const detail =
+    _detail || (hasBeenAuthorized ? rewaitlistedCopy : waitlistedCopy)
   return (
     <Box pb={1}>
       {hasBeenAuthorized && (
@@ -48,7 +56,7 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
         color="black100"
         textAlign={hasBeenAuthorized ? "center" : "left"}
       >
-        {`You're ${hasBeenAuthorized ? "back " : ""}on the waitlist`}
+        {title}
       </Sans>
       <Spacer mb={1} />
       <Sans
@@ -56,7 +64,7 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
         color="black50"
         textAlign={hasBeenAuthorized ? "center" : "left"}
       >
-        {hasBeenAuthorized ? rewaitlistedCopy : waitlistedCopy}
+        {detail}
       </Sans>
       <Spacer mb={3} />
       <ButtonBar
