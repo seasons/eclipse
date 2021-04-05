@@ -1,3 +1,3 @@
 export { Collection } from "./Collection"
-export { ReviewOrder, Order_OrderFragment } from "./ReviewOrder"
+export { ReviewOrder } from "./ReviewOrder"
 export { OrderConfirmation } from "./OrderConfirmation"

@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client"
 import { ReviewOrder } from "./ReviewOrder"
-import { GetCustomerQuery } from "./queries"
 import React from "react"
 import {
   OrderFragment,
@@ -8,6 +7,8 @@ import {
 } from "@/generated/OrderFragment"
 import { GetCustomer, GetCustomer_me_customer } from "@/generated/GetCustomer"
 import { FixedBackArrow, Loader } from "@/components"
+import { OrderFragment_Customer } from "@/queries"
+import gql from "graphql-tag"
 
 type Props = {
   onBackPressed: () => void
@@ -25,6 +26,19 @@ type Props = {
   windowWidth: number
 }
 
+export const ReviewOrder_Query = gql`
+  query ReviewOrder_Query {
+    me {
+      id
+      customer {
+        id
+        ...OrderFragment_Customer
+      }
+    }
+  }
+  ${OrderFragment_Customer}
+`
+
 export const ReviewOrderContainer: React.FC<Props> = ({
   order,
   onBackPressed,
@@ -32,7 +46,7 @@ export const ReviewOrderContainer: React.FC<Props> = ({
   onOrderSubmitted,
   windowWidth,
 }) => {
-  const { data, loading } = useQuery<GetCustomer>(GetCustomerQuery)
+  const { data, loading } = useQuery<GetCustomer>(ReviewOrder_Query)
 
   const [isSubmittingOrder, setIsSubmittingOrder] = React.useState(false)
 

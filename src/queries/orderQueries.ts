@@ -1,7 +1,7 @@
 import gql from "graphql-tag"
 
-export const OrderFragment = gql`
-  fragment Order_OrderFragment on Order {
+export const OrderFragment_Order = gql`
+  fragment OrderFragment_Order on Order {
     id
     orderNumber
     subTotal
@@ -42,8 +42,8 @@ export const OrderFragment = gql`
   }
 `
 
-export const CustomerFragment = gql`
-  fragment Order_CustomerFragment on Customer {
+export const OrderFragment_Customer = gql`
+  fragment OrderFragment_Customer on Customer {
     id
     detail {
       id
@@ -73,17 +73,4 @@ export const CustomerFragment = gql`
       last_digits
     }
   }
-`
-
-export const GetCustomerQuery = gql`
-  query GetCustomer {
-    me {
-      id
-      customer {
-        id
-        ...Order_CustomerFragment
-      }
-    }
-  }
-  ${CustomerFragment}
 `

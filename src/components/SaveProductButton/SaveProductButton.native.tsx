@@ -7,9 +7,7 @@ import { TrackSchema, useTracking } from "@/helpers/track"
 import { Box } from "@/elements/Box"
 import { useMutation } from "@apollo/client"
 import { GET_PRODUCT } from "@/queries/productQueries"
-import { GET_BAG } from "@/queries/bagQueries"
-import { GET_HOMEPAGE_NATIVE } from "@/queries/homeQueries"
-import type { PopUpData } from "@/types"
+import { SaveProductButtonProps } from "./SaveProductButton.shared"
 
 export const SAVE_ITEM = gql`
   mutation SaveItem($item: ID!, $save: Boolean!) {
@@ -23,19 +21,6 @@ export const SAVE_ITEM = gql`
   }
 `
 
-export interface SaveProductButtonProps {
-  product: any
-  selectedVariant?: any
-  onPressSaveButton: () => void
-  grayStroke?: boolean
-  height?: number
-  width?: number
-  noModal?: boolean
-  showPopUp: (data: PopUpData) => any
-  hidePopUp: () => void
-  authState: any
-}
-
 export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   product,
   selectedVariant,
@@ -47,6 +32,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   showPopUp,
   hidePopUp,
   authState,
+  refetchQueries,
 }) => {
   const navigation = useNavigation()
   const isSaved = selectedVariant?.isSaved
@@ -62,13 +48,11 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
           where: { id: product?.id },
         },
       },
-      {
-        query: GET_BAG,
-      },
-      {
-        query: GET_HOMEPAGE_NATIVE,
-        variables: { firstFitPics: 8, skipFitPics: 0 },
-      },
+      // {
+      //   query: GET_HOMEPAGE_NATIVE,
+      //   variables: { firstFitPics: 8, skipFitPics: 0 },
+      // },
+      ...refetchQueries,
     ],
   })
   const userHasSession = !!authState?.userSession

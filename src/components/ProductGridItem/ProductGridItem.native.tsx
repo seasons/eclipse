@@ -18,6 +18,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   showPopUp,
   hidePopUp,
   authState,
+  saveProductButtonRefetchQueries,
 }) => {
   const tracking = useTracking()
   const navigation = useNavigation()
@@ -80,6 +81,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
               grayStroke
               height={16}
               width={12}
+              refetchQueries={saveProductButtonRefetchQueries}
               product={product}
               onPressSaveButton={() => {
                 tracking.trackEvent({
