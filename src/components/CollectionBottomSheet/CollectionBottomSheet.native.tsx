@@ -72,7 +72,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
   products,
   onEndReached,
   metaData,
-  shouldLoadMore,
+  aggregateCount,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
   const [flatListHeight, setFlatListHeight] = useState(0)
@@ -142,7 +142,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
         )}
         ListFooterComponent={() => (
           <Box>
-            {!!shouldLoadMore && (
+            {!!aggregateCount && aggregateCount > products?.length && (
               <Flex
                 py={3}
                 flexDirection="row"
@@ -213,7 +213,7 @@ export const CollectionBottomSheet: React.FC<CollectionBottomSheetProps> = ({
     readMoreExpanded,
     setReadMoreExpanded,
     metaData,
-    shouldLoadMore,
+    aggregateCount,
   ])
 
   return <>{content}</>
