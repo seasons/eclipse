@@ -31,13 +31,8 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const { previousData, data = previousData, refetch } = useQuery(
     GET_NOTIFICATION_BAR
   )
-  const {
-    notificationBarState,
-    hideNotificationBar,
-    showNotificationBar,
-  } = useNotificationBarContext()
+  const { notificationBarState } = useNotificationBarContext()
 
-  console.log(`notif bar state: `, notificationBarState)
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -57,39 +52,11 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     refetch()
   }, [isLoggedIn, refetch])
 
-  console.log(data)
+  if (!show || hasbeenClosedNow) {
+    return null
+  }
 
-  useEffect(() => {
-    if (!hasData) {
-      return
-    }
-    const {
-      me: {
-        notificationBar: {
-          clickCount,
-          web: { route: webRoute },
-          mobile: { route: mobileRoute },
-        },
-      },
-    } = data
-
-    const isDismissableNotif = webRoute.dismissable && mobileRoute.dismissable
-    const hasBeenClickedBefore = clickCount > 0
-    const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
-
-    console.log(`isDismissableNotif:`, isDismissableNotif)
-    console.log(`hasBeenClosedBefore: `, hasBeenClosedBefore)
-    console.log(`hasbeenClosedNow: `, hasbeenClosedNow)
-    console.log(`show: `, show)
-
-    // debugger
-    if (!hasBeenClosedBefore && !show && !hasbeenClosedNow) {
-      console.log(`runs showNotificationBar`)
-      showNotificationBar()
-    }
-  }, [hasData, show, showNotificationBar, hasbeenClosedNow])
-
-  if (!hasData || !show) {
+  if (!hasData) {
     return null
   }
 
@@ -111,27 +78,23 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const defaultPalette = palette?.default
   const pressedPalette = palette?.pressed
 
+  const isDismissableNotif = webRoute?.dismissable && mobileRoute?.dismissable
+  const hasBeenClickedBefore = clickCount > 0
+  const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
+  if (hasBeenClosedBefore) {
+    return null
+  }
+
   const onPressIn = () => {
-    console.log("isWebNotification: ", isWebNotification)
-    console.log("webRoute.dismissable: ", webRoute.dismissable)
     if (isMobileNotification) {
       if (mobileRoute.dismissable) {
-        // setHasBeenClosedNow(true)
-        // setUserDidDismiss()
         setHasBeenClosedNow(true)
-        hideNotificationBar()
       } else {
         onClick(mobileRoute)
       }
     } else if (isWebNotification) {
-      console.log(`in web onPressIn`)
       if (webRoute.dismissable) {
-        console.log(`in webroute dismissable onPressIn`)
-        // setHasBeenClosedNow(true)
-        // setUserDidDismiss()
-        console.log(`run setHasBeenClosedNow(true), hideNotificationBar`)
         setHasBeenClosedNow(true)
-        hideNotificationBar()
       } else {
         onClick(webRoute)
       }

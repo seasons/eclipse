@@ -4,7 +4,6 @@ import { NotificationBarContext } from "./NotificationBarContext"
 enum NotificationBarAction {
   Show = "SHOW",
   Hide = "HIDE",
-  // SetUserDidDismiss = "SET_USER_DID_DISMISS",
 }
 
 export const NotificationBarProvider = ({ children }) => {
@@ -21,16 +20,10 @@ export const NotificationBarProvider = ({ children }) => {
             ...prevState,
             show: false,
           }
-        // case NotificationBarAction.SetUserDidDismiss:
-        //   return {
-        //     ...prevState,
-        //     userDidDismiss: true,
-        //   }
       }
     },
     {
-      show: false,
-      // userDidDismiss: false,
+      show: true,
     }
   )
 
@@ -44,9 +37,6 @@ export const NotificationBarProvider = ({ children }) => {
     hideNotificationBar: async () => {
       dispatch({ type: NotificationBarAction.Hide })
     },
-    // setUserDidDismiss: async () => {
-    //   dispatch({ type: NotificationBarAction.SetUserDidDismiss })
-    // },
     notificationBarState,
   }
 
