@@ -96,9 +96,9 @@
     "react-spring": "^8.0.27",
     "react-tracking": "^7.3.0",
     "release-it": "^13.5.8",
-    "styled-bootstrap-grid": "^3.0.5",
     "styled-components": "^5.2.1",
     "styled-system": "^5.1.5",
+    "styled-bootstrap-grid": "^3.0.5",
     "tsc-alias": "^1.1.5",
     "typescript": "^3.8.3",
     "watch": "^1.0.2"

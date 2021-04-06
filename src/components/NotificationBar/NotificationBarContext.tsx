@@ -6,5 +6,9 @@ export const useNotificationBarContext = () =>
 export const NotificationBarContext = React.createContext({
   showNotificationBar: () => null,
   hideNotificationBar: () => null,
-  notificationBarState: { show: true },
+  // userDidDismissNow: () => null,
+  // setUserDidDismiss: () => null,
+  // notificationBarState: { show: false, userDidDismiss: false },
+  notificationBarState: { show: false },
+  // notificationBarState: { show: false, userDismissedNow: false },
 })

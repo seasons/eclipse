@@ -31,7 +31,13 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const { previousData, data = previousData, refetch } = useQuery(
     GET_NOTIFICATION_BAR
   )
-  const { notificationBarState } = useNotificationBarContext()
+  const {
+    notificationBarState,
+    hideNotificationBar,
+    showNotificationBar,
+  } = useNotificationBarContext()
+
+  console.log(`notif bar state: `, notificationBarState)
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -51,54 +57,81 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     refetch()
   }, [isLoggedIn, refetch])
 
+  console.log(data)
+
+  useEffect(() => {
+    if (!hasData) {
+      return
+    }
+    const {
+      me: {
+        notificationBar: {
+          clickCount,
+          web: { route: webRoute },
+          mobile: { route: mobileRoute },
+        },
+      },
+    } = data
+
+    const isDismissableNotif = webRoute.dismissable && mobileRoute.dismissable
+    const hasBeenClickedBefore = clickCount > 0
+    const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
+
+    console.log(`isDismissableNotif:`, isDismissableNotif)
+    console.log(`hasBeenClosedBefore: `, hasBeenClosedBefore)
+    console.log(`hasbeenClosedNow: `, hasbeenClosedNow)
+    console.log(`show: `, show)
+
+    // debugger
+    if (!hasBeenClosedBefore && !show && !hasbeenClosedNow) {
+      console.log(`runs showNotificationBar`)
+      showNotificationBar()
+    }
+  }, [hasData, show, showNotificationBar, hasbeenClosedNow])
+
   if (!hasData || !show) {
     return null
   }
+
   const isWebNotification = type === "web"
   const isMobileNotification = type === "mobile"
-  const {
-    me: {
-      notificationBar: {
-        id: notificationBarId,
-        icon,
-        clickCount,
-        viewCount,
-        web: { title: webTitle, detail: webDetail, route: webRoute },
-        mobile: {
-          title: mobileTitle,
-          detail: mobileDetail,
-          route: mobileRoute,
-        },
-        palette: {
-          default: {
-            backgroundColor,
-            titleFontColor,
-            detailFontColor,
-            iconStrokeColor,
-          },
-          pressed: {
-            backgroundColor: backgroundColorPressed,
-            titleFontColor: titleFontColorPressed,
-            detailFontColor: detailFontColorPressed,
-            iconStrokeColor: iconStrokeColorPressed,
-          },
-        },
-      },
-    },
-  } = data
-  const hasBeenClosedBefore =
-    webRoute.dismissable && mobileRoute.dismissable && clickCount > 0
+  const notificationBar = data?.me?.notificationBar
+
+  const notificationBarId = notificationBar?.id
+  const icon = notificationBar?.icon
+  const clickCount = notificationBar?.clickCount
+  const viewCount = notificationBar?.viewCount
+
+  const web = notificationBar?.web
+  const mobile = notificationBar?.mobile
+  const webRoute = web?.route
+  const mobileRoute = mobile?.route
+
+  const palette = notificationBar?.palette
+  const defaultPalette = palette?.default
+  const pressedPalette = palette?.pressed
 
   const onPressIn = () => {
+    console.log("isWebNotification: ", isWebNotification)
+    console.log("webRoute.dismissable: ", webRoute.dismissable)
     if (isMobileNotification) {
       if (mobileRoute.dismissable) {
+        // setHasBeenClosedNow(true)
+        // setUserDidDismiss()
         setHasBeenClosedNow(true)
+        hideNotificationBar()
       } else {
         onClick(mobileRoute)
       }
     } else if (isWebNotification) {
+      console.log(`in web onPressIn`)
       if (webRoute.dismissable) {
+        console.log(`in webroute dismissable onPressIn`)
+        // setHasBeenClosedNow(true)
+        // setUserDidDismiss()
+        console.log(`run setHasBeenClosedNow(true), hideNotificationBar`)
         setHasBeenClosedNow(true)
+        hideNotificationBar()
       } else {
         onClick(webRoute)
       }
@@ -106,10 +139,6 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     updateNotificationBarReceipt({
       variables: { notificationBarId, clickCount: clickCount + 1 },
     })
-  }
-
-  if (hasBeenClosedBefore || hasbeenClosedNow) {
-    return null
   }
 
   if (!hasUpdatedViewCount) {
@@ -123,17 +152,17 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     <Pressable onPressIn={onPressIn}>
       {({ pressed }) => {
         const bgColorWithState = pressed
-          ? backgroundColorPressed
-          : backgroundColor
+          ? pressedPalette?.backgroundColor
+          : defaultPalette?.backgroundColor
         const titleFontColorWithState = pressed
-          ? titleFontColorPressed
-          : titleFontColor
+          ? pressedPalette?.titleFontColor
+          : defaultPalette?.titleFontColor
         const detailFontColorWithState = pressed
-          ? detailFontColorPressed
-          : detailFontColor
+          ? pressedPalette?.detailFontColor
+          : defaultPalette?.detailFontColor
         const iconFontColorWithState = pressed
-          ? iconStrokeColorPressed
-          : iconStrokeColor
+          ? pressedPalette?.iconStrokeColor
+          : defaultPalette?.iconStrokeColor
         const renderChevron =
           icon === "Chevron" || !supportedIcons.includes(icon) // default icon
         const renderCloseX = icon === "CloseX"
@@ -141,12 +170,12 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
           <Container color={bgColorWithState}>
             <Box paddingRight="20px">
               <Sans size="3" color={titleFontColorWithState}>
-                {isWebNotification && webTitle}
-                {isMobileNotification && mobileTitle}
+                {isWebNotification && web?.title}
+                {isMobileNotification && mobile?.title}
               </Sans>
               <Sans size="3" color={detailFontColorWithState}>
-                {isWebNotification && webDetail}
-                {isMobileNotification && mobileDetail}
+                {isWebNotification && web?.detail}
+                {isMobileNotification && mobile?.detail}
               </Sans>
             </Box>
             <Box>
