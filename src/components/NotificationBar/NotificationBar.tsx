@@ -5,11 +5,14 @@ import {
   NotificationBarProps,
 } from "./NotificationBar.shared"
 import { Container } from "styled-bootstrap-grid"
-import { Box } from "@/elements"
+import { Box, Spacer } from "@/elements"
+
+const NOTIFICATION_BAR_HEIGHT = "52px"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   return (
     <NotificationBarTemplate
+      outerContainerComponent={OuterWrapper}
       containerComponent={NotificationBarContainer}
       type="web"
       {...props}
@@ -27,6 +30,23 @@ const NotificationBarContainer = ({ children, color }) => {
   )
 }
 
+const OuterWrapper = ({ children }) => {
+  return (
+    <>
+      <FixedBox>{children}</FixedBox>
+      <Spacer mb={NOTIFICATION_BAR_HEIGHT} />
+    </>
+  )
+}
+
+const FixedBox = styled(Box)`
+  position: fixed;
+  top: 59px;
+  left: 0;
+  z-index: 30;
+  width: 100%;
+`
+
 const FlexContainer = styled(Box)`
   display: flex;
   flex-direction: row;
@@ -36,6 +56,7 @@ const FlexContainer = styled(Box)`
 
 const Wrapper = styled(Box)<{ color: string }>`
   background-color: ${(p) => p.color};
+  width: 100%;
 `
 
 const MaxWidth = styled(Container)`

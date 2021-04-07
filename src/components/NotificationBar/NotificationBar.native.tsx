@@ -9,6 +9,7 @@ import {
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   return (
     <NotificationBarTemplate
+      outerContainerComponent={Box}
       containerComponent={Container}
       type="mobile"
       {...props}

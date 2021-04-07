@@ -7,6 +7,7 @@ export const GET_NOTIFICATION_BAR = gql`
       notificationBar {
         id
         icon
+        underlinedCTAText
         viewCount
         clickCount
         web {
