@@ -32,6 +32,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     GET_NOTIFICATION_BAR
   )
   const { notificationBarState } = useNotificationBarContext()
+
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
     {
@@ -51,43 +52,38 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     refetch()
   }, [isLoggedIn, refetch])
 
-  if (!hasData || !show) {
+  if (!show || hasbeenClosedNow) {
     return null
   }
+
+  if (!hasData) {
+    return null
+  }
+
   const isWebNotification = type === "web"
   const isMobileNotification = type === "mobile"
-  const {
-    me: {
-      notificationBar: {
-        id: notificationBarId,
-        icon,
-        clickCount,
-        viewCount,
-        web: { title: webTitle, detail: webDetail, route: webRoute },
-        mobile: {
-          title: mobileTitle,
-          detail: mobileDetail,
-          route: mobileRoute,
-        },
-        palette: {
-          default: {
-            backgroundColor,
-            titleFontColor,
-            detailFontColor,
-            iconStrokeColor,
-          },
-          pressed: {
-            backgroundColor: backgroundColorPressed,
-            titleFontColor: titleFontColorPressed,
-            detailFontColor: detailFontColorPressed,
-            iconStrokeColor: iconStrokeColorPressed,
-          },
-        },
-      },
-    },
-  } = data
-  const hasBeenClosedBefore =
-    webRoute.dismissable && mobileRoute.dismissable && clickCount > 0
+  const notificationBar = data?.me?.notificationBar
+
+  const notificationBarId = notificationBar?.id
+  const icon = notificationBar?.icon
+  const clickCount = notificationBar?.clickCount
+  const viewCount = notificationBar?.viewCount
+
+  const web = notificationBar?.web
+  const mobile = notificationBar?.mobile
+  const webRoute = web?.route
+  const mobileRoute = mobile?.route
+
+  const palette = notificationBar?.palette
+  const defaultPalette = palette?.default
+  const pressedPalette = palette?.pressed
+
+  const isDismissableNotif = webRoute?.dismissable && mobileRoute?.dismissable
+  const hasBeenClickedBefore = clickCount > 0
+  const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
+  if (hasBeenClosedBefore) {
+    return null
+  }
 
   const onPressIn = () => {
     if (isMobileNotification) {
@@ -108,10 +104,6 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     })
   }
 
-  if (hasBeenClosedBefore || hasbeenClosedNow) {
-    return null
-  }
-
   if (!hasUpdatedViewCount) {
     updateNotificationBarReceipt({
       variables: { notificationBarId, viewCount: viewCount + 1 },
@@ -123,17 +115,17 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     <Pressable onPressIn={onPressIn}>
       {({ pressed }) => {
         const bgColorWithState = pressed
-          ? backgroundColorPressed
-          : backgroundColor
+          ? pressedPalette?.backgroundColor
+          : defaultPalette?.backgroundColor
         const titleFontColorWithState = pressed
-          ? titleFontColorPressed
-          : titleFontColor
+          ? pressedPalette?.titleFontColor
+          : defaultPalette?.titleFontColor
         const detailFontColorWithState = pressed
-          ? detailFontColorPressed
-          : detailFontColor
+          ? pressedPalette?.detailFontColor
+          : defaultPalette?.detailFontColor
         const iconFontColorWithState = pressed
-          ? iconStrokeColorPressed
-          : iconStrokeColor
+          ? pressedPalette?.iconStrokeColor
+          : defaultPalette?.iconStrokeColor
         const renderChevron =
           icon === "Chevron" || !supportedIcons.includes(icon) // default icon
         const renderCloseX = icon === "CloseX"
@@ -141,12 +133,12 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
           <Container color={bgColorWithState}>
             <Box paddingRight="20px">
               <Sans size="3" color={titleFontColorWithState}>
-                {isWebNotification && webTitle}
-                {isMobileNotification && mobileTitle}
+                {isWebNotification && web?.title}
+                {isMobileNotification && mobile?.title}
               </Sans>
               <Sans size="3" color={detailFontColorWithState}>
-                {isWebNotification && webDetail}
-                {isMobileNotification && mobileDetail}
+                {isWebNotification && web?.detail}
+                {isMobileNotification && mobile?.detail}
               </Sans>
             </Box>
             <Box>
