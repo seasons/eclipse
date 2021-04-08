@@ -19,7 +19,7 @@ export interface NotificationBarProps {
 interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   outerContainerComponent: React.FC
-  type: "web" | "mobile"
+  type: "web" | "native"
   show?: boolean
 }
 
@@ -56,7 +56,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   }, [isLoggedIn, refetch])
 
   const isWebNotification = type === "web"
-  const isMobileNotification = type === "mobile"
+  const isNativeNotification = type === "native"
   const notificationBar = data?.me?.notificationBar
   const underlinedCTAText = notificationBar?.underlinedCTAText
 
@@ -94,7 +94,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   }
 
   const onPressIn = () => {
-    if (isMobileNotification) {
+    if (isNativeNotification) {
       if (mobileRoute.dismissable) {
         setHasBeenClosedNow(true)
       } else {
@@ -140,18 +140,24 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
           const renderCloseX = icon === "CloseX"
           return (
             <Container color={bgColorWithState}>
-              <Box paddingRight="20px">
-                <Sans size="3" color={titleFontColorWithState}>
+              <Box pr={5}>
+                <Sans
+                  size={isWebNotification ? "3" : "4"}
+                  color={titleFontColorWithState}
+                >
                   {isWebNotification && web?.title}
-                  {isMobileNotification && mobile?.title}
+                  {isNativeNotification && mobile?.title}
                 </Sans>
-                <Sans size="3" color={detailFontColorWithState}>
+                <Sans
+                  size={isWebNotification ? "3" : "4"}
+                  color={detailFontColorWithState}
+                >
                   {isWebNotification && web?.detail}
-                  {isMobileNotification && mobile?.detail}
+                  {isNativeNotification && mobile?.detail}
                 </Sans>
               </Box>
               <FlexContainer>
-                {!!underlinedCTAText && (
+                {!!underlinedCTAText && isWebNotification && (
                   <FlexContainer mr={2}>
                     <Sans
                       size="3"
@@ -164,7 +170,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
                 )}
                 {renderChevron && (
                   <ChevronIcon
-                    scale={0.7}
+                    scale={isWebNotification ? 0.7 : 1}
                     color={iconFontColorWithState}
                     fillColor={bgColorWithState}
                   />

@@ -11,7 +11,7 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
     <NotificationBarTemplate
       outerContainerComponent={Box}
       containerComponent={Container}
-      type="mobile"
+      type="native"
       {...props}
     />
   )
