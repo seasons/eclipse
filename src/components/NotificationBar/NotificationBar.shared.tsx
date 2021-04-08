@@ -9,6 +9,7 @@ import {
   GET_NOTIFICATION_BAR,
   UPDATE_NOTIFICATION_BAR_RECEIPT,
 } from "@/queries/notifBarQueries"
+import styled from "styled-components"
 
 export interface NotificationBarProps {
   onClick?: (any) => void
@@ -17,12 +18,14 @@ export interface NotificationBarProps {
 
 interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
-  type: "web" | "mobile"
+  outerContainerComponent: React.FC
+  type: "web" | "native"
   show?: boolean
 }
 
 export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
   containerComponent: Container,
+  outerContainerComponent: OuterContainer,
   onClick,
   type,
   isLoggedIn,
@@ -52,17 +55,10 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     refetch()
   }, [isLoggedIn, refetch])
 
-  if (!show || hasbeenClosedNow) {
-    return null
-  }
-
-  if (!hasData) {
-    return null
-  }
-
   const isWebNotification = type === "web"
-  const isMobileNotification = type === "mobile"
+  const isNativeNotification = type === "native"
   const notificationBar = data?.me?.notificationBar
+  const underlinedCTAText = notificationBar?.underlinedCTAText
 
   const notificationBarId = notificationBar?.id
   const icon = notificationBar?.icon
@@ -81,12 +77,24 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const isDismissableNotif = webRoute?.dismissable && mobileRoute?.dismissable
   const hasBeenClickedBefore = clickCount > 0
   const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
-  if (hasBeenClosedBefore) {
+
+  let urlMatchesHref
+  if (typeof window !== "undefined") {
+    urlMatchesHref = window.location.pathname === webRoute?.url
+  }
+
+  if (
+    hasBeenClosedBefore ||
+    !show ||
+    hasbeenClosedNow ||
+    urlMatchesHref ||
+    !hasData
+  ) {
     return null
   }
 
   const onPressIn = () => {
-    if (isMobileNotification) {
+    if (isNativeNotification) {
       if (mobileRoute.dismissable) {
         setHasBeenClosedNow(true)
       } else {
@@ -112,47 +120,74 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   }
 
   return (
-    <Pressable onPressIn={onPressIn}>
-      {({ pressed }) => {
-        const bgColorWithState = pressed
-          ? pressedPalette?.backgroundColor
-          : defaultPalette?.backgroundColor
-        const titleFontColorWithState = pressed
-          ? pressedPalette?.titleFontColor
-          : defaultPalette?.titleFontColor
-        const detailFontColorWithState = pressed
-          ? pressedPalette?.detailFontColor
-          : defaultPalette?.detailFontColor
-        const iconFontColorWithState = pressed
-          ? pressedPalette?.iconStrokeColor
-          : defaultPalette?.iconStrokeColor
-        const renderChevron =
-          icon === "Chevron" || !supportedIcons.includes(icon) // default icon
-        const renderCloseX = icon === "CloseX"
-        return (
-          <Container color={bgColorWithState}>
-            <Box paddingRight="20px">
-              <Sans size="3" color={titleFontColorWithState}>
-                {isWebNotification && web?.title}
-                {isMobileNotification && mobile?.title}
-              </Sans>
-              <Sans size="3" color={detailFontColorWithState}>
-                {isWebNotification && web?.detail}
-                {isMobileNotification && mobile?.detail}
-              </Sans>
-            </Box>
-            <Box>
-              {renderChevron && (
-                <ChevronIcon
-                  color={iconFontColorWithState}
-                  fillColor={bgColorWithState}
-                />
-              )}
-              {renderCloseX && <CloseXIcon color={iconFontColorWithState} />}
-            </Box>
-          </Container>
-        )
-      }}
-    </Pressable>
+    <OuterContainer>
+      <Pressable onPressIn={onPressIn}>
+        {({ pressed }) => {
+          const bgColorWithState = pressed
+            ? pressedPalette?.backgroundColor
+            : defaultPalette?.backgroundColor
+          const titleFontColorWithState = pressed
+            ? pressedPalette?.titleFontColor
+            : defaultPalette?.titleFontColor
+          const detailFontColorWithState = pressed
+            ? pressedPalette?.detailFontColor
+            : defaultPalette?.detailFontColor
+          const iconFontColorWithState = pressed
+            ? pressedPalette?.iconStrokeColor
+            : defaultPalette?.iconStrokeColor
+          const renderChevron =
+            icon === "Chevron" || !supportedIcons.includes(icon) // default icon
+          const renderCloseX = icon === "CloseX"
+          return (
+            <Container color={bgColorWithState}>
+              <Box pr={5}>
+                <Sans
+                  size={isWebNotification ? "3" : "4"}
+                  color={titleFontColorWithState}
+                >
+                  {isWebNotification && web?.title}
+                  {isNativeNotification && mobile?.title}
+                </Sans>
+                <Sans
+                  size={isWebNotification ? "3" : "4"}
+                  color={detailFontColorWithState}
+                >
+                  {isWebNotification && web?.detail}
+                  {isNativeNotification && mobile?.detail}
+                </Sans>
+              </Box>
+              <FlexContainer>
+                {!!underlinedCTAText && isWebNotification && (
+                  <FlexContainer mr={2}>
+                    <Sans
+                      size="3"
+                      color={titleFontColorWithState}
+                      style={{ textDecorationLine: "underline" }}
+                    >
+                      {underlinedCTAText}
+                    </Sans>
+                  </FlexContainer>
+                )}
+                {renderChevron && (
+                  <ChevronIcon
+                    scale={isWebNotification ? 0.7 : 1}
+                    color={iconFontColorWithState}
+                    fillColor={bgColorWithState}
+                  />
+                )}
+                {renderCloseX && <CloseXIcon color={iconFontColorWithState} />}
+              </FlexContainer>
+            </Container>
+          )
+        }}
+      </Pressable>
+    </OuterContainer>
   )
 }
+
+const FlexContainer = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+`
