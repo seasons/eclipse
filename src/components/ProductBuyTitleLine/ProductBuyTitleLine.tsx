@@ -9,7 +9,7 @@ export const ProductBuyTitleLine = ({ brandName, brandLogoUri }) => (
     {brandLogoUri ? (
       <>
         <Sans color="black100" size="4" weight="medium">
-          Get it new from {" "}
+          Get it new from
         </Sans>
         <BrandLogoContainer>
           <ProgressiveImage
