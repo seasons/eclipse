@@ -12,7 +12,6 @@ import { ProductGridItemProps } from "./ProductGridItem.shared"
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
-  showName,
   imageIndex,
   isSignedIn,
 }) => {
@@ -24,15 +23,10 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
     }
   )
   const tracking = useTracking()
-  let showBrand = true
 
   const brandName = product?.brand?.name
   const brandSlug = product?.brand?.slug
   const retailPrice = product?.retailPrice
-
-  if (showName || brandName === "Vintage") {
-    showBrand = false
-  }
 
   if (!product || loading) {
     return (
@@ -47,47 +41,6 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         </ContentLoader>
       </Box>
     )
-  }
-
-  const RetailPrice = () =>
-    retailPrice && !isSignedIn ? (
-      <>
-        <LineThroughSans mt="0.5" size="2" color="black50" display="inline">
-          ${retailPrice}
-        </LineThroughSans>
-        <Sans mt="0.5" size="2" color="black50" display="inline">
-          {" "}
-          | $65 for 30-days
-        </Sans>
-      </>
-    ) : null
-
-  const Text = () => {
-    if (showBrand && brandName && brandSlug) {
-      return (
-        <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
-          <Sans size="2" mt="0.5">
-            {brandName}
-          </Sans>
-          <RetailPrice />
-          <VariantSizes variants={product.variants} size="2" />
-        </Link>
-      )
-    } else {
-      return (
-        <>
-          {!!product?.name && (
-            <>
-              <Sans size="2" mt="0.5">
-                {product?.name}
-              </Sans>
-              <RetailPrice />
-              <VariantSizes variants={product.variants} size="2" />
-            </>
-          )}
-        </>
-      )
-    }
   }
 
   return (
@@ -110,7 +63,28 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         >
           <ProgressiveImage url={image?.url} size="small" alt="product image" />
           <Spacer mb={1} />
-          <Text />
+          <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
+            <Sans size="2" mt="0.5">
+              {brandName}
+            </Sans>
+          </Link>
+          {retailPrice && !isSignedIn && (
+            <>
+              <LineThroughSans
+                mt="0.5"
+                size="2"
+                color="black50"
+                display="inline"
+              >
+                ${retailPrice}
+              </LineThroughSans>
+              <Sans mt="0.5" size="2" color="black50" display="inline">
+                {" "}
+                | $65 for 30-days
+              </Sans>
+            </>
+          )}
+          <VariantSizes variants={product.variants} size="2" />
         </a>
       </Link>
     </ProductContainer>

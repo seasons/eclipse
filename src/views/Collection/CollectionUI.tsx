@@ -162,11 +162,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
             {products?.map((product, i) => (
               <Col col sm="3" xs="6" key={i}>
                 <Box pb={[2, 2]}>
-                  <ProductGridItem
-                    product={product?.node}
-                    loading={!data}
-                    showName
-                  />
+                  <ProductGridItem product={product?.node} loading={!data} />
                 </Box>
               </Col>
             ))}

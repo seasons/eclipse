@@ -12,7 +12,6 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   underlineTitleText,
   underlineTitleOnClick,
   imageIndex,
-  showProductName,
   isSignedIn,
 }) => {
   let href = "/browse"
@@ -77,7 +76,6 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
               <Col md="4" xs="12" sm="12" key={index} pb={[2, 2, 2, 0, 0]}>
                 <ProductGridItem
                   product={product}
-                  showName={showProductName}
                   imageIndex={imageIndex}
                   isSignedIn={isSignedIn}
                 />
