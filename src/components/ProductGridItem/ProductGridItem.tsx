@@ -14,6 +14,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   loading,
   showName,
   imageIndex,
+  isSignedIn,
 }) => {
   const image = get(
     product,
@@ -27,6 +28,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
 
   const brandName = product?.brand?.name
   const brandSlug = product?.brand?.slug
+  const retailPrice = product?.retailPrice
 
   if (showName || brandName === "Vintage") {
     showBrand = false
@@ -47,6 +49,19 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
     )
   }
 
+  const RetailPrice = () =>
+    retailPrice && !isSignedIn ? (
+      <>
+        <LineThroughSans mt="0.5" size="2" color="black50" display="inline">
+          ${retailPrice}
+        </LineThroughSans>
+        <Sans mt="0.5" size="2" color="black50" display="inline">
+          {" "}
+          | $65 for 30-days
+        </Sans>
+      </>
+    ) : null
+
   const Text = () => {
     if (showBrand && brandName && brandSlug) {
       return (
@@ -54,6 +69,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
           <Sans size="2" mt="0.5">
             {brandName}
           </Sans>
+          <RetailPrice />
           <VariantSizes variants={product.variants} size="2" />
         </Link>
       )
@@ -65,6 +81,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
               <Sans size="2" mt="0.5">
                 {product?.name}
               </Sans>
+              <RetailPrice />
               <VariantSizes variants={product.variants} size="2" />
             </>
           )}
@@ -99,6 +116,10 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
     </ProductContainer>
   )
 }
+
+const LineThroughSans = styled(Sans)`
+  text-decoration: line-through;
+`
 
 const ProductContainer = styled(Box)`
   margin: 2px;

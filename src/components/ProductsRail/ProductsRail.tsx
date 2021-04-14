@@ -13,6 +13,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   underlineTitleOnClick,
   imageIndex,
   showProductName,
+  isSignedIn,
 }) => {
   let href = "/browse"
   let as
@@ -78,6 +79,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
                   product={product}
                   showName={showProductName}
                   imageIndex={imageIndex}
+                  isSignedIn={isSignedIn}
                 />
               </Col>
             )

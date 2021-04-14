@@ -11,5 +11,6 @@ export interface ProductGridItemProps {
   addLeftSpacing?: boolean
   imageIndex?: number
   showBrandName?: boolean
+  isSignedIn?: boolean
   flatListRef?: RefObject<any>
 }
