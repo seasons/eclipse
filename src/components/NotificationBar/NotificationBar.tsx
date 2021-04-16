@@ -10,11 +10,27 @@ import { Box, Spacer } from "@/elements"
 const NOTIFICATION_BAR_HEIGHT = "52px"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
+  const hideIf = (data: any) => {
+    if (data) {
+      let windowLocation
+      if (typeof window !== "undefined") {
+        windowLocation = window.location.pathname
+      }
+      return (
+        !!windowLocation &&
+        windowLocation === data?.me?.notificationBar?.web?.route?.url
+      )
+    } else {
+      return false
+    }
+  }
+
   return (
     <NotificationBarTemplate
       outerContainerComponent={OuterWrapper}
       containerComponent={NotificationBarContainer}
       type="web"
+      hideIf={hideIf}
       {...props}
     />
   )
