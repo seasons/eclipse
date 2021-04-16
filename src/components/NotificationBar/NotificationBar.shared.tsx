@@ -20,8 +20,8 @@ interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   outerContainerComponent: React.FC
   type: "web" | "native"
-  show?: boolean
-  windowLocation?: string
+  dataToParent?: (data: any) => void
+  overrideShow?: boolean
 }
 
 export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
@@ -30,7 +30,8 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   onClick,
   type,
   isLoggedIn,
-  windowLocation,
+  dataToParent,
+  overrideShow,
 }) => {
   const supportedIcons = ["Chevron", "CloseX"]
   const { previousData, data = previousData, refetch } = useQuery(
@@ -80,17 +81,18 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const hasBeenClickedBefore = clickCount > 0
   const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
 
-  let locationMatchesUrl
-  if (windowLocation) {
-    locationMatchesUrl = windowLocation === webRoute?.url
-  }
+  useEffect(() => {
+    if (data) {
+      dataToParent(data)
+    }
+  }, [data, dataToParent])
 
   if (
     hasBeenClosedBefore ||
     !show ||
     hasbeenClosedNow ||
     !hasData ||
-    locationMatchesUrl
+    overrideShow
   ) {
     return null
   }

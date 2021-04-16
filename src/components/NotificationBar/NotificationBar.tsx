@@ -10,16 +10,29 @@ import { Box, Spacer } from "@/elements"
 const NOTIFICATION_BAR_HEIGHT = "52px"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
-  let windowLocation
-  if (typeof window !== "undefined") {
-    windowLocation = window.location.pathname
+  const [overrideShow, setOverrideShow] = React.useState(false)
+
+  const dataToParent = (data: any) => {
+    if (data) {
+      let windowLocation
+      if (typeof window !== "undefined") {
+        windowLocation = window.location.pathname
+      }
+      if (windowLocation === data?.me?.notificationBar?.web?.route?.url) {
+        setOverrideShow(true)
+      } else if (overrideShow) {
+        setOverrideShow(false)
+      }
+    }
   }
 
   return (
     <NotificationBarTemplate
       outerContainerComponent={OuterWrapper}
+      dataToParent={dataToParent}
       containerComponent={NotificationBarContainer}
       type="web"
+      overrideShow={overrideShow}
       {...props}
     />
   )
