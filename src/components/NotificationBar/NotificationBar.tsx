@@ -18,7 +18,10 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
       if (typeof window !== "undefined") {
         windowLocation = window.location.pathname
       }
-      if (windowLocation === data?.me?.notificationBar?.web?.route?.url) {
+      if (
+        !!windowLocation &&
+        windowLocation === data?.me?.notificationBar?.web?.route?.url
+      ) {
         setOverrideShow(true)
       } else if (overrideShow) {
         setOverrideShow(false)
