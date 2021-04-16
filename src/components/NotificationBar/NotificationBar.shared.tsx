@@ -81,7 +81,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
 
   useEffect(() => {
-    if (data) {
+    if (data && hideIf) {
       setHide(hideIf(data))
     }
   }, [data, hideIf, setHide])
