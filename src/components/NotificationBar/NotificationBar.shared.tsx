@@ -21,6 +21,7 @@ interface NotificationBarTemplateProps extends NotificationBarProps {
   outerContainerComponent: React.FC
   type: "web" | "native"
   show?: boolean
+  windowLocation?: string
 }
 
 export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
@@ -29,6 +30,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   onClick,
   type,
   isLoggedIn,
+  windowLocation,
 }) => {
   const supportedIcons = ["Chevron", "CloseX"]
   const { previousData, data = previousData, refetch } = useQuery(
@@ -78,17 +80,17 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const hasBeenClickedBefore = clickCount > 0
   const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
 
-  let urlMatchesHref
-  if (typeof window !== "undefined") {
-    urlMatchesHref = window.location.pathname === webRoute?.url
+  let locationMatchesUrl
+  if (windowLocation) {
+    locationMatchesUrl = windowLocation === webRoute?.url
   }
 
   if (
     hasBeenClosedBefore ||
     !show ||
     hasbeenClosedNow ||
-    urlMatchesHref ||
-    !hasData
+    !hasData ||
+    locationMatchesUrl
   ) {
     return null
   }

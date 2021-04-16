@@ -10,6 +10,11 @@ import { Box, Spacer } from "@/elements"
 const NOTIFICATION_BAR_HEIGHT = "52px"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
+  let windowLocation
+  if (typeof window !== "undefined") {
+    windowLocation = window.location.pathname
+  }
+
   return (
     <NotificationBarTemplate
       outerContainerComponent={OuterWrapper}
