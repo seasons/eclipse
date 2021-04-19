@@ -157,6 +157,8 @@ export const ProductBuyCTA: React.FC<
       const price = priceInDollars?.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
       })
       const availableForSale = selectedVariant?.price?.buyNewAvailableForSale
       const brandName = product?.brand?.name
