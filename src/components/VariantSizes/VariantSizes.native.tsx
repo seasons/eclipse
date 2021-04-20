@@ -6,6 +6,7 @@ import styled from "styled-components/native"
 export const VariantSizes: React.FC<{
   variants: any[]
   size: "2" | "4"
+  lineHeight?: string
 }> = ({ variants, size }) => {
   const availableVariants = variants.filter((a) => !!a?.displayShort)
 
