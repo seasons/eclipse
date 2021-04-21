@@ -101,7 +101,8 @@
     "styled-system": "^5.1.5",
     "tsc-alias": "^1.1.5",
     "typescript": "^3.8.3",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
+    "graphql-anywhere": "^4.2.7"
   },
   "peerDependencies": {
     "@apollo/client": "*",

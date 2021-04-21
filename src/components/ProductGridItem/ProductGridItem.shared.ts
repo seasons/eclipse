@@ -6,10 +6,10 @@ export interface ProductGridItemProps {
   loading?: boolean
   showPopUp?: (data: PopUpData) => void
   hidePopUp?: () => void
-  authState?: any
   addLeftSpacing?: boolean
   imageIndex?: number
   showBrandName?: boolean
-  isSignedIn?: boolean
+  authState: any
   flatListRef?: RefObject<any>
+  onShowLoginModal?: () => void
 }

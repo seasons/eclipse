@@ -66,6 +66,7 @@ export interface CollectionUIProps {
   hidePopUp?: () => void
   authState?: any
   setProductCount?: (count: number) => void
+  onShowLoginModal?: () => void
 }
 
 export interface CollectionBottomSheetProps {
