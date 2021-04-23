@@ -13,7 +13,6 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
   imageIndex,
-  isSignedIn,
 }) => {
   const image = get(
     product,
@@ -25,6 +24,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   const tracking = useTracking()
 
   const brandName = product?.brand?.name
+  const productName = product?.name
   const brandSlug = product?.brand?.slug
   const retailPrice = product?.retailPrice
 
@@ -64,36 +64,28 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
           <ProgressiveImage url={image?.url} size="small" alt="product image" />
           <Spacer mb={1} />
           <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
-            <Sans size="2" mt="0.5">
-              {brandName}
-            </Sans>
+            <Spacer mt={0.5} />
+            <Sans size="2">{brandName}</Sans>
           </Link>
-          {retailPrice && !isSignedIn && (
+          <Spacer mt={0.5} />
+          <Sans size="2" color="black50">
+            {productName}
+          </Sans>
+          {retailPrice && (
             <>
-              <LineThroughSans
-                mt="0.5"
-                size="2"
-                color="black50"
-                display="inline"
-              >
-                ${retailPrice}
-              </LineThroughSans>
-              <Sans mt="0.5" size="2" color="black50" display="inline">
-                {" "}
-                | $65 for 30-days
+              <Spacer mt={0.5} />
+              <Sans size="2" color="black50">
+                Retail ${retailPrice}
               </Sans>
             </>
           )}
+          <Spacer mt={0.5} />
           <VariantSizes variants={product.variants} size="2" />
         </a>
       </Link>
     </ProductContainer>
   )
 }
-
-const LineThroughSans = styled(Sans)`
-  text-decoration: line-through;
-`
 
 const ProductContainer = styled(Box)`
   margin: 2px;
