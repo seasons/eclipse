@@ -35,9 +35,11 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
           <rect x={0} y={0} width="100%" height="100%" />
         </ContentLoader>
         <Spacer mb="5px" />
-        <ContentLoader width="100%" height="42px">
-          <rect x={0} y={0} width="40%" height={12} />
-          <rect x={0} y={19} width={37} height={12} />
+        <ContentLoader width="100%" height="70px">
+          <rect x={0} y={0} width={70} height={10} />
+          <rect x={0} y={18} width={110} height={10} />
+          <rect x={0} y={38} width={60} height={10} />
+          <rect x={0} y={58} width={55} height={10} />
         </ContentLoader>
       </Box>
     )
