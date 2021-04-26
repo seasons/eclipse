@@ -1,32 +1,37 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "../Link"
-import { get } from "lodash"
 import { VariantSizes } from "../VariantSizes"
 import ContentLoader from "react-content-loader"
-import { ProgressiveImage } from "@/components"
+import { Picture, ProgressiveImage } from "@/components"
 import { Box, Sans, Spacer } from "@/elements"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { ProductGridItemProps } from "./ProductGridItem.shared"
+import { IMAGE_ASPECT_RATIO } from "@/helpers/imageResize"
 
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
-  imageIndex,
 }) => {
-  const image = get(
-    product,
-    imageIndex ? `images[${imageIndex}]` : "images[0]",
-    {
-      url: "",
-    }
-  )
+  const [hover, setHover] = React.useState(false)
+  const [loaded, setLoaded] = React.useState(false)
+  const thirdImageRef = React.useRef(null)
+
+  const image = product?.images?.[0]
+  const thirdImage = product?.images?.[2]
   const tracking = useTracking()
 
   const brandName = product?.brand?.name
   const productName = product?.name
   const brandSlug = product?.brand?.slug
   const retailPrice = product?.retailPrice
+
+  React.useEffect(() => {
+    const image = thirdImageRef.current
+    if (image && image.complete && !loaded) {
+      setLoaded(true)
+    }
+  }, [thirdImageRef, setLoaded, loaded])
 
   if (!product || loading) {
     return (
@@ -48,6 +53,8 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   return (
     <ProductContainer
       key={product.id}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onClick={() =>
         tracking.trackEvent({
           actionName: TrackSchema.ActionNames.ProductTapped,
@@ -63,6 +70,19 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
           href={`/product/${product.slug}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
+          {hover && (
+            <ThirdImageWrapper loaded={loaded}>
+              <Picture
+                src={thirdImage?.url}
+                key={thirdImage?.url}
+                alt={`Image of ${product.name}`}
+                imgRef={thirdImageRef}
+                onLoad={() => {
+                  setLoaded(true)
+                }}
+              />
+            </ThirdImageWrapper>
+          )}
           <ProgressiveImage url={image?.url} size="small" alt="product image" />
           <Spacer mb={1} />
           <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
@@ -88,6 +108,16 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
     </ProductContainer>
   )
 }
+
+const ThirdImageWrapper = styled(Box)<{ loaded: boolean }>`
+  z-index: 3;
+  position: absolute;
+  opacity: ${(p) => (p.loaded ? 1 : 0)};
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: calc(100% * ${IMAGE_ASPECT_RATIO});
+`
 
 const ProductContainer = styled(Box)`
   margin: 2px;
