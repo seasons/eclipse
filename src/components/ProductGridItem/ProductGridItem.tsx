@@ -2,8 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import gql from "graphql-tag"
 import { Link } from "../Link"
-
-import { IMAGE_ASPECT_RATIO } from "@/helpers/imageResize"
 import { filter } from "graphql-anywhere"
 import { VariantSizes } from "../VariantSizes"
 import ContentLoader from "react-content-loader"
@@ -163,7 +161,6 @@ const ThirdImageWrapper = styled(Box)<{ loaded: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  padding-bottom: calc(100% * ${IMAGE_ASPECT_RATIO});
 `
 
 const ProductContainer = styled(Box)`
@@ -171,4 +168,5 @@ const ProductContainer = styled(Box)`
   overflow: hidden;
   text-align: left;
   cursor: pointer;
+  position: relative;
 `
