@@ -2,8 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import gql from "graphql-tag"
 import { Link } from "../Link"
-
-import { IMAGE_ASPECT_RATIO } from "@/helpers/imageResize"
 import { filter } from "graphql-anywhere"
 import { VariantSizes } from "../VariantSizes"
 import ContentLoader from "react-content-loader"
@@ -95,7 +93,11 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         })
       }
     >
-      <Link href="/product/[Product]" as={`/product/${product.slug}`}>
+      <Link
+        href="/product/[Product]"
+        as={`/product/${product.slug}`}
+        passHref={true}
+      >
         {hover && (
           <ThirdImageWrapper loaded={loaded}>
             <Picture
@@ -114,11 +116,19 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
       <Spacer mb={1} />
       <Flex flexDirection="row">
         <Box flex={1}>
-          <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
+          <Link
+            href="/designer/[Designer]"
+            as={`/designer/${brandSlug}`}
+            passHref={true}
+          >
             <Spacer mt={0.5} />
             <Sans size="2">{brandName}</Sans>
           </Link>
-          <Link href="/product/[Product]" as={`/product/${product.slug}`}>
+          <Link
+            href="/product/[Product]"
+            as={`/product/${product.slug}`}
+            passHref={true}
+          >
             <Spacer mt={0.5} />
             <Sans size="2" color="black50">
               {productName}
@@ -163,7 +173,6 @@ const ThirdImageWrapper = styled(Box)<{ loaded: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  padding-bottom: calc(100% * ${IMAGE_ASPECT_RATIO});
 `
 
 const ProductContainer = styled(Box)`
@@ -171,4 +180,5 @@ const ProductContainer = styled(Box)`
   overflow: hidden;
   text-align: left;
   cursor: pointer;
+  position: relative;
 `
