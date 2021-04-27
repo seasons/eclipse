@@ -93,7 +93,11 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         })
       }
     >
-      <Link href="/product/[Product]" as={`/product/${product.slug}`}>
+      <Link
+        href="/product/[Product]"
+        as={`/product/${product.slug}`}
+        passHref={true}
+      >
         {hover && (
           <ThirdImageWrapper loaded={loaded}>
             <Picture
@@ -112,11 +116,19 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
       <Spacer mb={1} />
       <Flex flexDirection="row">
         <Box flex={1}>
-          <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
+          <Link
+            href="/designer/[Designer]"
+            as={`/designer/${brandSlug}`}
+            passHref={true}
+          >
             <Spacer mt={0.5} />
             <Sans size="2">{brandName}</Sans>
           </Link>
-          <Link href="/product/[Product]" as={`/product/${product.slug}`}>
+          <Link
+            href="/product/[Product]"
+            as={`/product/${product.slug}`}
+            passHref={true}
+          >
             <Spacer mt={0.5} />
             <Sans size="2" color="black50">
               {productName}
