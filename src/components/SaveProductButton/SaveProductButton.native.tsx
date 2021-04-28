@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import gql from "graphql-tag"
 import { TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { SaveIcon } from "@/icons/SaveIcon"
@@ -8,19 +7,8 @@ import { Box } from "@/elements/Box"
 import { useMutation } from "@apollo/client"
 import { GET_PRODUCT } from "@/queries/productQueries"
 import { GET_BAG } from "@/queries/bagQueries"
+import { SAVE_ITEM } from "./queries"
 import type { PopUpData } from "@/types"
-
-export const SAVE_ITEM = gql`
-  mutation SaveItem($item: ID!, $save: Boolean!) {
-    saveProduct(item: $item, save: $save) {
-      id
-      productVariant {
-        id
-        isSaved
-      }
-    }
-  }
-`
 
 export interface SaveProductButtonProps {
   product: any

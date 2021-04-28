@@ -4,3 +4,4 @@ export {
   NotificationBarContext,
   useNotificationBarContext,
 } from "./NotificationBarContext"
+export { BrowseProductsNotificationBar } from "./BrowseProductsNotificationBar"

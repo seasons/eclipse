@@ -1,28 +1,16 @@
 import React, { useEffect, useState } from "react"
 import { Box } from "@/elements"
 import { SaveIcon } from "@/icons/SaveIcon"
-import gql from "graphql-tag"
 import { useMutation } from "@apollo/client"
 import { useTracking, TrackSchema } from "@/helpers/track"
 import { GET_PRODUCT } from "@/queries/productQueries"
 import { GET_BAG } from "@/queries/bagQueries"
+import { SAVE_ITEM } from "./queries"
 import styled from "styled-components"
 import { SaveProductButtonProps } from "./SaveProductButton.shared"
 import { SaveProductModal } from "../SaveProductModal"
 import { Modal, Tooltip } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
-
-export const SAVE_ITEM = gql`
-  mutation SaveItem($item: ID!, $save: Boolean!) {
-    saveProduct(item: $item, save: $save) {
-      id
-      productVariant {
-        id
-        isSaved
-      }
-    }
-  }
-`
 
 export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   product,
