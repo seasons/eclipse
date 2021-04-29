@@ -12,12 +12,14 @@ import { IMAGE_ASPECT_RATIO } from "@/helpers/imageResize"
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
+  imageIndex,
 }) => {
   const [hover, setHover] = React.useState(false)
   const [loaded, setLoaded] = React.useState(false)
   const thirdImageRef = React.useRef(null)
 
-  const image = product?.images?.[0]
+  const disableHover = imageIndex === 2
+  const image = product?.images?.[imageIndex || 0]
   const thirdImage = product?.images?.[2]
   const tracking = useTracking()
 
@@ -70,7 +72,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
           href={`/product/${product.slug}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          {hover && (
+          {hover && !disableHover && (
             <ThirdImageWrapper loaded={loaded}>
               <Picture
                 src={thirdImage?.url}
