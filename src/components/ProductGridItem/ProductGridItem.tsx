@@ -1,26 +1,56 @@
 import React from "react"
 import styled from "styled-components"
+import gql from "graphql-tag"
 import { Link } from "../Link"
+import { filter } from "graphql-anywhere"
 import { VariantSizes } from "../VariantSizes"
 import ContentLoader from "react-content-loader"
 import { Picture, ProgressiveImage } from "@/components"
-import { Box, Sans, Spacer } from "@/elements"
+import { Box, Sans, Spacer, Flex } from "@/elements"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { ProductGridItemProps } from "./ProductGridItem.shared"
-import { IMAGE_ASPECT_RATIO } from "@/helpers/imageResize"
+import { SaveProductButton } from "../SaveProductButton"
+import { SaveProductModal_Product } from "../SaveProductModal/SaveProductModal"
+
+export const ProductGridItem_Product = gql`
+  fragment ProductGridItem_Product on Product {
+    id
+    slug
+    retailPrice
+    brand {
+      id
+      slug
+      name
+    }
+    variants {
+      id
+      reservable
+      displayShort
+    }
+    extraLargeImages: images(size: XLarge) {
+      id
+      url
+    }
+
+    ...SaveProductModal_Product
+  }
+  ${SaveProductModal_Product}
+`
 
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
   imageIndex,
+  authState,
+  onShowLoginModal,
 }) => {
   const [hover, setHover] = React.useState(false)
   const [loaded, setLoaded] = React.useState(false)
   const thirdImageRef = React.useRef(null)
 
   const disableHover = imageIndex === 2
-  const image = product?.images?.[imageIndex || 0]
-  const thirdImage = product?.images?.[2]
+  const image = product?.extraLargeImages?.[imageIndex || 0]
+  const thirdImage = product?.extraLargeImages?.[2]
   const tracking = useTracking()
 
   const brandName = product?.brand?.name
@@ -29,8 +59,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   const retailPrice = product?.retailPrice
 
   React.useEffect(() => {
-    const image = thirdImageRef.current
-    if (image && image.complete && !loaded) {
+    if (thirdImageRef.current && thirdImageRef.current.complete && !loaded) {
       setLoaded(true)
     }
   }, [thirdImageRef, setLoaded, loaded])
@@ -67,46 +96,75 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         })
       }
     >
-      <Link href="/product/[Product]" as={`/product/${product.slug}`}>
-        <a
-          href={`/product/${product.slug}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          {hover && !disableHover && (
-            <ThirdImageWrapper loaded={loaded}>
-              <Picture
-                src={thirdImage?.url}
-                key={thirdImage?.url}
-                alt={`Image of ${product.name}`}
-                imgRef={thirdImageRef}
-                onLoad={() => {
-                  setLoaded(true)
-                }}
-              />
-            </ThirdImageWrapper>
-          )}
-          <ProgressiveImage url={image?.url} size="small" alt="product image" />
-          <Spacer mb={1} />
-          <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
+      <Link
+        href="/product/[Product]"
+        as={`/product/${product.slug}`}
+        passHref={true}
+      >
+        {hover && !disableHover && (
+          <ThirdImageWrapper loaded={loaded}>
+            <Picture
+              src={thirdImage?.url}
+              key={thirdImage?.url}
+              alt={`Image of ${product.name}`}
+              imgRef={thirdImageRef}
+              onLoad={() => {
+                setLoaded(true)
+              }}
+            />
+          </ThirdImageWrapper>
+        )}
+        <ProgressiveImage url={image?.url} size="small" alt="product image" />
+      </Link>
+      <Spacer mb={1} />
+      <Flex flexDirection="row">
+        <Box flex={1}>
+          <Link
+            href="/designer/[Designer]"
+            as={`/designer/${brandSlug}`}
+            passHref={true}
+          >
             <Spacer mt={0.5} />
             <Sans size="2">{brandName}</Sans>
           </Link>
-          <Spacer mt={0.5} />
-          <Sans size="2" color="black50">
-            {productName}
-          </Sans>
-          {retailPrice && (
-            <>
-              <Spacer mt={0.5} />
-              <Sans size="2" color="black50">
-                Retail ${retailPrice}
-              </Sans>
-            </>
-          )}
-          <Spacer mt={0.5} />
-          <VariantSizes variants={product.variants} size="2" />
-        </a>
-      </Link>
+          <Link
+            href="/product/[Product]"
+            as={`/product/${product.slug}`}
+            passHref={true}
+          >
+            <Spacer mt={0.5} />
+            <Sans size="2" color="black50">
+              {productName}
+            </Sans>
+            {retailPrice && (
+              <>
+                <Spacer mt={0.5} />
+                <Sans size="2" color="black50">
+                  Retail ${retailPrice}
+                </Sans>
+              </>
+            )}
+            <Spacer mt={0.5} />
+            <VariantSizes variants={product.variants} size="2" />
+          </Link>
+        </Box>
+        <Box marginRight={1}>
+          <SaveProductButton
+            product={filter(SaveProductModal_Product, product)}
+            height={20}
+            width={16}
+            onShowLoginModal={onShowLoginModal}
+            authState={authState}
+            showSizeSelector={true}
+            onPressSaveButton={() => {
+              tracking.trackEvent({
+                actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
+                actionType: TrackSchema.ActionTypes.Tap,
+              })
+            }}
+          />
+        </Box>
+      </Flex>
     </ProductContainer>
   )
 }
@@ -118,7 +176,6 @@ const ThirdImageWrapper = styled(Box)<{ loaded: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  padding-bottom: calc(100% * ${IMAGE_ASPECT_RATIO});
 `
 
 const ProductContainer = styled(Box)`
@@ -126,4 +183,5 @@ const ProductContainer = styled(Box)`
   overflow: hidden;
   text-align: left;
   cursor: pointer;
+  position: relative;
 `

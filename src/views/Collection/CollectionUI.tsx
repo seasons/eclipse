@@ -9,7 +9,6 @@ import Head from "next/head"
 import { Box, Col, Flex, Grid, Row, Sans, Spacer } from "@/elements"
 import { debounce } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
-// import Head from "next/head"
 import type { CollectionUIProps } from "./Collection"
 import styled from "styled-components"
 
@@ -18,6 +17,8 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   fetchMore,
   loading,
   setProductCount,
+  authState,
+  onShowLoginModal,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
   const collection = data?.collection
@@ -162,7 +163,12 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
             {products?.map((product, i) => (
               <Col col sm="3" xs="6" key={i}>
                 <Box pb={[2, 2]}>
-                  <ProductGridItem product={product?.node} loading={!data} />
+                  <ProductGridItem
+                    product={product?.node}
+                    loading={!data}
+                    authState={authState}
+                    onShowLoginModal={onShowLoginModal}
+                  />
                 </Box>
               </Col>
             ))}
