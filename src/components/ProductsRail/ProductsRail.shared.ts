@@ -9,5 +9,6 @@ export interface ProductsRailProps {
   imageIndex?: number
   underlineTitleOnClick?: () => void
   showProductName?: boolean
-  isSignedIn?: boolean
+  authState?: any
+  onShowLoginModal?: () => void
 }
