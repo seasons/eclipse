@@ -28,6 +28,7 @@ export const ProductGridItem_Product = gql`
       displayShort
     }
     extraLargeImages: images(size: XLarge) {
+      id
       url
     }
 
@@ -39,6 +40,7 @@ export const ProductGridItem_Product = gql`
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
+  imageIndex,
   authState,
   onShowLoginModal,
 }) => {
@@ -46,7 +48,8 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   const [loaded, setLoaded] = React.useState(false)
   const thirdImageRef = React.useRef(null)
 
-  const image = product?.extraLargeImages?.[0]
+  const disableHover = imageIndex === 2
+  const image = product?.extraLargeImages?.[imageIndex || 0]
   const thirdImage = product?.extraLargeImages?.[2]
   const tracking = useTracking()
 
@@ -98,7 +101,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         as={`/product/${product.slug}`}
         passHref={true}
       >
-        {hover && (
+        {hover && !disableHover && (
           <ThirdImageWrapper loaded={loaded}>
             <Picture
               src={thirdImage?.url}
