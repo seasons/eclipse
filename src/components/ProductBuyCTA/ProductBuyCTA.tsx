@@ -46,6 +46,7 @@ const ProductBuyNew = React.forwardRef(
           onClick={onBuyNew}
           disabled={!availableForSale || buyButtonMutating}
           loading={buyButtonMutating}
+          style={{ zIndex: 99 }}
         >
           {availableForSale ? `Buy for ${price}` : "Sold Out"}
         </Button>

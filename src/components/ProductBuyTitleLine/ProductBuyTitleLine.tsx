@@ -14,7 +14,7 @@ export const ProductBuyTitleLine = ({ brandName, brandLogoUri }) => (
         <BrandLogoContainer>
           <ProgressiveImage
             source={{ uri: brandLogoUri }}
-            style={{ height: 21, width: 116 }}
+            style={{ height: 51, width: 160 }}
             backgroundColor={color("white100")}
             resizeMode="contain"
           />
