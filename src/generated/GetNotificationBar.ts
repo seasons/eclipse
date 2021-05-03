@@ -64,6 +64,7 @@ export interface GetNotificationBar_me_notificationBar {
   __typename: "NotificationBar";
   id: NotificationBarID | null;
   icon: NotificationBarIcon | null;
+  underlinedCTAText: string | null;
   viewCount: number | null;
   clickCount: number | null;
   web: GetNotificationBar_me_notificationBar_web;

@@ -9,6 +9,7 @@
 
 export interface ProductBuyCTA_ProductFragment_brand_logoImage {
   __typename: "Image";
+  id: string;
   url: string | null;
   height: number | null;
   width: number | null;

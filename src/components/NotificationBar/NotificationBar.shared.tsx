@@ -9,6 +9,7 @@ import {
   GET_NOTIFICATION_BAR,
   UPDATE_NOTIFICATION_BAR_RECEIPT,
 } from "@/queries/notifBarQueries"
+import { GetNotificationBar_me_notificationBar } from "@/generated/GetNotificationBar"
 import styled from "styled-components"
 
 export interface NotificationBarProps {
@@ -21,22 +22,30 @@ interface NotificationBarTemplateProps extends NotificationBarProps {
   outerContainerComponent: React.FC
   type: "web" | "native"
   hideIf?: (data: any) => boolean
+  hideIcon?: boolean
+  data: GetNotificationBar_me_notificationBar | null
+  onUpdateNotificationBarReceipt: (opts: {
+    notificationBarId: string
+    clickCount?: number
+    viewCount?: number
+  }) => Promise<void>
 }
 
-export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
-  containerComponent: Container,
-  outerContainerComponent: OuterContainer,
-  onClick,
-  type,
+type GraphQLNotificationBarProps = Omit<
+  NotificationBarTemplateProps,
+  "data" | "onUpdateNotificationBarReceipt"
+> & {
+  isLoggedIn?: boolean
+}
+
+export const GraphQLNotificationBarTemplate: React.FC<GraphQLNotificationBarProps> = ({
   isLoggedIn,
-  hideIf,
+  ...notificationBarTemplateProps
 }) => {
-  const [hide, setHide] = useState(false)
-  const supportedIcons = ["Chevron", "CloseX"]
+  const mapData = (d) => d?.me?.notificationBar
   const { previousData, data = previousData, refetch } = useQuery(
     GET_NOTIFICATION_BAR
   )
-  const { notificationBarState } = useNotificationBarContext()
 
   const [updateNotificationBarReceipt] = useMutation(
     UPDATE_NOTIFICATION_BAR_RECEIPT,
@@ -48,31 +57,57 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
       ],
     }
   )
-  const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
-  const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
-  const hasData = data?.me?.notificationBar
-  const show = notificationBarState.show
+
+  const handleUpdateNotificationBarReceipt = (variables) =>
+    updateNotificationBarReceipt({ variables }).then(() => Promise.resolve())
 
   useEffect(() => {
     refetch()
   }, [isLoggedIn, refetch])
 
+  return (
+    <NotificationBarTemplate
+      {...notificationBarTemplateProps}
+      data={mapData(data)}
+      onUpdateNotificationBarReceipt={handleUpdateNotificationBarReceipt}
+    />
+  )
+}
+
+export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
+  containerComponent: Container,
+  outerContainerComponent: OuterContainer,
+  onClick,
+  onUpdateNotificationBarReceipt,
+  type,
+  hideIf,
+  hideIcon,
+  data,
+}) => {
+  const [hide, setHide] = useState(false)
+  const supportedIcons = ["Chevron", "CloseX"]
+  const { notificationBarState } = useNotificationBarContext()
+
+  const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
+  const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
+  const hasData = Boolean(data)
+  const show = notificationBarState.show
+
   const isWebNotification = type === "web"
   const isNativeNotification = type === "native"
-  const notificationBar = data?.me?.notificationBar
-  const underlinedCTAText = notificationBar?.underlinedCTAText
+  const underlinedCTAText = data?.underlinedCTAText
 
-  const notificationBarId = notificationBar?.id
-  const icon = notificationBar?.icon
-  const clickCount = notificationBar?.clickCount
-  const viewCount = notificationBar?.viewCount
+  const notificationBarId = data?.id
+  const icon = data?.icon
+  const clickCount = data?.clickCount
+  const viewCount = data?.viewCount
 
-  const web = notificationBar?.web
-  const mobile = notificationBar?.mobile
+  const web = data?.web
+  const mobile = data?.mobile
   const webRoute = web?.route
   const mobileRoute = mobile?.route
 
-  const palette = notificationBar?.palette
+  const palette = data?.palette
   const defaultPalette = palette?.default
   const pressedPalette = palette?.pressed
 
@@ -92,26 +127,28 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
 
   const onPressIn = () => {
     if (isNativeNotification) {
-      if (mobileRoute.dismissable) {
+      if (mobileRoute && mobileRoute.dismissable) {
         setHasBeenClosedNow(true)
       } else {
         onClick(mobileRoute)
       }
     } else if (isWebNotification) {
-      if (webRoute.dismissable) {
+      if (webRoute && webRoute.dismissable) {
         setHasBeenClosedNow(true)
       } else {
         onClick(webRoute)
       }
     }
-    updateNotificationBarReceipt({
-      variables: { notificationBarId, clickCount: clickCount + 1 },
+    onUpdateNotificationBarReceipt({
+      notificationBarId,
+      clickCount: clickCount + 1,
     })
   }
 
   if (!hasUpdatedViewCount) {
-    updateNotificationBarReceipt({
-      variables: { notificationBarId, viewCount: viewCount + 1 },
+    onUpdateNotificationBarReceipt({
+      notificationBarId,
+      viewCount: viewCount + 1,
     })
     setHasUpdatedViewCount(true)
   }
@@ -155,7 +192,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
               </Box>
               <FlexContainer>
                 {!!underlinedCTAText && isWebNotification && (
-                  <FlexContainer mr={2}>
+                  <FlexContainer mr={hideIcon ? 0 : 2}>
                     <Sans
                       size="3"
                       color={titleFontColorWithState}
@@ -165,14 +202,16 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
                     </Sans>
                   </FlexContainer>
                 )}
-                {renderChevron && (
+                {!hideIcon && renderChevron && (
                   <ChevronIcon
                     scale={isWebNotification ? 0.7 : 1}
                     color={iconFontColorWithState}
                     fillColor={bgColorWithState}
                   />
                 )}
-                {renderCloseX && <CloseXIcon color={iconFontColorWithState} />}
+                {!hideIcon && renderCloseX && (
+                  <CloseXIcon color={iconFontColorWithState} />
+                )}
               </FlexContainer>
             </Container>
           )
