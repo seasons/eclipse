@@ -2,7 +2,7 @@ import styled from "styled-components"
 import React, { useState, useRef, useEffect } from "react"
 import { ImageProps } from "react-native"
 import { Picture } from "@/components"
-import { color, PRODUCT_ASPECT_RATIO } from "@/helpers"
+import { PRODUCT_ASPECT_RATIO } from "@/helpers"
 import { Box } from "@/elements"
 import { imageResize, ImageSize } from "@/helpers/imageResize"
 
@@ -21,6 +21,7 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   aspectRatio = PRODUCT_ASPECT_RATIO,
   alt,
   source,
+  style,
 }) => {
   const [loaded, setLoaded] = useState(false)
   const fullImageRef = useRef(null)
@@ -36,7 +37,7 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   const fullImage = imageResize(imageUrl, size)
 
   return (
-    <ImageWrapper aspectRatio={aspectRatio}>
+    <ImageWrapper aspectRatio={aspectRatio} style={style}>
       <FullImageWrapper loaded={loaded}>
         <Picture
           src={fullImage}
@@ -63,7 +64,6 @@ const FullImageWrapper = styled.div<{ loaded: boolean }>`
   width: 100%;
   transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1;
-  background-color: ${color("white100")};
 
   img {
     width: 100%;

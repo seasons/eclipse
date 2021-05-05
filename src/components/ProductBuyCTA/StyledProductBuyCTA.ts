@@ -8,8 +8,8 @@ export const UnderlinedSans = styled(Sans)`
 `
 
 export const BrandLogoContainer = styled(Box)`
-  height: 21px;
-  width: 116px;
+  height: 51px;
+  width: 150px;
   margin-left: 6px;
   margin-bottom: 4px;
 `

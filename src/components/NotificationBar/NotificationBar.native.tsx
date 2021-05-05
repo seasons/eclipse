@@ -2,15 +2,16 @@ import { Box } from "@/elements/Box"
 import React from "react"
 import styled from "styled-components/native"
 import {
-  NotificationBarTemplate,
+  GraphQLNotificationBarTemplate,
   NotificationBarProps,
 } from "./NotificationBar.shared"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   return (
-    <NotificationBarTemplate
+    <GraphQLNotificationBarTemplate
+      outerContainerComponent={Box}
       containerComponent={Container}
-      type="mobile"
+      type="native"
       {...props}
     />
   )

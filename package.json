@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.2.17",
+  "version": "1.2.33",
   "description": "Components library for harvest and flare",
   "main": "lib/commonjs/index",
   "react-native": "lib/module/index",
@@ -30,7 +30,7 @@
     "copy-watch:harvest": "cpx \"lib/**/*.{js,map,ts,tsx}\" ../harvest/node_modules/@seasons/eclipse/lib --watch --verbose",
     "copy-watch:flare": "cpx \"lib/**/*.{js,map,ts,tsx}\" ../flare/node_modules/@seasons/eclipse/lib --watch --verbose",
     "rewrite-paths": "tsc-alias --dir lib/commonjs && tsc-alias --dir lib/module",
-    "apollo:codegen": "rm -r src/generated && apollo client:codegen --excludes **/clientQueries.ts --endpoint=http://localhost:4000 --target typescript --tagName gql --outputFlat src/generated",
+    "apollo:codegen": "rm -rf src/generated && apollo client:codegen --excludes **/clientQueries.ts --endpoint=http://localhost:4000 --target typescript --tagName gql --outputFlat src/generated",
     "watch": "watch 'yarn prepare' ./src"
   },
   "keywords": [
@@ -69,7 +69,7 @@
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^4.2.5",
+    "graphql-anywhere": "^4.2.7",
     "jest": "^26.0.1",
     "luxon": "^1.25.0",
     "metro-react-native-babel-preset": "^0.65.1",

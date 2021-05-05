@@ -1,0 +1,1 @@
+export { SaveProductModal } from "./SaveProductModal"

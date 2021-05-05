@@ -1,1 +1,1 @@
-export { ProductGridItem } from "./ProductGridItem"
+export { ProductGridItem, ProductGridItem_Product } from "./ProductGridItem"

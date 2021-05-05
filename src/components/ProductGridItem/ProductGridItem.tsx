@@ -1,36 +1,68 @@
 import React from "react"
 import styled from "styled-components"
+import gql from "graphql-tag"
 import { Link } from "../Link"
-import { get } from "lodash"
+import { filter } from "graphql-anywhere"
 import { VariantSizes } from "../VariantSizes"
 import ContentLoader from "react-content-loader"
-import { ProgressiveImage } from "@/components"
-import { Box, Sans, Spacer } from "@/elements"
+import { Picture, ProgressiveImage } from "@/components"
+import { Box, Sans, Spacer, Flex } from "@/elements"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { ProductGridItemProps } from "./ProductGridItem.shared"
+import { SaveProductButton } from "../SaveProductButton"
+import { SaveProductModal_Product } from "../SaveProductModal/SaveProductModal"
+
+export const ProductGridItem_Product = gql`
+  fragment ProductGridItem_Product on Product {
+    id
+    slug
+    retailPrice
+    brand {
+      id
+      slug
+      name
+    }
+    variants {
+      id
+      reservable
+      displayShort
+    }
+    extraLargeImages: images(size: XLarge) {
+      id
+      url
+    }
+
+    ...SaveProductModal_Product
+  }
+  ${SaveProductModal_Product}
+`
 
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   product,
   loading,
-  showName,
   imageIndex,
+  authState,
+  onShowLoginModal,
 }) => {
-  const image = get(
-    product,
-    imageIndex ? `images[${imageIndex}]` : "images[0]",
-    {
-      url: "",
-    }
-  )
+  const [hover, setHover] = React.useState(false)
+  const [loaded, setLoaded] = React.useState(false)
+  const thirdImageRef = React.useRef(null)
+
+  const disableHover = imageIndex === 2
+  const image = product?.extraLargeImages?.[imageIndex || 0]
+  const thirdImage = product?.extraLargeImages?.[2]
   const tracking = useTracking()
-  let showBrand = true
 
   const brandName = product?.brand?.name
+  const productName = product?.name
   const brandSlug = product?.brand?.slug
+  const retailPrice = product?.retailPrice
 
-  if (showName || brandName === "Vintage") {
-    showBrand = false
-  }
+  React.useEffect(() => {
+    if (thirdImageRef.current && thirdImageRef.current.complete && !loaded) {
+      setLoaded(true)
+    }
+  }, [thirdImageRef, setLoaded, loaded])
 
   if (!product || loading) {
     return (
@@ -39,43 +71,21 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
           <rect x={0} y={0} width="100%" height="100%" />
         </ContentLoader>
         <Spacer mb="5px" />
-        <ContentLoader width="100%" height="42px">
-          <rect x={0} y={0} width="40%" height={12} />
-          <rect x={0} y={19} width={37} height={12} />
+        <ContentLoader width="100%" height="70px">
+          <rect x={0} y={0} width={70} height={10} />
+          <rect x={0} y={18} width={110} height={10} />
+          <rect x={0} y={38} width={60} height={10} />
+          <rect x={0} y={58} width={55} height={10} />
         </ContentLoader>
       </Box>
     )
   }
 
-  const Text = () => {
-    if (showBrand && brandName && brandSlug) {
-      return (
-        <Link href="/designer/[Designer]" as={`/designer/${brandSlug}`}>
-          <Sans size="2" mt="0.5">
-            {brandName}
-          </Sans>
-          <VariantSizes variants={product.variants} size="2" />
-        </Link>
-      )
-    } else {
-      return (
-        <>
-          {!!product?.name && (
-            <>
-              <Sans size="2" mt="0.5">
-                {product?.name}
-              </Sans>
-              <VariantSizes variants={product.variants} size="2" />
-            </>
-          )}
-        </>
-      )
-    }
-  }
-
   return (
     <ProductContainer
       key={product.id}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onClick={() =>
         tracking.trackEvent({
           actionName: TrackSchema.ActionNames.ProductTapped,
@@ -86,23 +96,92 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         })
       }
     >
-      <Link href="/product/[Product]" as={`/product/${product.slug}`}>
-        <a
-          href={`/product/${product.slug}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <ProgressiveImage url={image?.url} size="small" alt="product image" />
-          <Spacer mb={1} />
-          <Text />
-        </a>
+      <Link
+        href="/product/[Product]"
+        as={`/product/${product.slug}`}
+        passHref={true}
+      >
+        {hover && !disableHover && (
+          <ThirdImageWrapper loaded={loaded}>
+            <Picture
+              src={thirdImage?.url}
+              key={thirdImage?.url}
+              alt={`Image of ${product.name}`}
+              imgRef={thirdImageRef}
+              onLoad={() => {
+                setLoaded(true)
+              }}
+            />
+          </ThirdImageWrapper>
+        )}
+        <ProgressiveImage url={image?.url} size="small" alt="product image" />
       </Link>
+      <Spacer mb={1} />
+      <Flex flexDirection="row">
+        <Box flex={1}>
+          <Link
+            href="/designer/[Designer]"
+            as={`/designer/${brandSlug}`}
+            passHref={true}
+          >
+            <Spacer mt={0.5} />
+            <Sans size="2">{brandName}</Sans>
+          </Link>
+          <Link
+            href="/product/[Product]"
+            as={`/product/${product.slug}`}
+            passHref={true}
+          >
+            <Spacer mt={0.5} />
+            <Sans size="2" color="black50">
+              {productName}
+            </Sans>
+            {retailPrice && (
+              <>
+                <Spacer mt={0.5} />
+                <Sans size="2" color="black50">
+                  Retail ${retailPrice}
+                </Sans>
+              </>
+            )}
+            <Spacer mt={0.5} />
+            <VariantSizes variants={product.variants} size="2" />
+          </Link>
+        </Box>
+        <Box marginRight={1}>
+          <SaveProductButton
+            product={filter(SaveProductModal_Product, product)}
+            height={20}
+            width={16}
+            onShowLoginModal={onShowLoginModal}
+            authState={authState}
+            showSizeSelector={true}
+            onPressSaveButton={() => {
+              tracking.trackEvent({
+                actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
+                actionType: TrackSchema.ActionTypes.Tap,
+              })
+            }}
+          />
+        </Box>
+      </Flex>
     </ProductContainer>
   )
 }
+
+const ThirdImageWrapper = styled(Box)<{ loaded: boolean }>`
+  z-index: 3;
+  position: absolute;
+  opacity: ${(p) => (p.loaded ? 1 : 0)};
+  top: 0;
+  left: 0;
+  width: 100%;
+`
 
 const ProductContainer = styled(Box)`
   margin: 2px;
   overflow: hidden;
   text-align: left;
   cursor: pointer;
+  position: relative;
 `

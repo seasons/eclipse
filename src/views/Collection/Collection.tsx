@@ -66,6 +66,7 @@ export interface CollectionUIProps {
   hidePopUp?: () => void
   authState?: any
   setProductCount?: (count: number) => void
+  onShowLoginModal?: () => void
 }
 
 export interface CollectionBottomSheetProps {
@@ -79,7 +80,7 @@ export interface CollectionBottomSheetProps {
   title: string
   onEndReached: () => void
   metaData?: []
-  shouldLoadMore?: boolean
+  aggregateCount?: number
 }
 
 export const Collection: React.FC<{

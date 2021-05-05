@@ -1,25 +1,33 @@
 import React from "react"
-import styled from "styled-components"
 import {
-  NotificationBarTemplate,
+  GraphQLNotificationBarTemplate,
   NotificationBarProps,
 } from "./NotificationBar.shared"
+import { NotificationBarContainer, OuterWrapper } from "./StyledNotificationBar"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
+  const hideIf = (data: any) => {
+    if (data) {
+      let windowLocation
+      if (typeof window !== "undefined") {
+        windowLocation = window.location.pathname
+      }
+      return (
+        !!windowLocation &&
+        windowLocation === data?.me?.notificationBar?.web?.route?.url
+      )
+    } else {
+      return false
+    }
+  }
+
   return (
-    <NotificationBarTemplate
-      containerComponent={Container}
+    <GraphQLNotificationBarTemplate
+      outerContainerComponent={OuterWrapper}
+      containerComponent={NotificationBarContainer}
       type="web"
+      hideIf={hideIf}
       {...props}
     />
   )
 }
-
-const Container = styled.div<{ color: string }>`
-  background-color: ${(p) => p.color};
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px 15px 20px;
-`

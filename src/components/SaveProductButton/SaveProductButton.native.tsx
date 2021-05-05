@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react"
-import gql from "graphql-tag"
 import { TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { SaveIcon } from "@/icons/SaveIcon"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { Box } from "@/elements/Box"
-import { useMutation } from "@apollo/client"
+import { gql, useMutation } from "@apollo/client"
 import { GET_PRODUCT } from "@/queries/productQueries"
 import { SaveProductButtonProps } from "./SaveProductButton.shared"
 

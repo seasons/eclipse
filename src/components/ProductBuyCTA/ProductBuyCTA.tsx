@@ -46,6 +46,7 @@ const ProductBuyNew = React.forwardRef(
           onClick={onBuyNew}
           disabled={!availableForSale || buyButtonMutating}
           loading={buyButtonMutating}
+          style={{ zIndex: 99 }}
         >
           {availableForSale ? `Buy for ${price}` : "Sold Out"}
         </Button>
@@ -157,6 +158,8 @@ export const ProductBuyCTA: React.FC<
       const price = priceInDollars?.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
       })
       const availableForSale = selectedVariant?.price?.buyNewAvailableForSale
       const brandName = product?.brand?.name

@@ -1,5 +1,5 @@
-import { PopUpData } from "@/types"
 import { PureQueryOptions } from "@apollo/client"
+import type { PopUpData } from "@/types"
 
 export interface SaveProductButtonProps {
   product: any
@@ -13,4 +13,6 @@ export interface SaveProductButtonProps {
   hidePopUp: () => void
   authState: any
   refetchQueries?: Array<string | PureQueryOptions>
+  showSizeSelector?: boolean
+  onShowLoginModal?: () => void
 }
