@@ -1,17 +1,17 @@
 import { Box, Flex, Sans } from "@/elements"
-import {
-  Order_OrderFragment_lineItems_productVariant,
-  Order_OrderFragment_lineItems_productVariant_product,
-} from "@/generated/Order_OrderFragment"
 import { ProgressiveImage } from "@/components"
 import { Container } from "./StyledOrderItem"
 import React from "react"
 import { PRODUCT_ASPECT_RATIO } from "@/helpers/constants"
+import {
+  OrderFragment_Order_lineItems_productVariant,
+  OrderFragment_Order_lineItems_productVariant_product,
+} from "@/generated/OrderFragment_Order"
 
 type OrderItemProps = {
-  productVariant: Order_OrderFragment_lineItems_productVariant
+  productVariant: OrderFragment_Order_lineItems_productVariant
   onPress: (
-    product: Order_OrderFragment_lineItems_productVariant_product
+    product: OrderFragment_Order_lineItems_productVariant_product
   ) => void
 }
 

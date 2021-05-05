@@ -10,26 +10,26 @@ import {
   Separator,
 } from "@/components"
 import { ScrollView, UnderlinedSans } from "./StyledReviewOrder"
-import {
-  Order_OrderFragment,
-  Order_OrderFragment_lineItems_productVariant_product,
-  Order_OrderFragment_lineItems_productVariant_product_brand,
-} from "@/generated/Order_OrderFragment"
-import { Order_CustomerFragment } from "@/generated/Order_CustomerFragment"
 import { OrderType } from "@/generated/globalTypes"
 import { displayCurrency } from "@/helpers/currency"
 import { space } from "@/helpers/space"
+import {
+  OrderFragment_Order,
+  OrderFragment_Order_lineItems_productVariant_product,
+  OrderFragment_Order_lineItems_productVariant_product_brand,
+} from "@/generated/OrderFragment_Order"
+import { OrderFragment_Customer } from "@/generated/OrderFragment_Customer"
 
 type Props = {
   isSubmittingOrder: boolean
   onBackPressed: () => void
   onOrderItemPressed: (
-    product: Order_OrderFragment_lineItems_productVariant_product
+    product: OrderFragment_Order_lineItems_productVariant_product
   ) => void
   onNavigateToBrand: (href: string) => void
   onSubmitOrder: (orderId: string) => void
-  order: Order_OrderFragment
-  customer: Order_CustomerFragment
+  order: OrderFragment_Order
+  customer: OrderFragment_Customer
   windowWidth: number
 }
 
@@ -41,7 +41,7 @@ const SubText = ({
 }: {
   needsShipping: boolean
   orderType: OrderType
-  brand: Order_OrderFragment_lineItems_productVariant_product_brand
+  brand: OrderFragment_Order_lineItems_productVariant_product_brand
   onNavigateToBrand: (href: string) => void
 }) => {
   if (orderType === "New") {
