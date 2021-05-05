@@ -46,6 +46,7 @@ export interface ProductGridItem_Product_variants {
 
 export interface ProductGridItem_Product_extraLargeImages {
   __typename: "Image";
+  id: string;
   url: string | null;
 }
 

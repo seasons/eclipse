@@ -9,22 +9,22 @@ import {
   OrderItem,
 } from "@/components"
 import { Box, Flex, Sans, Spacer } from "@/elements"
-import {
-  Order_OrderFragment,
-  Order_OrderFragment_lineItems_productVariant_product,
-} from "@/generated/Order_OrderFragment"
-import { Order_CustomerFragment } from "@/generated/Order_CustomerFragment"
 import React from "react"
 import { ScrollView } from "./StyledOrderConfirmation"
 import { CheckCircled } from "@/icons/CheckCircled"
+import { OrderFragment_Customer } from "@/generated/OrderFragment_Customer"
+import {
+  OrderFragment_Order,
+  OrderFragment_Order_lineItems_productVariant_product,
+} from "@/generated/OrderFragment_Order"
 
 type Props = {
   windowWidth: number
-  order: Order_OrderFragment
-  customer: Order_CustomerFragment
+  order: OrderFragment_Order
+  customer: OrderFragment_Customer
   onDonePressed: () => void
   onOrderItemPressed: (
-    product: Order_OrderFragment_lineItems_productVariant_product
+    product: OrderFragment_Order_lineItems_productVariant_product
   ) => void
 }
 

@@ -6,25 +6,25 @@
 import { ShippingCode } from "./globalTypes";
 
 // ====================================================
-// GraphQL fragment: Order_CustomerFragment
+// GraphQL fragment: OrderFragment_Customer
 // ====================================================
 
-export interface Order_CustomerFragment_detail_shippingAddress_shippingOptions_shippingMethod {
+export interface OrderFragment_Customer_detail_shippingAddress_shippingOptions_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
   code: ShippingCode;
   displayText: string;
 }
 
-export interface Order_CustomerFragment_detail_shippingAddress_shippingOptions {
+export interface OrderFragment_Customer_detail_shippingAddress_shippingOptions {
   __typename: "ShippingOption";
   id: string;
   externalCost: number | null;
   averageDuration: number | null;
-  shippingMethod: Order_CustomerFragment_detail_shippingAddress_shippingOptions_shippingMethod | null;
+  shippingMethod: OrderFragment_Customer_detail_shippingAddress_shippingOptions_shippingMethod | null;
 }
 
-export interface Order_CustomerFragment_detail_shippingAddress {
+export interface OrderFragment_Customer_detail_shippingAddress {
   __typename: "Location";
   id: string;
   address1: string | null;
@@ -32,26 +32,26 @@ export interface Order_CustomerFragment_detail_shippingAddress {
   city: string | null;
   state: string | null;
   zipCode: string;
-  shippingOptions: Order_CustomerFragment_detail_shippingAddress_shippingOptions[] | null;
+  shippingOptions: OrderFragment_Customer_detail_shippingAddress_shippingOptions[] | null;
 }
 
-export interface Order_CustomerFragment_detail {
+export interface OrderFragment_Customer_detail {
   __typename: "CustomerDetail";
   id: string;
   phoneNumber: string | null;
-  shippingAddress: Order_CustomerFragment_detail_shippingAddress | null;
+  shippingAddress: OrderFragment_Customer_detail_shippingAddress | null;
 }
 
-export interface Order_CustomerFragment_billingInfo {
+export interface OrderFragment_Customer_billingInfo {
   __typename: "BillingInfo";
   id: string;
   brand: string;
   last_digits: string;
 }
 
-export interface Order_CustomerFragment {
+export interface OrderFragment_Customer {
   __typename: "Customer";
   id: string;
-  detail: Order_CustomerFragment_detail | null;
-  billingInfo: Order_CustomerFragment_billingInfo | null;
+  detail: OrderFragment_Customer_detail | null;
+  billingInfo: OrderFragment_Customer_billingInfo | null;
 }

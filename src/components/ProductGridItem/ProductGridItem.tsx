@@ -43,6 +43,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   imageIndex,
   authState,
   onShowLoginModal,
+  saveProductButtonRefetchQueries,
 }) => {
   const [hover, setHover] = React.useState(false)
   const [loaded, setLoaded] = React.useState(false)
@@ -162,6 +163,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
                 actionType: TrackSchema.ActionTypes.Tap,
               })
             }}
+            refetchQueries={saveProductButtonRefetchQueries}
           />
         </Box>
       </Flex>

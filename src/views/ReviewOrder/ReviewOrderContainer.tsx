@@ -1,29 +1,29 @@
 import { useQuery } from "@apollo/client"
 import { ReviewOrder } from "./ReviewOrder"
 import React from "react"
-import {
-  Order_OrderFragment,
-  Order_OrderFragment_lineItems_productVariant_product,
-} from "@/generated/Order_OrderFragment"
-import { GetCustomer, GetCustomer_me_customer } from "@/generated/GetCustomer"
 import { FixedBackArrow, Loader } from "@/components"
 import { OrderFragment_Customer } from "@/queries"
 import gql from "graphql-tag"
+import {
+  OrderFragment_Order,
+  OrderFragment_Order_lineItems_productVariant_product,
+} from "@/generated/OrderFragment_Order"
+import { ReviewOrder_Query_me_customer } from "@/generated/ReviewOrder_Query"
 
 type Props = {
   onBackPressed: () => void
   onNavigateToBrand: (href: string) => void
   onOrderItemPressed: (
-    product: Order_OrderFragment_lineItems_productVariant_product
+    product: OrderFragment_Order_lineItems_productVariant_product
   ) => void
   onOrderSubmitted: ({
     order,
     customer,
   }: {
-    order: Order_OrderFragment
-    customer: GetCustomer_me_customer
+    order: OrderFragment_Order
+    customer: ReviewOrder_Query_me_customer
   }) => Promise<void>
-  order: Order_OrderFragment
+  order: OrderFragment_Order
   windowWidth: number
 }
 
@@ -48,7 +48,7 @@ export const ReviewOrderContainer: React.FC<Props> = ({
   onNavigateToBrand,
   windowWidth,
 }) => {
-  const { data, loading } = useQuery<GetCustomer>(ReviewOrder_Query)
+  const { data, loading } = useQuery(ReviewOrder_Query)
 
   const [isSubmittingOrder, setIsSubmittingOrder] = React.useState(false)
 

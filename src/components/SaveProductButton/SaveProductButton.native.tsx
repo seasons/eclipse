@@ -4,20 +4,9 @@ import { useNavigation } from "@react-navigation/native"
 import { SaveIcon } from "@/icons/SaveIcon"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { Box } from "@/elements/Box"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import { SaveProductButtonProps } from "./SaveProductButton.shared"
-
-export const SAVE_ITEM = gql`
-  mutation SaveItem($item: ID!, $save: Boolean!) {
-    saveProduct(item: $item, save: $save) {
-      id
-      productVariant {
-        id
-        isSaved
-      }
-    }
-  }
-`
+import { SAVE_ITEM } from "./queries"
 
 export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   product,
