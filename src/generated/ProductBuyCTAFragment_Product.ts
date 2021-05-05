@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ProductBuyCTA_ProductFragment
+// GraphQL fragment: ProductBuyCTAFragment_Product
 // ====================================================
 
-export interface ProductBuyCTA_ProductFragment_brand_logoImage {
+export interface ProductBuyCTAFragment_Product_brand_logoImage {
   __typename: "Image";
   id: string;
   url: string | null;
@@ -15,16 +15,16 @@ export interface ProductBuyCTA_ProductFragment_brand_logoImage {
   width: number | null;
 }
 
-export interface ProductBuyCTA_ProductFragment_brand {
+export interface ProductBuyCTAFragment_Product_brand {
   __typename: "Brand";
   id: string;
   name: string;
   websiteUrl: string | null;
-  logoImage: ProductBuyCTA_ProductFragment_brand_logoImage | null;
+  logoImage: ProductBuyCTAFragment_Product_brand_logoImage | null;
 }
 
-export interface ProductBuyCTA_ProductFragment {
+export interface ProductBuyCTAFragment_Product {
   __typename: "Product";
   id: string;
-  brand: ProductBuyCTA_ProductFragment_brand;
+  brand: ProductBuyCTAFragment_Product_brand;
 }

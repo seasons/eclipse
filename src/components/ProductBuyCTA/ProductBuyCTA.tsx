@@ -1,7 +1,7 @@
 import React from "react"
 
-import { ProductBuyCTA_ProductFragment as ProductFragment } from "@/generated/ProductBuyCTA_ProductFragment"
-import { ProductBuyCTA_ProductVariantFragment as ProductVariantFragment } from "@/generated/ProductBuyCTA_ProductVariantFragment"
+import { ProductBuyCTAFragment_Product as ProductFragment } from "@/generated/ProductBuyCTAFragment_Product"
+import { ProductBuyCTAFragment_ProductVariant as ProductVariantFragment } from "@/generated/ProductBuyCTAFragment_ProductVariant"
 
 import { Flex, Sans, Spacer } from "@/elements"
 import { Button, ProductBuyTitleLine } from "@/components"
