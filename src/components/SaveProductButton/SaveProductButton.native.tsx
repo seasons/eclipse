@@ -5,7 +5,6 @@ import { SaveIcon } from "@/icons/SaveIcon"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { Box } from "@/elements/Box"
 import { gql, useMutation } from "@apollo/client"
-import { GET_PRODUCT } from "@/queries/productQueries"
 import { SaveProductButtonProps } from "./SaveProductButton.shared"
 
 export const SAVE_ITEM = gql`

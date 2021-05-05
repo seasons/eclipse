@@ -9,8 +9,8 @@ export interface SaveProductButtonProps {
   height?: number
   width?: number
   noModal?: boolean
-  showPopUp: (data: PopUpData) => any
-  hidePopUp: () => void
+  showPopUp?: (data: PopUpData) => any
+  hidePopUp?: () => void
   authState: any
   refetchQueries?: Array<string | PureQueryOptions>
   showSizeSelector?: boolean
