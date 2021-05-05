@@ -147,7 +147,6 @@ export interface GetProduct_products_brand {
   id: string;
   slug: string;
   name: string;
-  logo: any | null;
   since: any | null;
   products: GetProduct_products_brand_products[] | null;
 }
