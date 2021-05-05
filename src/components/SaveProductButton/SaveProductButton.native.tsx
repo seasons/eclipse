@@ -31,7 +31,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   showPopUp,
   hidePopUp,
   authState,
-  refetchQueries,
+  refetchQueries = [],
 }) => {
   const navigation = useNavigation()
   const isSaved = selectedVariant?.isSaved
@@ -40,15 +40,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   const [enabled, setEnabled] = useState(isSaved)
   const tracking = useTracking()
   const [saveItem] = useMutation(SAVE_ITEM, {
-    refetchQueries: [
-      {
-        query: GET_PRODUCT,
-        variables: {
-          where: { id: product?.id },
-        },
-      },
-      ...refetchQueries,
-    ],
+    refetchQueries,
   })
   const userHasSession = !!authState?.userSession
 
