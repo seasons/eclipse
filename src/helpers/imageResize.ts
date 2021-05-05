@@ -69,6 +69,9 @@ export const imageResize = (
   sizeName: ImageResizerSize,
   passedOptions: ImageResizerOptions = { fit: "clip" }
 ) => {
+  if (!url) {
+    return ""
+  }
   const removedParams = url.split("?")[0]
   const options: ImageResizerOptions = pickBy(
     {
