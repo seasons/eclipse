@@ -4,24 +4,21 @@ import { useNavigation } from "@react-navigation/native"
 import { SaveIcon } from "@/icons/SaveIcon"
 import { TrackSchema, useTracking } from "@/helpers/track"
 import { Box } from "@/elements/Box"
-import { useMutation } from "@apollo/client"
+import { gql, useMutation } from "@apollo/client"
 import { GET_PRODUCT } from "@/queries/productQueries"
-import { GET_BAG } from "@/queries/bagQueries"
-import { SAVE_ITEM } from "./queries"
-import type { PopUpData } from "@/types"
+import { SaveProductButtonProps } from "./SaveProductButton.shared"
 
-export interface SaveProductButtonProps {
-  product: any
-  selectedVariant?: any
-  onPressSaveButton: () => void
-  grayStroke?: boolean
-  height?: number
-  width?: number
-  noModal?: boolean
-  showPopUp: (data: PopUpData) => any
-  hidePopUp: () => void
-  authState: any
-}
+export const SAVE_ITEM = gql`
+  mutation SaveItem($item: ID!, $save: Boolean!) {
+    saveProduct(item: $item, save: $save) {
+      id
+      productVariant {
+        id
+        isSaved
+      }
+    }
+  }
+`
 
 export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   product,
@@ -34,6 +31,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   showPopUp,
   hidePopUp,
   authState,
+  refetchQueries = [],
 }) => {
   const navigation = useNavigation()
   const isSaved = selectedVariant?.isSaved
@@ -42,17 +40,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   const [enabled, setEnabled] = useState(isSaved)
   const tracking = useTracking()
   const [saveItem] = useMutation(SAVE_ITEM, {
-    refetchQueries: [
-      {
-        query: GET_PRODUCT,
-        variables: {
-          where: { id: product?.id },
-        },
-      },
-      {
-        query: GET_BAG,
-      },
-    ],
+    refetchQueries,
   })
   const userHasSession = !!authState?.userSession
 

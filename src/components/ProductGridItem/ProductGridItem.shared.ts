@@ -1,5 +1,6 @@
 import { PopUpData } from "@/types"
 import { RefObject } from "react"
+import { PureQueryOptions } from "@apollo/client"
 
 export interface ProductGridItemProps {
   product: any
@@ -11,5 +12,6 @@ export interface ProductGridItemProps {
   showBrandName?: boolean
   authState: any
   flatListRef?: RefObject<any>
+  saveProductButtonRefetchQueries?: Array<string | PureQueryOptions>
   onShowLoginModal?: () => void
 }

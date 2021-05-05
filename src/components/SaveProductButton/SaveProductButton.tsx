@@ -1,13 +1,11 @@
+import { SaveProductButtonProps } from "./SaveProductButton.shared"
 import React, { useEffect, useState } from "react"
 import { Box } from "@/elements"
 import { SaveIcon } from "@/icons/SaveIcon"
 import { useMutation } from "@apollo/client"
 import { useTracking, TrackSchema } from "@/helpers/track"
-import { GET_PRODUCT } from "@/queries/productQueries"
-import { GET_BAG } from "@/queries/bagQueries"
 import { SAVE_ITEM } from "./queries"
 import styled from "styled-components"
-import { SaveProductButtonProps } from "./SaveProductButton.shared"
 import { SaveProductModal } from "../SaveProductModal"
 import { Modal, Tooltip } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
@@ -21,6 +19,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   showSizeSelector,
   authState,
   onShowLoginModal,
+  refetchQueries = [],
 }) => {
   const isSaved = selectedVariant?.isSaved
     ? selectedVariant?.isSaved
@@ -29,17 +28,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
   const [enabled, setEnabled] = useState(isSaved)
   const tracking = useTracking()
   const [saveItem] = useMutation(SAVE_ITEM, {
-    refetchQueries: [
-      {
-        query: GET_PRODUCT,
-        variables: {
-          slug: product?.slug,
-        },
-      },
-      {
-        query: GET_BAG,
-      },
-    ],
+    refetchQueries,
   })
 
   useEffect(() => {
