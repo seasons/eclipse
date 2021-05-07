@@ -95,7 +95,7 @@ const ProductBuyUsed = React.forwardRef(
         loading={buyButtonMutating}
         disabled={buyButtonMutating || !availableForSale}
       >
-        {availableForSale ? `Buy used for ${price}` : "Sold Out"}
+        {availableForSale ? `Buy for ${price}` : "Sold Out"}
       </Button>
       <Spacer mb={2} />
       <Sans size="3" opacity={0.5} color="black100">
