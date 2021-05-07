@@ -179,7 +179,7 @@ export const ProductBuyAlert: React.FC<Props> = ({
               disabled={isMutating}
               loading={isMutating}
             >
-              Buy used for{" "}
+              Buy for{" "}
               {(tab.price / 100).toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
