@@ -47,4 +47,5 @@ const MaxWidth = styled(Box)`
   width: 100%;
   margin: 0 auto;
   position: relative;
+  max-width: ${(props) => props.theme.grid.container.xl}px;
 `

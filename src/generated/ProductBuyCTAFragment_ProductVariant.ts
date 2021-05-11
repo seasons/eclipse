@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ProductBuyCTA_ProductVariantFragment
+// GraphQL fragment: ProductBuyCTAFragment_ProductVariant
 // ====================================================
 
-export interface ProductBuyCTA_ProductVariantFragment_price {
+export interface ProductBuyCTAFragment_ProductVariant_price {
   __typename: "ProductVariantPrice";
   id: string;
   buyUsedEnabled: boolean;
@@ -18,8 +18,8 @@ export interface ProductBuyCTA_ProductVariantFragment_price {
   buyNewAvailableForSale: boolean | null;
 }
 
-export interface ProductBuyCTA_ProductVariantFragment {
+export interface ProductBuyCTAFragment_ProductVariant {
   __typename: "ProductVariant";
   id: string;
-  price: ProductBuyCTA_ProductVariantFragment_price;
+  price: ProductBuyCTAFragment_ProductVariant_price;
 }
