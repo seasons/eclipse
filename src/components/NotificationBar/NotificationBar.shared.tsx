@@ -12,8 +12,12 @@ import {
 import { GetNotificationBar_me_notificationBar } from "@/generated/GetNotificationBar"
 import styled from "styled-components"
 
+export enum PressType {
+  PRIMARY = "PRIMARY",
+  CTA = "CTA",
+}
 export interface NotificationBarProps {
-  onClick?: (any) => void
+  onClick?: (route: any, type: PressType) => void
   isLoggedIn?: boolean
 }
 
@@ -89,7 +93,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const { notificationBarState } = useNotificationBarContext()
 
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
-  const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
+  const [hasBeenClosedNow, setHasBeenClosedNow] = useState(false)
   const hasData = Boolean(data)
   const show = notificationBarState.show
 
@@ -121,22 +125,22 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     }
   }, [data, hideIf, setHide])
 
-  if (hasBeenClosedBefore || !show || hasbeenClosedNow || !hasData || hide) {
+  if (hasBeenClosedBefore || !show || hasBeenClosedNow || !hasData || hide) {
     return null
   }
 
-  const onPressIn = () => {
+  const onPressIn = (pressType: PressType) => {
     if (isNativeNotification) {
       if (mobileRoute && mobileRoute.dismissable) {
         setHasBeenClosedNow(true)
-      } else {
-        onClick(mobileRoute)
+      } else if (onClick) {
+        onClick(mobileRoute, pressType)
       }
     } else if (isWebNotification) {
       if (webRoute && webRoute.dismissable) {
         setHasBeenClosedNow(true)
-      } else {
-        onClick(webRoute)
+      } else if (onClick) {
+        onClick(webRoute, pressType)
       }
     }
     onUpdateNotificationBarReceipt({
@@ -155,7 +159,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
 
   return (
     <OuterContainer>
-      <Pressable onPressIn={onPressIn}>
+      <Pressable onPressIn={() => onPressIn(PressType.PRIMARY)}>
         {({ pressed }) => {
           const bgColorWithState = pressed
             ? pressedPalette?.backgroundColor
@@ -190,29 +194,33 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
                   {isNativeNotification && mobile?.detail}
                 </Sans>
               </Box>
-              <FlexContainer>
-                {!!underlinedCTAText && isWebNotification && (
-                  <FlexContainer mr={hideIcon ? 0 : 2}>
-                    <Sans
-                      size="3"
-                      color={titleFontColorWithState}
-                      style={{ textDecorationLine: "underline" }}
-                    >
-                      {underlinedCTAText}
-                    </Sans>
+              <Pressable onPressIn={() => onPressIn(PressType.CTA)}>
+                {() => (
+                  <FlexContainer>
+                    {!!underlinedCTAText && isWebNotification && (
+                      <FlexContainer mr={hideIcon ? 0 : 2}>
+                        <Sans
+                          size="3"
+                          color={titleFontColorWithState}
+                          style={{ textDecorationLine: "underline" }}
+                        >
+                          {underlinedCTAText}
+                        </Sans>
+                      </FlexContainer>
+                    )}
+                    {!hideIcon && renderChevron && (
+                      <ChevronIcon
+                        scale={isWebNotification ? 0.7 : 1}
+                        color={iconFontColorWithState}
+                        fillColor={bgColorWithState}
+                      />
+                    )}
+                    {!hideIcon && renderCloseX && (
+                      <CloseXIcon color={iconFontColorWithState} />
+                    )}
                   </FlexContainer>
                 )}
-                {!hideIcon && renderChevron && (
-                  <ChevronIcon
-                    scale={isWebNotification ? 0.7 : 1}
-                    color={iconFontColorWithState}
-                    fillColor={bgColorWithState}
-                  />
-                )}
-                {!hideIcon && renderCloseX && (
-                  <CloseXIcon color={iconFontColorWithState} />
-                )}
-              </FlexContainer>
+              </Pressable>
             </Container>
           )
         }}

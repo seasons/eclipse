@@ -1,4 +1,4 @@
-export { NotificationBar } from "./NotificationBar"
+export { NotificationBar, PressType } from "./NotificationBar"
 export { NotificationBarProvider } from "./NotificationBarProvider"
 export {
   NotificationBarContext,

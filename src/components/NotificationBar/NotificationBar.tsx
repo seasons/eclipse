@@ -4,6 +4,7 @@ import {
   NotificationBarProps,
 } from "./NotificationBar.shared"
 import { NotificationBarContainer, OuterWrapper } from "./StyledNotificationBar"
+export { PressType } from "./NotificationBar.shared"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
   const hideIf = (data: any) => {

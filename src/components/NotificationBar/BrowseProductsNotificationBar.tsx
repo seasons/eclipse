@@ -12,7 +12,7 @@ const BROWSE_PRODUCTS_NOTIFICATION = ({
     title:
       "Apply for membership & get access to over +1,000 styles starting at $65 per month",
     route: {
-      dismissable: true,
+      url: "/signup",
     },
   },
   underlinedCTAText: "Dismiss",
@@ -59,6 +59,7 @@ interface BrowseProductsNotificationBarProps extends NotificationBarProps {
 
 export const BrowseProductsNotificationBar: React.FC<BrowseProductsNotificationBarProps> = ({
   isBrowse,
+  onClick,
   ...props
 }) => {
   const [data, setData] = React.useState(getBrowseProductsNotification())
@@ -91,6 +92,7 @@ export const BrowseProductsNotificationBar: React.FC<BrowseProductsNotificationB
       hideIf={hideIf}
       hideIcon={true}
       data={data}
+      onClick={onClick}
     />
   )
 }
