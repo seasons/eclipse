@@ -3,7 +3,6 @@ import { Box, Sans } from "@/elements"
 import { ChevronIcon } from "@/icons/ChevronIcon"
 import { CloseXIcon } from "@/icons/CloseXIcon"
 import { useQuery, useMutation } from "@apollo/client"
-import { Pressable } from "@/components/ReactNative"
 import { useNotificationBarContext } from "./NotificationBarContext"
 import {
   GET_NOTIFICATION_BAR,
@@ -11,9 +10,11 @@ import {
 } from "@/queries/notifBarQueries"
 import { GetNotificationBar_me_notificationBar } from "@/generated/GetNotificationBar"
 import styled from "styled-components"
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native"
 
 export interface NotificationBarProps {
-  onClick?: (any) => void
+  onClickText?: () => void
+  onClickBanner?: (any) => void
   isLoggedIn?: boolean
 }
 
@@ -21,7 +22,7 @@ interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   outerContainerComponent: React.FC
   type: "web" | "native"
-  hideIf?: (data: any) => boolean
+  showIf?: (data: any) => boolean
   hideIcon?: boolean
   data: GetNotificationBar_me_notificationBar | null
   onUpdateNotificationBarReceipt: (opts: {
@@ -77,21 +78,22 @@ export const GraphQLNotificationBarTemplate: React.FC<GraphQLNotificationBarProp
 export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = ({
   containerComponent: Container,
   outerContainerComponent: OuterContainer,
-  onClick,
+  onClickBanner,
+  onClickText,
   onUpdateNotificationBarReceipt,
   type,
-  hideIf,
+  showIf,
   hideIcon,
   data,
 }) => {
-  const [hide, setHide] = useState(false)
+  const [show, setShow] = useState(false)
   const supportedIcons = ["Chevron", "CloseX"]
   const { notificationBarState } = useNotificationBarContext()
 
   const [hasUpdatedViewCount, setHasUpdatedViewCount] = useState(false)
   const [hasbeenClosedNow, setHasBeenClosedNow] = useState(false)
   const hasData = Boolean(data)
-  const show = notificationBarState.show
+  const notifStateShow = notificationBarState.show
 
   const isWebNotification = type === "web"
   const isNativeNotification = type === "native"
@@ -109,34 +111,44 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
 
   const palette = data?.palette
   const defaultPalette = palette?.default
-  const pressedPalette = palette?.pressed
 
   const isDismissableNotif = webRoute?.dismissable && mobileRoute?.dismissable
   const hasBeenClickedBefore = clickCount > 0
   const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
 
-  useEffect(() => {
-    if (data && hideIf) {
-      setHide(hideIf(data))
-    }
-  }, [data, hideIf, setHide])
+  const bgColorWithState = defaultPalette?.backgroundColor
+  const titleFontColorWithState = defaultPalette?.titleFontColor
+  const detailFontColorWithState = defaultPalette?.detailFontColor
+  const iconFontColorWithState = defaultPalette?.iconStrokeColor
+  const renderChevron = icon === "Chevron" || !supportedIcons.includes(icon) // default icon
+  const renderCloseX = icon === "CloseX"
 
-  if (hasBeenClosedBefore || !show || hasbeenClosedNow || !hasData || hide) {
+  useEffect(() => {
+    setShow(notifStateShow)
+  }, [notifStateShow])
+
+  useEffect(() => {
+    if (data && showIf) {
+      setShow(showIf(data))
+    }
+  }, [data, showIf, setShow])
+
+  if (hasBeenClosedBefore || !show || hasbeenClosedNow || !hasData) {
     return null
   }
 
-  const onPressIn = () => {
+  const onBannerClick = () => {
     if (isNativeNotification) {
-      if (mobileRoute && mobileRoute.dismissable) {
+      if (mobileRoute && mobileRoute.route) {
+        onClickBanner(mobileRoute)
+      } else if (mobileRoute && mobileRoute.dismissable) {
         setHasBeenClosedNow(true)
-      } else {
-        onClick(mobileRoute)
       }
     } else if (isWebNotification) {
-      if (webRoute && webRoute.dismissable) {
+      if (webRoute && webRoute.url) {
+        onClickBanner(webRoute)
+      } else if (webRoute && webRoute.dismissable) {
         setHasBeenClosedNow(true)
-      } else {
-        onClick(webRoute)
       }
     }
     onUpdateNotificationBarReceipt({
@@ -155,68 +167,64 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
 
   return (
     <OuterContainer>
-      <Pressable onPressIn={onPressIn}>
-        {({ pressed }) => {
-          const bgColorWithState = pressed
-            ? pressedPalette?.backgroundColor
-            : defaultPalette?.backgroundColor
-          const titleFontColorWithState = pressed
-            ? pressedPalette?.titleFontColor
-            : defaultPalette?.titleFontColor
-          const detailFontColorWithState = pressed
-            ? pressedPalette?.detailFontColor
-            : defaultPalette?.detailFontColor
-          const iconFontColorWithState = pressed
-            ? pressedPalette?.iconStrokeColor
-            : defaultPalette?.iconStrokeColor
-          const renderChevron =
-            icon === "Chevron" || !supportedIcons.includes(icon) // default icon
-          const renderCloseX = icon === "CloseX"
-          return (
-            <Container color={bgColorWithState}>
-              <Box pr={5}>
-                <Sans
-                  size={isWebNotification ? "3" : "4"}
-                  color={titleFontColorWithState}
-                >
-                  {isWebNotification && web?.title}
-                  {isNativeNotification && mobile?.title}
-                </Sans>
-                <Sans
-                  size={isWebNotification ? "3" : "4"}
-                  color={detailFontColorWithState}
-                >
-                  {isWebNotification && web?.detail}
-                  {isNativeNotification && mobile?.detail}
-                </Sans>
-              </Box>
-              <FlexContainer>
-                {!!underlinedCTAText && isWebNotification && (
-                  <FlexContainer mr={hideIcon ? 0 : 2}>
-                    <Sans
-                      size="3"
-                      color={titleFontColorWithState}
-                      style={{ textDecorationLine: "underline" }}
-                    >
-                      {underlinedCTAText}
-                    </Sans>
-                  </FlexContainer>
-                )}
-                {!hideIcon && renderChevron && (
-                  <ChevronIcon
-                    scale={isWebNotification ? 0.7 : 1}
-                    color={iconFontColorWithState}
-                    fillColor={bgColorWithState}
-                  />
-                )}
-                {!hideIcon && renderCloseX && (
-                  <CloseXIcon color={iconFontColorWithState} />
-                )}
-              </FlexContainer>
-            </Container>
-          )
-        }}
-      </Pressable>
+      <TouchableOpacity onPress={() => onBannerClick()}>
+        <Container color={bgColorWithState}>
+          <Box pr={5} py={2}>
+            <Sans
+              size={isWebNotification ? "3" : "4"}
+              color={titleFontColorWithState}
+            >
+              {isWebNotification && web?.title}
+              {isNativeNotification && mobile?.title}
+            </Sans>
+            <Sans
+              size={isWebNotification ? "3" : "4"}
+              color={detailFontColorWithState}
+            >
+              {isWebNotification && web?.detail}
+              {isNativeNotification && mobile?.detail}
+            </Sans>
+          </Box>
+          <FlexContainer>
+            {!!underlinedCTAText && isWebNotification && (
+              <TouchableWithoutFeedback
+                onPress={(e) => {
+                  e.stopPropagation()
+                  console.log("underline click")
+                  !!onClickText ? onClickText() : setHasBeenClosedNow(true)
+                }}
+              >
+                <FlexContainer pl={2} py={2} mr={hideIcon ? 0 : 2}>
+                  <Sans
+                    size="3"
+                    color={titleFontColorWithState}
+                    style={{ textDecorationLine: "underline" }}
+                  >
+                    {underlinedCTAText}
+                  </Sans>
+                </FlexContainer>
+              </TouchableWithoutFeedback>
+            )}
+            {!hideIcon && renderChevron && (
+              <ChevronIcon
+                scale={isWebNotification ? 0.7 : 1}
+                color={iconFontColorWithState}
+                fillColor={bgColorWithState}
+              />
+            )}
+            {!hideIcon && renderCloseX && (
+              <TouchableWithoutFeedback
+                onPress={(e) => {
+                  e.stopPropagation()
+                  setHasBeenClosedNow(true)
+                }}
+              >
+                <CloseXIcon color={iconFontColorWithState} />
+              </TouchableWithoutFeedback>
+            )}
+          </FlexContainer>
+        </Container>
+      </TouchableOpacity>
     </OuterContainer>
   )
 }

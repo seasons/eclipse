@@ -36,12 +36,6 @@ export const GET_NOTIFICATION_BAR = gql`
             detailFontColor
             iconStrokeColor
           }
-          pressed {
-            backgroundColor
-            titleFontColor
-            detailFontColor
-            iconStrokeColor
-          }
         }
       }
     }
