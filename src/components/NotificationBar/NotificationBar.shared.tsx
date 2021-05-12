@@ -22,7 +22,7 @@ interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   outerContainerComponent: React.FC
   type: "web" | "native"
-  showIf?: (data: any) => boolean
+  showIf?: (webURL?: string) => boolean
   hideIcon?: boolean
   data: GetNotificationBar_me_notificationBar | null
   onUpdateNotificationBarReceipt: (opts: {
@@ -124,12 +124,13 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const renderCloseX = icon === "CloseX"
 
   useEffect(() => {
+    console.log("notifStateShow,", notifStateShow)
     setShow(notifStateShow)
   }, [notifStateShow])
 
   useEffect(() => {
     if (data && showIf) {
-      setShow(showIf(data))
+      setShow(showIf(data?.web?.route?.url))
     }
   }, [data, showIf, setShow])
 
