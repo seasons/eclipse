@@ -190,7 +190,6 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
               <TouchableWithoutFeedback
                 onPress={(e) => {
                   e.stopPropagation()
-                  console.log("underline click")
                   !!onClickText ? onClickText() : setHasBeenClosedNow(true)
                 }}
               >
