@@ -6,7 +6,7 @@ import {
 import { NotificationBarContainer, OuterWrapper } from "./StyledNotificationBar"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
-  const hideIf = (data: any) => {
+  const showIf = (data: any) => {
     if (data) {
       let windowLocation
       if (typeof window !== "undefined") {
@@ -14,7 +14,7 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
       }
       return (
         !!windowLocation &&
-        windowLocation === data?.me?.notificationBar?.web?.route?.url
+        windowLocation !== data?.me?.notificationBar?.web?.route?.url
       )
     } else {
       return false
@@ -26,7 +26,7 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
       outerContainerComponent={OuterWrapper}
       containerComponent={NotificationBarContainer}
       type="web"
-      hideIf={hideIf}
+      showIf={showIf}
       {...props}
     />
   )

@@ -7,7 +7,7 @@ const NOTIFICATION_BAR_HEIGHT = "52px"
 
 export const NotificationBarContainer = ({ children, color }) => {
   return (
-    <Wrapper color={color} py={2}>
+    <Wrapper color={color}>
       <MaxWidth>
         <FlexContainer px={[2, 2, 2, 2, 2]}>{children}</FlexContainer>
       </MaxWidth>
@@ -30,6 +30,7 @@ const FixedBox = styled(Box)`
   left: 0;
   z-index: 30;
   width: 100%;
+  cursor: pointer;
 `
 
 const FlexContainer = styled(Box)`

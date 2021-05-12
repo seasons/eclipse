@@ -5,15 +5,14 @@ import {
 } from "./NotificationBar.shared"
 import { NotificationBarContainer, OuterWrapper } from "./StyledNotificationBar"
 import { GetNotificationBar_me_notificationBar } from "@/generated/GetNotificationBar"
+import { useRouter } from "next/router"
 
 const BROWSE_PRODUCTS_NOTIFICATION = ({
   id: "BROWSE_PRODUCTS_NOTIFICATION",
   web: {
     title:
       "Apply for membership & get access to over +1,000 styles starting at $65 per month",
-    route: {
-      dismissable: true,
-    },
+    route: { url: "/signup", dismissable: true },
   },
   underlinedCTAText: "Dismiss",
   palette: {
@@ -53,22 +52,18 @@ const setBrowseProductsNotification = (data) => {
   )
 }
 
-interface BrowseProductsNotificationBarProps extends NotificationBarProps {
-  isBrowse: boolean
-}
-
-export const BrowseProductsNotificationBar: React.FC<BrowseProductsNotificationBarProps> = ({
-  isBrowse,
+export const BrowseProductsNotificationBar: React.FC<NotificationBarProps> = ({
   ...props
 }) => {
+  const router = useRouter()
   const [data, setData] = React.useState(getBrowseProductsNotification())
 
   React.useEffect(() => {
     setBrowseProductsNotification(data)
   }, [data])
 
-  const hideIf = (data: any) => {
-    return props.isLoggedIn || !isBrowse || data.clickCount > 0
+  const showIf = (data: any) => {
+    return !props.isLoggedIn && data.clickCount < 1
   }
 
   const handleUpdateNotificationBarReceipt = ({
@@ -88,9 +83,10 @@ export const BrowseProductsNotificationBar: React.FC<BrowseProductsNotificationB
       containerComponent={NotificationBarContainer}
       onUpdateNotificationBarReceipt={handleUpdateNotificationBarReceipt}
       type="web"
-      hideIf={hideIf}
+      showIf={showIf}
       hideIcon={true}
       data={data}
+      onClickBanner={({ url }) => router.push(url)}
     />
   )
 }
