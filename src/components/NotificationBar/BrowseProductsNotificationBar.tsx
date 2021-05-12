@@ -62,7 +62,7 @@ export const BrowseProductsNotificationBar: React.FC<NotificationBarProps> = ({
     setBrowseProductsNotification(data)
   }, [data])
 
-  const showIf = (data: any) => {
+  const showIf = () => {
     return !props.isLoggedIn && data.clickCount < 1
   }
 
