@@ -22,12 +22,6 @@ const BROWSE_PRODUCTS_NOTIFICATION = ({
       detailFontColor: "#7F7F7F",
       iconStrokeColor: "#7F7F7F",
     },
-    pressed: {
-      backgroundColor: "#000000",
-      titleFontColor: "#ffffff",
-      detailFontColor: "#7F7F7F",
-      iconStrokeColor: "#7F7F7F",
-    },
   },
   clickCount: 0,
   viewCount: 0,

@@ -93,7 +93,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
           <SaveIcon
             width={width ? width : 16}
             height={height ? height : 22}
-            enabled={enabled}
+            enabled={!!enabled}
           />
         </Wrapper>
       </LightTooltip>

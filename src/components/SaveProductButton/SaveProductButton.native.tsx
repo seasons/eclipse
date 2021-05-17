@@ -98,7 +98,7 @@ export const SaveProductButton: React.FC<SaveProductButtonProps> = ({
         <SaveIcon
           width={width}
           height={height}
-          enabled={enabled}
+          enabled={!!enabled}
           grayStroke={grayStroke}
         />
       </Box>
