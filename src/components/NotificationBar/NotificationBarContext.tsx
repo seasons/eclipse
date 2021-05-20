@@ -5,7 +5,7 @@ export interface NotificationBarData {
   subtitle?: string
   underlinedText?: string
   onClickBanner?: () => void
-  onClickCTAText?: () => void
+  onClickText?: () => void
 }
 
 export const useNotificationBarContext = () =>

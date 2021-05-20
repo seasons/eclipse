@@ -153,7 +153,9 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   }
 
   const onBannerClick = () => {
-    if (isNativeNotification) {
+    if (data.onClickBanner) {
+      data.onClickBanner()
+    } else if (isNativeNotification) {
       if (mobileRoute && mobileRoute.route) {
         onClickBanner(mobileRoute)
       } else if (mobileRoute && mobileRoute.dismissable) {
