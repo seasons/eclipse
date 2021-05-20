@@ -190,6 +190,27 @@ export const themeProps = {
     /** Determines if the input device has the notion of hover, e.g. mouse. */
     hover: `not all and (pointer: coarse), not all and (-moz-touch-enabled: 1)`,
   },
+
+  // https://github.com/dragma/styled-bootstrap-grid#styled-bootstrap-grid
+  grid: {
+    breakpoints,
+    container: {
+      padding: 0,
+      maxWidth: {
+        xl: 1500,
+        lg: 1500,
+        md: 1500,
+        sm: 1500,
+        xs: 1500,
+      },
+    },
+    row: {
+      padding: 0,
+    },
+    col: {
+      padding: 0,
+    },
+  },
 }
 
 export const Theme = (props) => {
