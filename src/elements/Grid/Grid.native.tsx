@@ -10,7 +10,6 @@ import { View } from "react-native"
 /** Outter wrapper when using a grid */
 export const Grid: any = styled(View)`
   overflow: hidden;
-  max-width: ${(props) => props.theme.grid.breakpoints.xl}px;
   ${space};
 `
 
