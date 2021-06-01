@@ -3,7 +3,10 @@ import { Box, Sans } from "@/elements"
 import { ChevronIcon } from "@/icons/ChevronIcon"
 import { CloseXIcon } from "@/icons/CloseXIcon"
 import { useQuery, useMutation } from "@apollo/client"
-import { useNotificationBarContext } from "./NotificationBarContext"
+import {
+  NotificationBarData,
+  useNotificationBarContext,
+} from "./NotificationBarContext"
 import {
   GET_NOTIFICATION_BAR,
   UPDATE_NOTIFICATION_BAR_RECEIPT,
@@ -11,6 +14,7 @@ import {
 import { GetNotificationBar_me_notificationBar } from "@/generated/GetNotificationBar"
 import styled from "styled-components"
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native"
+import { color } from "@/helpers"
 
 export interface NotificationBarProps {
   onClickText?: () => void
@@ -18,13 +22,17 @@ export interface NotificationBarProps {
   isLoggedIn?: boolean
 }
 
+interface Data
+  extends GetNotificationBar_me_notificationBar,
+    NotificationBarData {}
+
 interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   outerContainerComponent: React.FC
   type: "web" | "native"
   showIf?: (webURL?: string) => boolean
   hideIcon?: boolean
-  data: GetNotificationBar_me_notificationBar | null
+  data: Data | null
   onUpdateNotificationBarReceipt: (opts: {
     notificationBarId: string
     clickCount?: number
@@ -43,6 +51,8 @@ export const GraphQLNotificationBarTemplate: React.FC<GraphQLNotificationBarProp
   isLoggedIn,
   ...notificationBarTemplateProps
 }) => {
+  const { notificationBarState } = useNotificationBarContext()
+  const { data: contextData } = notificationBarState
   const mapData = (d) => d?.me?.notificationBar
   const { previousData, data = previousData, refetch } = useQuery(
     GET_NOTIFICATION_BAR
@@ -59,6 +69,8 @@ export const GraphQLNotificationBarTemplate: React.FC<GraphQLNotificationBarProp
     }
   )
 
+  const notifData = contextData ? contextData : mapData(data)
+
   const handleUpdateNotificationBarReceipt = (variables) =>
     updateNotificationBarReceipt({ variables }).then(() => Promise.resolve())
 
@@ -69,7 +81,7 @@ export const GraphQLNotificationBarTemplate: React.FC<GraphQLNotificationBarProp
   return (
     <NotificationBarTemplate
       {...notificationBarTemplateProps}
-      data={mapData(data)}
+      data={notifData}
       onUpdateNotificationBarReceipt={handleUpdateNotificationBarReceipt}
     />
   )
@@ -116,15 +128,17 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   const hasBeenClickedBefore = clickCount > 0
   const hasBeenClosedBefore = isDismissableNotif && hasBeenClickedBefore
 
-  const bgColorWithState = defaultPalette?.backgroundColor
-  const titleFontColorWithState = defaultPalette?.titleFontColor
-  const detailFontColorWithState = defaultPalette?.detailFontColor
-  const iconFontColorWithState = defaultPalette?.iconStrokeColor
+  const bgColorWithState = defaultPalette?.backgroundColor ?? color("black100")
+  const titleFontColorWithState =
+    defaultPalette?.titleFontColor ?? color("white100")
+  const detailFontColorWithState =
+    defaultPalette?.detailFontColor ?? color("black50")
+  const iconFontColorWithState =
+    defaultPalette?.iconStrokeColor ?? color("black50")
   const renderChevron = icon === "Chevron" || !supportedIcons.includes(icon) // default icon
   const renderCloseX = icon === "CloseX"
 
   useEffect(() => {
-    console.log("notifStateShow,", notifStateShow)
     setShow(notifStateShow)
   }, [notifStateShow])
 
@@ -139,7 +153,9 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   }
 
   const onBannerClick = () => {
-    if (isNativeNotification) {
+    if (data.onClickBanner) {
+      data.onClickBanner()
+    } else if (isNativeNotification) {
       if (mobileRoute && mobileRoute.route) {
         onClickBanner(mobileRoute)
       } else if (mobileRoute && mobileRoute.dismissable) {
@@ -152,18 +168,29 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
         setHasBeenClosedNow(true)
       }
     }
-    onUpdateNotificationBarReceipt({
-      notificationBarId,
-      clickCount: clickCount + 1,
-    })
+    if (notificationBarId) {
+      onUpdateNotificationBarReceipt({
+        notificationBarId,
+        clickCount: clickCount + 1,
+      })
+    }
   }
 
-  if (!hasUpdatedViewCount) {
+  if (!hasUpdatedViewCount && notificationBarId) {
     onUpdateNotificationBarReceipt({
       notificationBarId,
       viewCount: viewCount + 1,
     })
     setHasUpdatedViewCount(true)
+  }
+
+  let subtitle
+  if (data?.subtitle) {
+    subtitle = data.subtitle
+  } else if (isWebNotification) {
+    subtitle = web?.detail
+  } else if (isNativeNotification) {
+    subtitle = mobile?.detail
   }
 
   return (
@@ -175,16 +202,16 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
               size={isWebNotification ? "3" : "4"}
               color={titleFontColorWithState}
             >
-              {isWebNotification && web?.title}
-              {isNativeNotification && mobile?.title}
+              {web?.title || mobile?.title || data?.title}
             </Sans>
-            <Sans
-              size={isWebNotification ? "3" : "4"}
-              color={detailFontColorWithState}
-            >
-              {isWebNotification && web?.detail}
-              {isNativeNotification && mobile?.detail}
-            </Sans>
+            {!!subtitle && (
+              <Sans
+                size={isWebNotification ? "3" : "4"}
+                color={detailFontColorWithState}
+              >
+                {subtitle}
+              </Sans>
+            )}
           </Box>
           <FlexContainer>
             {!!underlinedCTAText && isWebNotification && (

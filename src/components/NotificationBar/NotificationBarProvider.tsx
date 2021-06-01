@@ -1,5 +1,8 @@
 import React, { useReducer } from "react"
-import { NotificationBarContext } from "./NotificationBarContext"
+import {
+  NotificationBarContext,
+  NotificationBarData,
+} from "./NotificationBarContext"
 
 enum NotificationBarAction {
   Show = "SHOW",
@@ -14,25 +17,28 @@ export const NotificationBarProvider = ({ children }) => {
           return {
             ...prevState,
             show: true,
+            data: action.data,
           }
         case NotificationBarAction.Hide:
           return {
             ...prevState,
             show: false,
+            data: null,
           }
       }
     },
     {
       show: true,
+      data: null,
     }
   )
 
   let clearData
 
   const notificationBarContext = {
-    showNotificationBar: async () => {
+    showNotificationBar: async (data: NotificationBarData) => {
       clearTimeout(clearData)
-      dispatch({ type: NotificationBarAction.Show })
+      dispatch({ type: NotificationBarAction.Show, data })
     },
     hideNotificationBar: async () => {
       dispatch({ type: NotificationBarAction.Hide })
@@ -41,6 +47,7 @@ export const NotificationBarProvider = ({ children }) => {
   }
 
   return (
+    // @ts-ignore
     <NotificationBarContext.Provider value={notificationBarContext}>
       {children}
     </NotificationBarContext.Provider>
