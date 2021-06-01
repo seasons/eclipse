@@ -18,6 +18,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   authState,
   setProductCount,
   loading,
+  pageLength,
 }) => {
   const [currentImage, setCurrentImage] = useState(1)
   const navigation = useNavigation()
@@ -55,11 +56,8 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         variables: {
           skip: products.length,
         },
-      }).then((fetchMoreResult: any) => {
-        setProductCount(
-          products.length +
-            fetchMoreResult?.data?.collection?.products?.edges?.length
-        )
+      }).then(() => {
+        setProductCount(products.length + pageLength)
       })
     }
   }
