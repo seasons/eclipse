@@ -3,6 +3,7 @@ import styled from "styled-components"
 import gql from "graphql-tag"
 import { Link } from "../Link"
 import { filter } from "graphql-anywhere"
+import { PRODUCT_ASPECT_RATIO } from "@/helpers"
 import { VariantSizes } from "../VariantSizes"
 import ContentLoader from "react-content-loader"
 import { Picture, ProgressiveImage } from "@/components"
@@ -177,10 +178,18 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
 const ThirdImageWrapper = styled(Box)<{ loaded: boolean }>`
   z-index: 3;
   position: absolute;
+  height: 0;
+  padding-bottom: calc(100% * ${PRODUCT_ASPECT_RATIO});
   opacity: ${(p) => (p.loaded ? 1 : 0)};
   top: 0;
   left: 0;
   width: 100%;
+
+  img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
 `
 
 const ProductContainer = styled(Box)`
