@@ -19,6 +19,7 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
   setProductCount,
   authState,
   onShowLoginModal,
+  pageLength,
 }) => {
   const [readMoreExpanded, setReadMoreExpanded] = useState(false)
   const collection = data?.collection
@@ -43,11 +44,8 @@ export const CollectionUI: React.FC<CollectionUIProps> = ({
         variables: {
           skip: products?.length,
         },
-      }).then((fetchMoreResult: any) => {
-        setProductCount(
-          products.length +
-            fetchMoreResult?.data?.collection?.products?.edges?.length
-        )
+      }).then(() => {
+        setProductCount(products.length + pageLength)
       })
     }
   }, 100)

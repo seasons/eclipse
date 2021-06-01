@@ -60,6 +60,7 @@ export const SNAP_PADDING = 70
 
 export interface CollectionUIProps {
   data: any
+  pageLength: number
   fetchMore: (x: any) => Promise<any>
   loading?: boolean
   showPopUp?: (data: PopUpData) => any
@@ -89,7 +90,8 @@ export const Collection: React.FC<{
   hidePopUp?: () => void
   authState?: any
 }> = ({ collectionSlug, showPopUp, hidePopUp, authState }) => {
-  const [productCount, setProductCount] = useState(12)
+  const PAGE_LENGTH = 12
+  const [productCount, setProductCount] = useState(PAGE_LENGTH)
   const {
     previousData,
     data = previousData,
@@ -114,6 +116,7 @@ export const Collection: React.FC<{
       fetchMore={fetchMore}
       loading={loading}
       data={data}
+      pageLength={PAGE_LENGTH}
       showPopUp={showPopUp}
       hidePopUp={hidePopUp}
       authState={authState}
