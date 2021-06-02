@@ -4,14 +4,13 @@ import { ProductBuyCTAFragment_Product as ProductFragment } from "@/generated/Pr
 import { ProductBuyCTAFragment_ProductVariant as ProductVariantFragment } from "@/generated/ProductBuyCTAFragment_ProductVariant"
 
 import { Flex, Sans, Spacer } from "@/elements"
-import { Button, ProductBuyTitleLine } from "@/components"
+import { Button } from "@/components"
 import { UnderlinedSans } from "./StyledProductBuyCTA"
 import { FlexProps } from "styled-system"
 
 type ProductBuyNewProps = {
   price: string
   brandName: string
-  brandLogoUri?: any
   availableForSale: boolean
   onBuyNew: () => void
   onNavigateToPartner: () => void
@@ -23,7 +22,6 @@ const ProductBuyNew = React.forwardRef(
     {
       price,
       brandName,
-      brandLogoUri,
       onBuyNew,
       onNavigateToPartner,
       availableForSale,
@@ -34,10 +32,9 @@ const ProductBuyNew = React.forwardRef(
   ) => {
     return (
       <Flex flexDirection="column" {...flexProps} ref={ref as any}>
-        <ProductBuyTitleLine
-          brandName={brandName}
-          brandLogoUri={brandLogoUri}
-        />
+        <Sans color="black100" size="4" weight="medium">
+          Get it new from {brandName}
+        </Sans>
         <Spacer mb={2} />
         <Button
           variant="primaryBlack"
@@ -163,7 +160,6 @@ export const ProductBuyCTA: React.FC<
       })
       const availableForSale = selectedVariant?.price?.buyNewAvailableForSale
       const brandName = product?.brand?.name
-      const brandLogoUri = product?.brand?.logoImage?.url
       const handleNavigateToPartner = () => {
         const href = product?.brand?.websiteUrl
         if (href) {
@@ -177,7 +173,6 @@ export const ProductBuyCTA: React.FC<
           buyButtonMutating={buyButtonMutating}
           price={price}
           brandName={brandName}
-          brandLogoUri={brandLogoUri}
           availableForSale={availableForSale}
           onBuyNew={onBuyNew}
           onNavigateToPartner={handleNavigateToPartner}

@@ -1,6 +1,6 @@
 import React from "react"
 import { Flex, Spacer, Sans } from "@/elements"
-import { TabBar, Button, ProductBuyTitleLine } from "@/components"
+import { TabBar, Button } from "@/components"
 import { OrderType } from "@/generated/globalTypes"
 import { UnderlinedSans, Root } from "./StyledProductBuyAlert"
 
@@ -18,13 +18,11 @@ export type Tab =
       price: number
       brandHref: string
       brandName: string
-      brandLogoUri: string
     }
   | {
       type: TabType.NEW_UNAVAILABLE
       brandHref: string
       brandName: string
-      brandLogoUri: string
     }
   | {
       type: TabType.USED
@@ -88,10 +86,9 @@ export const ProductBuyAlert: React.FC<Props> = ({
             py="3"
             key={TabType.NEW}
           >
-            <ProductBuyTitleLine
-              brandName={tab.brandName}
-              brandLogoUri={tab.brandLogoUri}
-            />
+            <Sans color="black100" size="4" weight="medium">
+              Get it new from {tab?.brandName}
+            </Sans>
             <Spacer mb={3} />
             <Button
               variant="primaryBlack"
@@ -135,10 +132,9 @@ export const ProductBuyAlert: React.FC<Props> = ({
             alignItems="center"
             key={TabType.NEW_UNAVAILABLE}
           >
-            <ProductBuyTitleLine
-              brandName={tab.brandName}
-              brandLogoUri={tab.brandLogoUri}
-            />
+            <Sans color="black100" size="4" weight="medium">
+              Get it new from {tab?.brandName}
+            </Sans>
             <Spacer mb={3} />
             <Button variant="secondaryOutline" block disabled>
               Sold Out
