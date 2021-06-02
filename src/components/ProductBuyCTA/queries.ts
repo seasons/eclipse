@@ -7,12 +7,6 @@ export const ProductFragment = gql`
       id
       name
       websiteUrl
-      logoImage {
-        id
-        url
-        height
-        width
-      }
     }
   }
 `

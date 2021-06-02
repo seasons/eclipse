@@ -46,18 +46,9 @@ export interface GetNotificationBar_me_notificationBar_palette_default {
   iconStrokeColor: string;
 }
 
-export interface GetNotificationBar_me_notificationBar_palette_pressed {
-  __typename: "NotificationBarColorPalette";
-  backgroundColor: string;
-  titleFontColor: string;
-  detailFontColor: string;
-  iconStrokeColor: string;
-}
-
 export interface GetNotificationBar_me_notificationBar_palette {
   __typename: "NotificationBarPalette";
   default: GetNotificationBar_me_notificationBar_palette_default;
-  pressed: GetNotificationBar_me_notificationBar_palette_pressed;
 }
 
 export interface GetNotificationBar_me_notificationBar {
