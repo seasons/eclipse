@@ -1,8 +1,6 @@
 import React from "react"
-
 import { ProductBuyCTAFragment_Product as ProductFragment } from "@/generated/ProductBuyCTAFragment_Product"
 import { ProductBuyCTAFragment_ProductVariant as ProductVariantFragment } from "@/generated/ProductBuyCTAFragment_ProductVariant"
-
 import { Flex, Sans, Spacer } from "@/elements"
 import { Button } from "@/components"
 import { UnderlinedSans } from "./StyledProductBuyCTA"
