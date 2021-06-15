@@ -16,5 +16,8 @@ export const NotificationBarContext = React.createContext({
     return data
   },
   hideNotificationBar: () => null,
-  notificationBarState: { show: true, data: null },
+  setOffsetTop: (offset: number) => {
+    return offset
+  },
+  notificationBarState: { show: true, data: null, offsetTop: 0 },
 })

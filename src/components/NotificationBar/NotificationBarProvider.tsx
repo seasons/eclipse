@@ -7,6 +7,7 @@ import {
 enum NotificationBarAction {
   Show = "SHOW",
   Hide = "HIDE",
+  SetOffset = "SET_OFFSET",
 }
 
 export const NotificationBarProvider = ({ children }) => {
@@ -25,11 +26,17 @@ export const NotificationBarProvider = ({ children }) => {
             show: false,
             data: null,
           }
+        case NotificationBarAction.SetOffset:
+          return {
+            ...prevState,
+            offsetTop: action.offsetTop,
+          }
       }
     },
     {
       show: true,
       data: null,
+      offsetTop: 0,
     }
   )
 
@@ -42,6 +49,9 @@ export const NotificationBarProvider = ({ children }) => {
     },
     hideNotificationBar: async () => {
       dispatch({ type: NotificationBarAction.Hide })
+    },
+    setOffsetTop: async (offsetTop: number) => {
+      dispatch({ type: NotificationBarAction.SetOffset, offsetTop })
     },
     notificationBarState,
   }
