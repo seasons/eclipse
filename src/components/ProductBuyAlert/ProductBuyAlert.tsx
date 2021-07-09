@@ -86,10 +86,6 @@ export const ProductBuyAlert: React.FC<Props> = ({
             py="3"
             key={TabType.NEW}
           >
-            <Sans color="black100" size="4" weight="medium">
-              Get it new from {tab?.brandName}
-            </Sans>
-            <Spacer mb={3} />
             <Button
               variant="primaryBlack"
               block
@@ -132,10 +128,6 @@ export const ProductBuyAlert: React.FC<Props> = ({
             alignItems="center"
             key={TabType.NEW_UNAVAILABLE}
           >
-            <Sans color="black100" size="4" weight="medium">
-              Get it new from {tab?.brandName}
-            </Sans>
-            <Spacer mb={3} />
             <Button variant="secondaryOutline" block disabled>
               Sold Out
             </Button>
