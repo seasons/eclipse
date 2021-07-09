@@ -109,107 +109,109 @@ export const ReviewOrder: React.FC<Props> = ({
   return (
     <Container insetsTop insetsBottom={false} backgroundColor="white100">
       <FixedBackArrow onPress={onBackPressed} variant="whiteBackground" />
-      <Flex style={{ flex: 1 }} px={2}>
+      <Flex style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-          <Spacer mb={80} />
-          <Box pb={1}>
-            <Sans size="7" color="black100">
-              Confirm purchase
-            </Sans>
-          </Box>
-          <Box mb={4}>
-            <SubText
-              needsShipping={needsShipping}
-              orderType={order.type}
-              brand={productVariantItems?.[0]?.productVariant?.product?.brand}
-              onNavigateToBrand={onNavigateToBrand}
-            />
-          </Box>
-          {!!order && (
+          <Box px={2}>
+            <Spacer mb={80} />
+            <Box pb={1}>
+              <Sans size="7" color="black100">
+                Confirm purchase
+              </Sans>
+            </Box>
             <Box mb={4}>
-              <SectionHeader title="Purchase summary" />
-              {order?.lineItems?.map((item, index) => {
-                const itemPriceInDollars = item?.price / 100
-                const displayName =
-                  item.recordType === "Package"
-                    ? "Shipping"
-                    : item?.productVariant?.product?.name
+              <SubText
+                needsShipping={needsShipping}
+                orderType={order.type}
+                brand={productVariantItems?.[0]?.productVariant?.product?.brand}
+                onNavigateToBrand={onNavigateToBrand}
+              />
+            </Box>
+            {!!order && (
+              <Box mb={4}>
+                <SectionHeader title="Purchase summary" />
+                {order?.lineItems?.map((item, index) => {
+                  const itemPriceInDollars = item?.price / 100
+                  const displayName =
+                    item.recordType === "Package"
+                      ? "Shipping"
+                      : item?.productVariant?.product?.name
 
-                return (
-                  <LineItem
-                    leftText={displayName}
-                    rightText={displayCurrency(itemPriceInDollars)}
-                    key={item?.productVariant?.id ?? index}
-                    windowWidth={windowWidth}
-                  />
-                )
-              })}
-              <Spacer mb={2} />
-              <LineItem
-                leftText="Subtotal"
-                windowWidth={windowWidth}
-                rightText={displayCurrency(subTotalDollars)}
-              />
-              <LineItem
-                leftText="Sales tax"
-                windowWidth={windowWidth}
-                rightText={displayCurrency(totalSalesTaxDollars)}
-              />
-              <LineItem
-                leftText="Total"
-                windowWidth={windowWidth}
-                rightText={displayCurrency(totalInDollars)}
-                color="black100"
-              />
-            </Box>
-          )}
-          {!!paymentMethod && (
-            <Box mb={4}>
-              <SectionHeader title="Payment method" />
-              <Sans size="4" color="black50" mt={1}>
-                {`${paymentBrand} ending in ${paymentMethod}`}
-              </Sans>
-            </Box>
-          )}
-          {!!address && needsShipping && (
-            <Box mb={4}>
-              <SectionHeader title="Shipping address" />
-              <Sans size="4" color="black50" mt={1}>
-                {`${address.address1}${
-                  address.address2 ? " " + address.address2 : ""
-                },`}
-              </Sans>
-              <Sans size="4" color="black50">
-                {`${address.city}, ${address.state} ${address.zipCode}`}
-              </Sans>
-            </Box>
-          )}
-          {!!phoneNumber && (
-            <Box mb={4}>
-              <SectionHeader title="Phone number" />
-              <Sans size="4" color="black50" mt={1}>
-                {phoneNumber}
-              </Sans>
-            </Box>
-          )}
-          <Box mb={5}>
-            <SectionHeader
-              title={productVariantItems?.length === 1 ? "Item" : "Items"}
-            />
-            <Box mt={1} mb={4}>
-              {productVariantItems?.map((item, i) => {
-                return (
-                  <Box key={i}>
-                    <OrderItem
-                      productVariant={item.productVariant}
-                      onPress={onOrderItemPressed}
+                  return (
+                    <LineItem
+                      leftText={displayName}
+                      rightText={displayCurrency(itemPriceInDollars)}
+                      key={item?.productVariant?.id ?? index}
+                      windowWidth={windowWidth}
                     />
-                    <Spacer mb={1} />
-                    {i !== productVariantItems.length - 1 && <Separator />}
-                    <Spacer mb={1} />
-                  </Box>
-                )
-              })}
+                  )
+                })}
+                <Spacer mb={2} />
+                <LineItem
+                  leftText="Subtotal"
+                  windowWidth={windowWidth}
+                  rightText={displayCurrency(subTotalDollars)}
+                />
+                <LineItem
+                  leftText="Sales tax"
+                  windowWidth={windowWidth}
+                  rightText={displayCurrency(totalSalesTaxDollars)}
+                />
+                <LineItem
+                  leftText="Total"
+                  windowWidth={windowWidth}
+                  rightText={displayCurrency(totalInDollars)}
+                  color="black100"
+                />
+              </Box>
+            )}
+            {!!paymentMethod && (
+              <Box mb={4}>
+                <SectionHeader title="Payment method" />
+                <Sans size="4" color="black50" mt={1}>
+                  {`${paymentBrand} ending in ${paymentMethod}`}
+                </Sans>
+              </Box>
+            )}
+            {!!address && needsShipping && (
+              <Box mb={4}>
+                <SectionHeader title="Shipping address" />
+                <Sans size="4" color="black50" mt={1}>
+                  {`${address.address1}${
+                    address.address2 ? " " + address.address2 : ""
+                  },`}
+                </Sans>
+                <Sans size="4" color="black50">
+                  {`${address.city}, ${address.state} ${address.zipCode}`}
+                </Sans>
+              </Box>
+            )}
+            {!!phoneNumber && (
+              <Box mb={4}>
+                <SectionHeader title="Phone number" />
+                <Sans size="4" color="black50" mt={1}>
+                  {phoneNumber}
+                </Sans>
+              </Box>
+            )}
+            <Box mb={5}>
+              <SectionHeader
+                title={productVariantItems?.length === 1 ? "Item" : "Items"}
+              />
+              <Box mt={1} mb={4}>
+                {productVariantItems?.map((item, i) => {
+                  return (
+                    <Box key={i}>
+                      <OrderItem
+                        productVariant={item.productVariant}
+                        onPress={onOrderItemPressed}
+                      />
+                      <Spacer mb={1} />
+                      {i !== productVariantItems.length - 1 && <Separator />}
+                      <Spacer mb={1} />
+                    </Box>
+                  )
+                })}
+              </Box>
             </Box>
           </Box>
         </ScrollView>
