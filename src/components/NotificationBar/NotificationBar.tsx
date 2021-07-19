@@ -6,7 +6,10 @@ import {
 import { NotificationBarContainer, OuterWrapper } from "./StyledNotificationBar"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
-  const showIf = (webURL: string) => {
+  const showIf = ({ drawerView, url: webURL }) => {
+    if (drawerView) {
+      return true
+    }
     if (webURL) {
       let windowLocation
       if (typeof window !== "undefined") {
@@ -17,9 +20,9 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
       } else {
         return false
       }
-    } else {
-      return false
     }
+
+    return false
   }
 
   return (

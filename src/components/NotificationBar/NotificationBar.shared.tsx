@@ -30,7 +30,7 @@ interface NotificationBarTemplateProps extends NotificationBarProps {
   containerComponent: React.FC<{ color: string }>
   outerContainerComponent: React.FC
   type: "web" | "native"
-  showIf?: (webURL?: string) => boolean
+  showIf?: (webRoute: { drawerView?: string; url?: string }) => boolean
   hideIcon?: boolean
   data: Data | null
   onUpdateNotificationBarReceipt: (opts: {
@@ -144,7 +144,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
 
   useEffect(() => {
     if (data && showIf) {
-      setShow(showIf(data?.web?.route?.url))
+      setShow(showIf(data?.web?.route))
     }
   }, [data, showIf, setShow])
 
@@ -162,7 +162,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
         setHasBeenClosedNow(true)
       }
     } else if (isWebNotification) {
-      if (webRoute && webRoute.url) {
+      if (webRoute) {
         onClickBanner(webRoute)
       } else if (webRoute && webRoute.dismissable) {
         setHasBeenClosedNow(true)
