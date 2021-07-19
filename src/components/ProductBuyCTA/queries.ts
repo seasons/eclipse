@@ -1,6 +1,6 @@
 import gql from "graphql-tag"
 
-export const ProductFragment = gql`
+export const ProductBuyCTAFragment_Product = gql`
   fragment ProductBuyCTAFragment_Product on Product {
     id
     brand {
@@ -11,7 +11,7 @@ export const ProductFragment = gql`
   }
 `
 
-export const ProductVariantFragment = gql`
+export const ProductBuyCTAFragment_ProductVariant = gql`
   fragment ProductBuyCTAFragment_ProductVariant on ProductVariant {
     id
     price {
