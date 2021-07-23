@@ -15,11 +15,7 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
       if (typeof window !== "undefined") {
         windowLocation = window.location.pathname
       }
-      if (!!windowLocation && !!webURL && windowLocation !== webURL) {
-        return true
-      } else {
-        return false
-      }
+      return !!windowLocation && !!webURL && windowLocation !== webURL
     }
 
     return false
