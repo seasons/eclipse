@@ -2,7 +2,7 @@ import React from "react"
 import { Sans, Spacer, Box } from "@/elements"
 import gql from "graphql-tag"
 import { ProductInfoItem } from "../ProductInfoItem"
-import { Separator } from "../Separator"
+
 
 export const ProductConditionSectionFragment_PhysicalProductQualityReport = gql`
   fragment ProductConditionSectionFragment_PhysicalProductQualityReport on PhysicalProductQualityReport {
@@ -29,7 +29,17 @@ export const ProductConditionSection = ({
     !physicalProductQualityReport.published ||
     !physicalProductQualityReport.score
   ) {
-    return null
+    return (<Box {...boxProps}>
+              <ProductInfoItem detailType="Condition" detailValue="" />
+              <Spacer mb={2} />
+              <Sans size="4">{'New'}</Sans>
+              <Spacer mb={2} />
+              <Sans size="3" color="black50">
+                {'Just arrived from the factory'}
+              </Sans>
+              <Spacer mb={2} />
+              {/* <Separator /> */}
+            </Box>)
   }
 
   const { score, notes } = physicalProductQualityReport
@@ -41,10 +51,10 @@ export const ProductConditionSection = ({
       <Sans size="4">{conditionDisplayName(score)}</Sans>
       <Spacer mb={2} />
       <Sans size="3" color="black50">
-        {notes}
+        {score === 10 ?  'Just arrived from the factory' : notes}
       </Sans>
       <Spacer mb={2} />
-      <Separator />
+      
     </Box>
   )
 }
