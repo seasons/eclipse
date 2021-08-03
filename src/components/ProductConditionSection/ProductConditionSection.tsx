@@ -38,7 +38,6 @@ export const ProductConditionSection = ({
                 {'Just arrived from the factory'}
               </Sans>
               <Spacer mb={2} />
-              {/* <Separator /> */}
             </Box>)
   }
 
@@ -54,7 +53,7 @@ export const ProductConditionSection = ({
         {score === 10 ?  'Just arrived from the factory' : notes}
       </Sans>
       <Spacer mb={2} />
-      
+
     </Box>
   )
 }
