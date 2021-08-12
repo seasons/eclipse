@@ -59,6 +59,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   const productName = product?.name
   const brandSlug = product?.brand?.slug
   const retailPrice = product?.retailPrice
+  const rentalPrice = product?.rentalPrice? product?.rentalPrice : 40
 
   React.useEffect(() => {
     if (thirdImageRef.current && thirdImageRef.current.complete && !loaded) {
@@ -145,7 +146,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
               <>
                 <Spacer mt={0.5} />
                 <Sans size="2" color="black50">
-                  Retail ${retailPrice}
+                  ${rentalPrice} per Month | ${retailPrice} Retail
                 </Sans>
               </>
             )}
