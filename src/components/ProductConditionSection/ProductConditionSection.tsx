@@ -32,10 +32,10 @@ export const ProductConditionSection = ({
     return (<Box {...boxProps}>
               <ProductInfoItem detailType="Condition" detailValue="" />
               <Spacer mb={2} />
-              <Sans size="4">{'New'}</Sans>
+              <Sans size="4">New</Sans>
               <Spacer mb={2} />
               <Sans size="3" color="black50">
-                {'Just arrived from the factory'}
+                Just arrived from the factory
               </Sans>
               <Spacer mb={2} />
             </Box>)
@@ -43,15 +43,36 @@ export const ProductConditionSection = ({
 
   const { score, notes } = physicalProductQualityReport
 
+  const NotesDisplay = (score, notes) => {
+    if(notes){
+      return(
+        <Sans size="3" color="black50">
+          {notes}
+        </Sans>
+      )
+    }  
+    if(score === 10){
+      return(
+        <Sans size="3" color="black50">
+          Just arrived from the factory
+        </Sans>
+      )
+    }
+    return(
+      <Sans size="3" color="black50">
+        Just arrived from the factory
+      </Sans>
+    )
+  }
+
   return (
     <Box {...boxProps}>
       <ProductInfoItem detailType="Condition" detailValue="" />
       <Spacer mb={2} />
       <Sans size="4">{conditionDisplayName(score)}</Sans>
       <Spacer mb={2} />
-      <Sans size="3" color="black50">
-        {score === 10 ?  'Just arrived from the factory' : notes}
-      </Sans>
+        {NotesDisplay(score, notes)}
+      
       <Spacer mb={2} />
 
     </Box>

@@ -186,7 +186,6 @@
     "useTabs": false
   },
   "dependencies": {
-    "@seasons/eclipse": "^1.2.49",
     "dripsy": "^1.4.6"
   }
 }
