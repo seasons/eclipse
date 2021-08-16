@@ -24,10 +24,12 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   const navigation = useNavigation()
 
   const itemWidth = Dimensions.get("window").width / 2 - 2
-  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO
+  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO + 15
   const image = product?.images?.[0]?.url
   const productName = product?.name
   const brandName = product?.brand?.name
+  const retailPrice = product?.retailPrice
+  const rentalPrice = product?.rentalPrice
 
   return (
     <TouchableWithoutFeedback
@@ -69,6 +71,12 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
                 {!!showBrandName && brandName !== "Vintage"
                   ? brandName
                   : productName}
+              </Sans>
+            )}
+            {retailPrice && (
+              <Sans size="2" color="black50">
+                ${rentalPrice ? rentalPrice : 40} per month | ${retailPrice}{" "}
+                retail
               </Sans>
             )}
             <VariantSizes size="2" variants={product?.variants} />
