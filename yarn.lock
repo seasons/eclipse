@@ -3375,13 +3375,6 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@seasons/eclipse@^1.2.49":
-  version "1.2.49"
-  resolved "https://registry.yarnpkg.com/@seasons/eclipse/-/eclipse-1.2.49.tgz#8e4b1caed5643abb76984f419cfb9af5fbd65ee2"
-  integrity sha512-0JfhytT9rajji541xrpHFgdjEqnkFX6IbHooWj2uxMyK2XbobIt7w13wcthsQd+DW5jYDUaQlHr33w93lWkhwg==
-  dependencies:
-    dripsy "^1.4.6"
-
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz"
