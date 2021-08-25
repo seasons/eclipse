@@ -9,6 +9,7 @@ import { SaveProductButton } from "@/components/SaveProductButton"
 import { VariantSizes } from "@/components/VariantSizes"
 import { ProgressiveImage } from "../Image/ProgressiveImage"
 import { ProductGridItemProps } from "./ProductGridItem.shared"
+import { ProductPriceText } from "../ProductPriceText"
 
 const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   flatListRef,
@@ -24,7 +25,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   const navigation = useNavigation()
 
   const itemWidth = Dimensions.get("window").width / 2 - 2
-  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO
+  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO + 15
   const image = product?.images?.[0]?.url
   const productName = product?.name
   const brandName = product?.brand?.name
@@ -71,6 +72,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
                   : productName}
               </Sans>
             )}
+            <ProductPriceText size="2" product={product} />
             <VariantSizes size="2" variants={product?.variants} />
           </Box>
           <Box mt={0.5}>

@@ -12,12 +12,12 @@ import { TrackSchema, useTracking } from "@/helpers/track"
 import { ProductGridItemProps } from "./ProductGridItem.shared"
 import { SaveProductButton } from "../SaveProductButton"
 import { SaveProductModal_Product } from "../SaveProductModal/SaveProductModal"
+import { ProductPriceText, ProductPriceText_Product } from "../ProductPriceText"
 
 export const ProductGridItem_Product = gql`
   fragment ProductGridItem_Product on Product {
     id
     slug
-    retailPrice
     brand {
       id
       slug
@@ -34,8 +34,10 @@ export const ProductGridItem_Product = gql`
     }
 
     ...SaveProductModal_Product
+    ...ProductPriceText_Product
   }
   ${SaveProductModal_Product}
+  ${ProductPriceText_Product}
 `
 
 export const ProductGridItem: React.FC<ProductGridItemProps> = ({
@@ -58,7 +60,6 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   const brandName = product?.brand?.name
   const productName = product?.name
   const brandSlug = product?.brand?.slug
-  const retailPrice = product?.retailPrice
 
   React.useEffect(() => {
     if (thirdImageRef.current && thirdImageRef.current.complete && !loaded) {
@@ -141,14 +142,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
             <Sans size="2" color="black50">
               {productName}
             </Sans>
-            {retailPrice && (
-              <>
-                <Spacer mt={0.5} />
-                <Sans size="2" color="black50">
-                  Retail ${retailPrice}
-                </Sans>
-              </>
-            )}
+            <ProductPriceText size="2" product={product} />
             <Spacer mt={0.5} />
             <VariantSizes variants={product.variants} size="2" />
           </Link>
