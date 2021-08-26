@@ -143,7 +143,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   }, [notifStateShow])
 
   useEffect(() => {
-    if (data && showIf) {
+    if (data?.web?.route && showIf) {
       setShow(showIf(data?.web?.route))
     }
   }, [data, showIf, setShow])
@@ -193,9 +193,18 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
     subtitle = mobile?.detail
   }
 
-  return (
-    <OuterContainer>
-      <TouchableOpacity onPress={() => onBannerClick()}>
+  let canClick = false
+  if (
+    (isNativeNotification && mobileRoute && mobileRoute.route) ||
+    (isWebNotification && webRoute) ||
+    data.onClickBanner
+  ) {
+    canClick = true
+  }
+
+  const Content = () => {
+    return (
+      <Box style={canClick && isWebNotification ? { cursor: "pointer" } : {}}>
         <Container color={bgColorWithState}>
           <Box pr={5} py={2}>
             <Sans
@@ -232,7 +241,7 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
                 </FlexContainer>
               </TouchableWithoutFeedback>
             )}
-            {!hideIcon && renderChevron && (
+            {!hideIcon && renderChevron && canClick && (
               <ChevronIcon
                 scale={isWebNotification ? 0.7 : 1}
                 color={iconFontColorWithState}
@@ -251,7 +260,19 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
             )}
           </FlexContainer>
         </Container>
-      </TouchableOpacity>
+      </Box>
+    )
+  }
+
+  return (
+    <OuterContainer>
+      {canClick ? (
+        <TouchableOpacity onPress={() => onBannerClick()}>
+          <Content />
+        </TouchableOpacity>
+      ) : (
+        <Content />
+      )}
     </OuterContainer>
   )
 }

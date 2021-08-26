@@ -43,7 +43,6 @@ const FixedBox = styled(Box)<{ offsetTop: number }>`
   left: 0;
   z-index: 30;
   width: 100%;
-  cursor: pointer;
 `
 
 const FlexContainer = styled(Box)`
