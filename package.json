@@ -2,7 +2,7 @@
   "name": "@seasons/eclipse",
   "version": "1.4.0",
   "description": "Components library for harvest and flare",
-  "main": "lib/commonjs/index",
+  "main": "src/index",
   "react-native": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
   "files": [
