@@ -65,7 +65,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
           alignItems="flex-start"
           width="100%"
         >
-          <Box my={0.5} mx={1} style={{ backgroundColor: "blue" }}>
+          <Box my={0.5} mx={1}>
             {(!!productName || !!brandName) && (
               <Sans size="2" style={{ maxWidth: itemWidth - 50 }}>
                 Hello{" "}
