@@ -121,7 +121,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
         <ProgressiveImage url={image?.url} size="small" alt="product image" />
       </Link>
       <Spacer mb={1} />
-      <Flex flexDirection="row" width="100%">
+      <Flex flexDirection="row" alignItems="flex-start" width="100%">
         <Box flex={1}>
           <Link
             href="/designer/[Designer]"
@@ -147,7 +147,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
             <VariantSizes variants={product.variants} size="2" />
           </Link>
         </Box>
-        <Box marginRight={1}>
+        <Box mr={1}>
           <SaveProductButton
             product={filter(SaveProductModal_Product, product)}
             height={20}

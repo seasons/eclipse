@@ -31,7 +31,7 @@
     "copy-watch:flare": "cpx \"lib/**/*.{js,map,ts,tsx}\" ../flare/node_modules/@seasons/eclipse/lib --watch --verbose",
     "rewrite-paths": "tsc-alias --dir lib/commonjs && tsc-alias --dir lib/module",
     "apollo:codegen": "rm -rf src/generated && apollo client:codegen --excludes **/clientQueries.ts --endpoint=http://localhost:4000 --target typescript --tagName gql --outputFlat src/generated",
-    "watch": "watch 'yarn prepare' ./src"
+    "watch": "tsc --project tsconfig.watch.json -w & tsc-alias --project tsconfig.watch.json -w"
   },
   "keywords": [
     "react-native",
