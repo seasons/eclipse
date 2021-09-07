@@ -6,6 +6,7 @@ export interface ProductsRailProps {
   collectionSlug?: string
   tag?: string
   underlineTitleText?: string
+  rightText?: string
   imageIndex?: number
   underlineTitleOnClick?: () => void
   showProductName?: boolean
