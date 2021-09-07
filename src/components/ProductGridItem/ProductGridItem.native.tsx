@@ -25,7 +25,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   const navigation = useNavigation()
 
   const itemWidth = Dimensions.get("window").width / 2 - 2
-  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO + 15
+  const imageHeight = itemWidth * PRODUCT_ASPECT_RATIO - 20
   const image = product?.images?.[0]?.url
   const productName = product?.name
   const brandName = product?.brand?.name
@@ -53,7 +53,7 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
         }
       }}
     >
-      <Box mr={addLeftSpacing ? 0.5 : 0} mb={0.5} width={itemWidth}>
+      <Box mr={addLeftSpacing ? 0.5 : 0} pt={2} width={itemWidth}>
         <ProgressiveImage
           // @ts-ignore
           source={{ uri: image }}
