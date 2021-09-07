@@ -20,6 +20,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   title,
   large,
   onViewAll,
+  rightText,
 }) => {
   const navigation = useNavigation()
   const [currentPage, setCurrentPage] = useState(1)
@@ -63,10 +64,15 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
           <TouchableOpacity onPress={onViewAll}>
             <Box px={2}>
               <Sans size="4" style={{ textDecorationLine: "underline" }}>
-                View all
+                {rightText ? rightText : "View all"}
               </Sans>
             </Box>
           </TouchableOpacity>
+        )}
+        {!onViewAll && !!rightText && (
+          <Box px={2}>
+            <Sans size="4">{rightText}</Sans>
+          </Box>
         )}
       </Flex>
       <Spacer mt={1} />
