@@ -13,10 +13,11 @@ export const ProductConditionSectionFragment_PhysicalProductQualityReport = gql`
 `
 
 const conditionDisplayName = (score: number): string => {
-  if (score < 3) return "Offloaded"
-  if (score < 6) return "Used"
-  if (score < 9) return "Gently used"
-  return "New"
+  if (score < 3) {
+    return "Offloaded"
+  } else {
+    return "Used"
+  }
 }
 
 export const ProductConditionSection = ({
@@ -28,35 +29,13 @@ export const ProductConditionSection = ({
     !physicalProductQualityReport.published ||
     !physicalProductQualityReport.score
   ) {
-    return (
-      <Box {...boxProps}>
-        <ProductInfoItem detailType="Condition" detailValue="" />
-        <Spacer mb={2} />
-        <Sans size="4">New</Sans>
-        <Spacer mb={2} />
-        <Sans size="3" color="black50">
-          Just arrived from the factory
-        </Sans>
-        <Spacer mb={2} />
-      </Box>
-    )
+    return null
   }
 
   const { score, notes } = physicalProductQualityReport
 
-  const NotesDisplay = (notes) => {
-    if (notes) {
-      return (
-        <Sans size="3" color="black50">
-          {notes}
-        </Sans>
-      )
-    }
-    return (
-      <Sans size="3" color="black50">
-        Just arrived from the factory
-      </Sans>
-    )
+  if (score >= 7) {
+    return null
   }
 
   return (
@@ -65,8 +44,11 @@ export const ProductConditionSection = ({
       <Spacer mb={2} />
       <Sans size="4">{conditionDisplayName(score)}</Sans>
       <Spacer mb={2} />
-      {NotesDisplay(notes)}
-
+      {notes && (
+        <Sans size="3" color="black50">
+          {notes}
+        </Sans>
+      )}
       <Spacer mb={2} />
     </Box>
   )
