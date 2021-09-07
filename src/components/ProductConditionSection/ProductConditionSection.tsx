@@ -45,11 +45,13 @@ export const ProductConditionSection = ({
       <Sans size="4">{conditionDisplayName(score)}</Sans>
       <Spacer mb={2} />
       {notes && (
-        <Sans size="3" color="black50">
-          {notes}
-        </Sans>
+        <>
+          <Sans size="3" color="black50">
+            {notes}
+          </Sans>
+          <Spacer mb={2} />
+        </>
       )}
-      <Spacer mb={2} />
     </Box>
   )
 }
