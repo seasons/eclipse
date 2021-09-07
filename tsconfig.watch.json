@@ -22,7 +22,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    "target": "esnext",
+    "target": "es5",
     "rootDir": "src",
     "outDir": "lib/module"
   },
