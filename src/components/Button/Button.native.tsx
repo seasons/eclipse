@@ -289,7 +289,7 @@ export class Button extends Component<ButtonProps, ButtonState> {
 
   render() {
     const {
-      borderRadius = 28,
+      borderRadius = 8,
       backgroundColor,
       children,
       showCheckMark,

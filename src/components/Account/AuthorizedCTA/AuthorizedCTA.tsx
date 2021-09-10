@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Sans, Flex, Spacer } from "@/elements"
 import type { DateTime } from "luxon"
 import { Duration } from "luxon"
-import { Countdown, ButtonBar } from "@/components"
+import { Countdown, Button } from "@/components"
 
 export const AuthorizedCTA: React.FC<{
   authorizedAt: DateTime
@@ -35,38 +35,32 @@ export const AuthorizedCTA: React.FC<{
       return `a limited window`
     }
   }
-  const captionSansProps = { size: "4", color: "black50", textAlign: "center" }
+  const captionSansProps = { size: "4", color: "black50" }
   return (
     <Box pb={1}>
-      <Flex alignItems="center" justifyContent="center" pb={3}>
+      <Flex pb={3}>
         <Countdown targetDate={targetAuthorizationDate} />
       </Flex>
-      <Sans size="5" color="black100" textAlign="center">
-        You're in. Let's choose your plan
-      </Sans>
       <Spacer mb={1} />
       <Sans {...captionSansProps}>
-        You have{" "}
+        You're in. You have{" "}
         <Sans {...captionSansProps} underline inline>
           {getDetailTextTime()}
         </Sans>{" "}
         to secure your spot. If we don't hear from you, your invite will go to
-        the next person and{" "}
+        the next person in line &{" "}
         <Sans {...captionSansProps} underline inline>
           you'll be waitlisted.
         </Sans>
       </Sans>
       <Spacer mb={3} />
-      <ButtonBar
-        primaryButtonProps={{
-          children: "Choose plan",
-          onClick: onPressChoosePlan,
-        }}
-        secondaryButtonProps={{
-          children: "Learn more",
-          onClick: onPressLearnMore,
-        }}
-      />
+      <Button block onPress={onPressChoosePlan}>
+        Choose plan
+      </Button>
+      <Spacer mb={1} />
+      <Button block variant="primaryWhite" onPress={onPressLearnMore}>
+        FAQ
+      </Button>
     </Box>
   )
 }

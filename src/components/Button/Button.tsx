@@ -194,7 +194,7 @@ export class Button extends Component<WebButtonProps> {
 export class ButtonBase extends Component<ButtonBaseProps & SansProps> {
   static defaultProps = {
     border: 1,
-    borderRadius: 4,
+    borderRadius: 8,
   }
 
   onClick = (event) => {
@@ -245,7 +245,6 @@ const Container = styled.button<ButtonBaseProps>`
   cursor: pointer;
   position: relative;
   white-space: nowrap;
-  border-radius: 400px;
 
   ${borders};
   ${borderRadius};
