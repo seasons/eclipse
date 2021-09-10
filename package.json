@@ -1,6 +1,6 @@
 {
   "name": "@seasons/eclipse",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Components library for harvest and flare",
   "main": "src/index",
   "react-native": "lib/module/index",
