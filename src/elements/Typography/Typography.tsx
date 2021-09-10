@@ -237,7 +237,7 @@ export const Sans = createStyledText<SansProps>("sans", (weight, italic) => {
 })
 
 /**
- * This is our Apercu font used mainly for headers
+ * This is our NBAkademieProRegular font used mainly for headers
  *
  * @example
  *
