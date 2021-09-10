@@ -60,7 +60,7 @@ export const fontFamily: FontFamilyProps = {
     bold: "ProximaNova-Bold",
   },
   display: {
-    regular: "Apercu-Mono",
+    regular: "NBAkademieProRegular",
   },
 }
 
@@ -197,7 +197,7 @@ export const Display: React.SFC<DisplayProps> = (props) => {
 }
 
 export const LogoText = styled.Text`
-  font-family: "Apercu-Mono";
+  font-family: "NBAkademieProRegular";
   font-size: 20;
   letter-spacing: 2;
   line-height: 24;

@@ -45,6 +45,6 @@ export const fontFamily: FontFamilyProps = {
     medium: "",
   },
   display: {
-    regular: "'Apercu-Mono', sans-serif",
+    regular: "'NBAkademieProRegular', sans-serif",
   },
 }
