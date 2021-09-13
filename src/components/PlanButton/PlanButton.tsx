@@ -1,6 +1,6 @@
 import { Box, Flex, Sans, Spacer } from "@/elements"
 import { Radio } from "@/elements/Radio"
-import { color } from "helpers"
+import { color } from "@/helpers"
 import React from "react"
 import styled from "styled-components"
 

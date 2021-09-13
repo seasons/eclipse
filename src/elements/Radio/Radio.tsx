@@ -1,7 +1,6 @@
 import debounce from "lodash/debounce"
 import React from "react"
 import styled from "styled-components"
-import { color, space } from "helpers"
 import {
   BorderProps,
   borders,
@@ -13,6 +12,8 @@ import { Flex, FlexProps } from "@/elements/Flex/Flex"
 import { SansSize } from "@/theme/theme"
 import { Sans } from "@/elements/Typography"
 import { Box } from "@/elements/Box"
+import { color } from "../../helpers/color"
+import { space } from "../../helpers/space"
 
 /**
  * Spec: zpl.io/bAvnwlB

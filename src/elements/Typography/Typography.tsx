@@ -181,9 +181,6 @@ function createStyledText<P extends StyledTextProps>(
       }
 
       let styles = textProps.style ?? {}
-      if (fontType === "display") {
-        styles["letterSpacing"] = "-1px"
-      }
       if (underline) {
         styles["textDecoration"] = "underline"
       }
