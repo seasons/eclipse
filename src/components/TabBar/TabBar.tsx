@@ -31,7 +31,7 @@ interface TabProps {
   tabLabel: string
 }
 
-export const Tab: React.SFC<TabProps> = ({ children }) => (
+export const Tab: React.FC<TabProps> = ({ children }) => (
   <View style={{ flex: 1, overflow: "hidden" }}>{children}</View>
 )
 
