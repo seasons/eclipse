@@ -142,6 +142,7 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
             <Sans size="2" color="black50">
               {productName}
             </Sans>
+            <Spacer mb={0.5} />
             <ProductPriceText size="2" product={product} />
             <Spacer mt={0.5} />
             <VariantSizes variants={product.variants} size="2" />
