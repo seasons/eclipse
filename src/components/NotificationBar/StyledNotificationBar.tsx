@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from "react"
+import React from "react"
 import { Box, Spacer } from "@/elements"
 import { Container } from "styled-bootstrap-grid"
 import styled from "styled-components"
-import { useNotificationBarContext } from "./NotificationBarContext"
 
 export const NotificationBarContainer = ({ children, color }) => {
   return (
@@ -14,35 +13,24 @@ export const NotificationBarContainer = ({ children, color }) => {
   )
 }
 
+const NAV_HEIGHT = 72
+
 export const OuterWrapper = ({ children }) => {
-  const { notificationBarState } = useNotificationBarContext()
-  const [barHeight, setBarHeight] = useState(52)
-  const notifBarRef = useRef(null)
-
-  useEffect(() => {
-    if (notifBarRef.current) {
-      setBarHeight(notifBarRef.current.getBoundingClientRect().height)
-    }
-  }, [notifBarRef, setBarHeight])
-
-  const offsetTop = notificationBarState?.offsetTop
-
   return (
     <>
-      <FixedBox ref={notifBarRef} offsetTop={offsetTop}>
-        {children}
-      </FixedBox>
-      <Spacer mb={barHeight + offsetTop} />
+      <FixedBox>{children}</FixedBox>
+      <Spacer mb={NAV_HEIGHT} />
     </>
   )
 }
 
-const FixedBox = styled(Box)<{ offsetTop: number }>`
+const FixedBox = styled(Box)`
   position: fixed;
-  top: ${(p) => p.offsetTop + 59}px;
+  top: ${NAV_HEIGHT}px;
   left: 0;
   z-index: 30;
   width: 100%;
+  height: 56px;
 `
 
 const FlexContainer = styled(Box)`

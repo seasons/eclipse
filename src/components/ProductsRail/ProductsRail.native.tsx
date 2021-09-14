@@ -21,6 +21,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   large,
   onViewAll,
   rightText,
+  disableClickThrough = false,
 }) => {
   const navigation = useNavigation()
   const [currentPage, setCurrentPage] = useState(1)
@@ -85,11 +86,13 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
             <Animatable.View animation="fadeIn" duration={300}>
               <TouchableWithoutFeedback
                 onPress={() =>
-                  navigation.navigate("Product", {
-                    id: item.id,
-                    slug: item.slug,
-                    name: item.name,
-                  })
+                  disableClickThrough
+                    ? null
+                    : navigation.navigate("Product", {
+                        id: item.id,
+                        slug: item.slug,
+                        name: item.name,
+                      })
                 }
               >
                 <Box mr={0.5} style={{ width: slideWidth }}>
