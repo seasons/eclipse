@@ -85,10 +85,8 @@ export const NotificationBarTemplate: React.FC<NotificationBarTemplateProps> = (
   useEffect(() => {
     if (shouldHide && contextData && show) {
       // In some instances we want to hide the notification bar from some views
-      console.log("hide bar")
       hideNotificationBar(false)
     } else if (!dismissed && !show && contextData && !shouldHide) {
-      console.log("show bar")
       // In the event the user didn't dismiss and we still have contextData show it again
       showNotificationBar()
     }
