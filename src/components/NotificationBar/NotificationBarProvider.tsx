@@ -8,23 +8,28 @@ enum NotificationBarAction {
   Show = "SHOW",
   Hide = "HIDE",
   SetOffset = "SET_OFFSET",
+  AddData = "ADD_DATA",
 }
 
 export const NotificationBarProvider = ({ children }) => {
   const [notificationBarState, dispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {
+        case NotificationBarAction.AddData:
+          return {
+            ...prevState,
+            data: action.data,
+          }
         case NotificationBarAction.Show:
           return {
             ...prevState,
             show: true,
-            data: action.data,
           }
         case NotificationBarAction.Hide:
           return {
             ...prevState,
+            dismissed: action.dismissed,
             show: false,
-            data: null,
           }
         case NotificationBarAction.SetOffset:
           return {
@@ -34,7 +39,8 @@ export const NotificationBarProvider = ({ children }) => {
       }
     },
     {
-      show: true,
+      show: false,
+      dismissed: false,
       data: null,
       offsetTop: 0,
     }
@@ -43,12 +49,15 @@ export const NotificationBarProvider = ({ children }) => {
   let clearData
 
   const notificationBarContext = {
-    showNotificationBar: async (data: NotificationBarData) => {
-      clearTimeout(clearData)
-      dispatch({ type: NotificationBarAction.Show, data })
+    showNotificationBar: async () => {
+      dispatch({ type: NotificationBarAction.Show })
     },
-    hideNotificationBar: async () => {
-      dispatch({ type: NotificationBarAction.Hide })
+    addNotificationBarData: async (data: NotificationBarData) => {
+      clearTimeout(clearData)
+      dispatch({ type: NotificationBarAction.AddData, data })
+    },
+    hideNotificationBar: async (dismissed: boolean) => {
+      dispatch({ type: NotificationBarAction.Hide, dismissed })
     },
     setOffsetTop: async (offsetTop: number) => {
       dispatch({ type: NotificationBarAction.SetOffset, offsetTop })
