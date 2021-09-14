@@ -14,6 +14,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   imageIndex,
   authState,
   onShowLoginModal,
+  disableClickThrough = false,
 }) => {
   let href = "/browse"
   let as
@@ -74,7 +75,14 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
         <Row>
           {items?.map((product, index) => {
             return (
-              <Col md="4" xs="12" sm="12" key={index} pb={[2, 2, 2, 0, 0]}>
+              <Col
+                md="4"
+                xs="12"
+                sm="12"
+                key={index}
+                pb={[2, 2, 2, 0, 0]}
+                style={{ pointerEvents: disableClickThrough ? "none" : "auto" }}
+              >
                 <ProductGridItem
                   product={product}
                   imageIndex={imageIndex}

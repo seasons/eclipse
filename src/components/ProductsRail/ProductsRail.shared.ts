@@ -12,4 +12,5 @@ export interface ProductsRailProps {
   showProductName?: boolean
   authState?: any
   onShowLoginModal?: () => void
+  disableClickThrough?: boolean
 }
