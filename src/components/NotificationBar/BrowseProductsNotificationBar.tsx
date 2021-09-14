@@ -50,37 +50,25 @@ export const BrowseProductsNotificationBar: React.FC<NotificationBarProps> = ({
   ...props
 }) => {
   const router = useRouter()
-  const [data, setData] = React.useState(getBrowseProductsNotification())
+
+  const data = getBrowseProductsNotification()
 
   React.useEffect(() => {
     setBrowseProductsNotification(data)
   }, [data])
 
-  const showIf = () => {
-    return !props.isLoggedIn && data.clickCount < 1
-  }
-
-  const handleUpdateNotificationBarReceipt = ({
-    clickCount,
-  }: {
-    clickCount?: number
-  }) => {
-    if (clickCount) {
-      setData({ ...data, clickCount })
-    }
-    return Promise.resolve()
+  const hideIf = () => {
+    return props.isLoggedIn || data.clickCount < 1
   }
 
   return (
     <NotificationBarTemplate
       outerContainerComponent={OuterWrapper}
       containerComponent={NotificationBarContainer}
-      onUpdateNotificationBarReceipt={handleUpdateNotificationBarReceipt}
       type="web"
-      showIf={showIf}
-      hideIcon={true}
+      hideIf={hideIf}
       data={data}
-      onClickBanner={({ url }) => router.push(url)}
+      onHandleRoute={({ url }) => router.push(url)}
     />
   )
 }

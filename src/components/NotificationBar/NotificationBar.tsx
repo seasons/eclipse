@@ -3,19 +3,24 @@ import {
   GraphQLNotificationBarTemplate,
   NotificationBarProps,
 } from "./NotificationBar.shared"
+import { WebRoute } from "./NotificationBarContext"
 import { NotificationBarContainer, OuterWrapper } from "./StyledNotificationBar"
 
 export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
-  const showIf = ({ drawerView, url: webURL }) => {
+  const hideIf = (route: WebRoute) => {
+    if (!route) {
+      return false
+    }
+    const { drawerView, url: webURL } = route
     if (drawerView) {
-      return true
+      return false
     }
     if (webURL) {
       let windowLocation
       if (typeof window !== "undefined") {
         windowLocation = window.location.pathname
       }
-      return !!windowLocation && !!webURL && windowLocation !== webURL
+      return !!windowLocation && !!webURL && windowLocation === webURL
     }
 
     return false
@@ -26,7 +31,7 @@ export const NotificationBar: React.FC<NotificationBarProps> = (props) => {
       outerContainerComponent={OuterWrapper}
       containerComponent={NotificationBarContainer}
       type="web"
-      showIf={showIf}
+      hideIf={hideIf}
       {...props}
     />
   )

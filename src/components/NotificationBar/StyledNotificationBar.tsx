@@ -1,8 +1,11 @@
-import React, { useRef, useState, useEffect } from "react"
-import { Box, Spacer } from "@/elements"
+import React from "react"
+import { Box } from "@/elements"
 import { Container } from "styled-bootstrap-grid"
 import styled from "styled-components"
-import { useNotificationBarContext } from "./NotificationBarContext"
+import { Media } from "../../components/Responsive"
+
+const DESKTOP_NAV_HEIGHT = "72px"
+const MOBILE_NAV_HEIGHT = "59px"
 
 export const NotificationBarContainer = ({ children, color }) => {
   return (
@@ -15,33 +18,19 @@ export const NotificationBarContainer = ({ children, color }) => {
 }
 
 export const OuterWrapper = ({ children }) => {
-  const { notificationBarState } = useNotificationBarContext()
-  const [barHeight, setBarHeight] = useState(52)
-  const notifBarRef = useRef(null)
-
-  useEffect(() => {
-    if (notifBarRef.current) {
-      setBarHeight(notifBarRef.current.getBoundingClientRect().height)
-    }
-  }, [notifBarRef, setBarHeight])
-
-  const offsetTop = notificationBarState?.offsetTop
-
   return (
-    <>
-      <FixedBox ref={notifBarRef} offsetTop={offsetTop}>
-        {children}
-      </FixedBox>
-      <Spacer mb={barHeight + offsetTop} />
-    </>
+    <Box width="100%">
+      <Media greaterThan="sm">
+        <FixedBox height={DESKTOP_NAV_HEIGHT}>{children}</FixedBox>
+      </Media>
+      <Media lessThan="md">
+        <FixedBox height={MOBILE_NAV_HEIGHT}>{children}</FixedBox>
+      </Media>
+    </Box>
   )
 }
 
-const FixedBox = styled(Box)<{ offsetTop: number }>`
-  position: fixed;
-  top: ${(p) => p.offsetTop + 59}px;
-  left: 0;
-  z-index: 30;
+const FixedBox = styled(Box)`
   width: 100%;
 `
 
@@ -50,15 +39,21 @@ const FlexContainer = styled(Box)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 `
 
 const Wrapper = styled(Box)<{ color: string }>`
   background-color: ${(p) => p.color};
+  height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `
 
 const MaxWidth = styled(Container)`
   width: 100%;
+  height: 100%;
   margin: 0 auto;
   position: relative;
   max-width: ${(props) => props.theme.grid.container.xl}px;
