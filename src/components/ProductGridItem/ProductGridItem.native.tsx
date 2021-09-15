@@ -20,6 +20,9 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
   hidePopUp,
   authState,
   saveProductButtonRefetchQueries,
+  hidePrice,
+  hideSizes,
+  hideSaveButton,
 }) => {
   const tracking = useTracking()
   const navigation = useNavigation()
@@ -73,27 +76,31 @@ const ProductGridItemComponent: React.FC<ProductGridItemProps> = ({
                   : productName}
               </Sans>
             )}
-            <ProductPriceText size="2" product={product} />
-            <VariantSizes size="2" variants={product?.variants} />
+            {!hidePrice && <ProductPriceText size="2" product={product} />}
+            {!hideSizes && (
+              <VariantSizes size="2" variants={product?.variants} />
+            )}
           </Box>
-          <Box mt={0.5}>
-            <SaveProductButton
-              showPopUp={showPopUp}
-              hidePopUp={hidePopUp}
-              authState={authState}
-              grayStroke
-              height={16}
-              width={12}
-              refetchQueries={saveProductButtonRefetchQueries}
-              product={product}
-              onPressSaveButton={() => {
-                tracking.trackEvent({
-                  actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
-                  actionType: TrackSchema.ActionTypes.Tap,
-                })
-              }}
-            />
-          </Box>
+          {!hideSaveButton && (
+            <Box mt={0.5}>
+              <SaveProductButton
+                showPopUp={showPopUp}
+                hidePopUp={hidePopUp}
+                authState={authState}
+                grayStroke
+                height={16}
+                width={12}
+                refetchQueries={saveProductButtonRefetchQueries}
+                product={product}
+                onPressSaveButton={() => {
+                  tracking.trackEvent({
+                    actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
+                    actionType: TrackSchema.ActionTypes.Tap,
+                  })
+                }}
+              />
+            </Box>
+          )}
         </Flex>
         <Spacer mb={0.5} />
       </Box>

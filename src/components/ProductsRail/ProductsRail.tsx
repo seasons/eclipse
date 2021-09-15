@@ -14,7 +14,10 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   imageIndex,
   authState,
   onShowLoginModal,
-  disableClickThrough = false,
+  disableTap = false,
+  hideSaveButton,
+  hideSizes,
+  hidePrice,
 }) => {
   let href = "/browse"
   let as
@@ -81,13 +84,16 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
                 sm="12"
                 key={index}
                 pb={[2, 2, 2, 0, 0]}
-                style={{ pointerEvents: disableClickThrough ? "none" : "auto" }}
+                style={{ pointerEvents: disableTap ? "none" : "auto" }}
               >
                 <ProductGridItem
                   product={product}
                   imageIndex={imageIndex}
                   authState={authState}
                   onShowLoginModal={onShowLoginModal}
+                  hidePrice={hidePrice}
+                  hideSizes={hideSizes}
+                  hideSaveButton={hideSaveButton}
                 />
               </Col>
             )

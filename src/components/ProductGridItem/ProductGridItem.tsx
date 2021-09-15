@@ -47,6 +47,9 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
   authState,
   onShowLoginModal,
   saveProductButtonRefetchQueries,
+  hidePrice,
+  hideSizes,
+  hideSaveButton,
 }) => {
   const [hover, setHover] = React.useState(false)
   const [loaded, setLoaded] = React.useState(false)
@@ -142,29 +145,39 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
             <Sans size="2" color="black50">
               {productName}
             </Sans>
-            <Spacer mb={0.5} />
-            <ProductPriceText size="2" product={product} />
-            <Spacer mt={0.5} />
-            <VariantSizes variants={product.variants} size="2" />
+            {!hidePrice && (
+              <>
+                <Spacer mb={0.5} />
+                <ProductPriceText size="2" product={product} />
+              </>
+            )}
+            {!hideSizes && (
+              <>
+                <Spacer mt={0.5} />
+                <VariantSizes variants={product.variants} size="2" />
+              </>
+            )}
           </Link>
         </Box>
-        <Box mr={1}>
-          <SaveProductButton
-            product={filter(SaveProductModal_Product, product)}
-            height={20}
-            width={16}
-            onShowLoginModal={onShowLoginModal}
-            authState={authState}
-            showSizeSelector={true}
-            onPressSaveButton={() => {
-              tracking.trackEvent({
-                actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
-                actionType: TrackSchema.ActionTypes.Tap,
-              })
-            }}
-            refetchQueries={saveProductButtonRefetchQueries}
-          />
-        </Box>
+        {!hideSaveButton && (
+          <Box mr={1}>
+            <SaveProductButton
+              product={filter(SaveProductModal_Product, product)}
+              height={20}
+              width={16}
+              onShowLoginModal={onShowLoginModal}
+              authState={authState}
+              showSizeSelector={true}
+              onPressSaveButton={() => {
+                tracking.trackEvent({
+                  actionName: TrackSchema.ActionNames.SaveProductButtonTapped,
+                  actionType: TrackSchema.ActionTypes.Tap,
+                })
+              }}
+              refetchQueries={saveProductButtonRefetchQueries}
+            />
+          </Box>
+        )}
       </Flex>
     </ProductContainer>
   )

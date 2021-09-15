@@ -14,4 +14,7 @@ export interface ProductGridItemProps {
   flatListRef?: RefObject<any>
   saveProductButtonRefetchQueries?: Array<string | PureQueryOptions>
   onShowLoginModal?: () => void
+  hidePrice?: boolean
+  hideSizes?: boolean
+  hideSaveButton?: boolean
 }

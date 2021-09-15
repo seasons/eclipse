@@ -21,7 +21,8 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
   large,
   onViewAll,
   rightText,
-  disableClickThrough = false,
+  disableTap = false,
+  hideSizes = false,
 }) => {
   const navigation = useNavigation()
   const [currentPage, setCurrentPage] = useState(1)
@@ -86,7 +87,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
             <Animatable.View animation="fadeIn" duration={300}>
               <TouchableWithoutFeedback
                 onPress={() =>
-                  disableClickThrough
+                  disableTap
                     ? null
                     : navigation.navigate("Product", {
                         id: item.id,
@@ -106,7 +107,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
                   />
                   <Spacer mb={0.5} />
                   {!!brandName && <Sans size="2">{brandName}</Sans>}
-                  {item.variants && (
+                  {!hideSizes && item.variants && (
                     <VariantSizes size="2" variants={item.variants} />
                   )}
                 </Box>
