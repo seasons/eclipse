@@ -82,7 +82,8 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
         data={items}
         renderItem={({ item }: { item: any; index: number }) => {
           const image = item?.images?.[0]?.url as any
-          const brandName = item.brand && item.brand.name
+          const brandName = item?.brand?.name
+          const productName = item?.name
           return (
             <Animatable.View animation="fadeIn" duration={300}>
               <TouchableWithoutFeedback
@@ -107,6 +108,7 @@ export const ProductsRail: React.FC<ProductsRailProps> = ({
                   />
                   <Spacer mb={0.5} />
                   {!!brandName && <Sans size="2">{brandName}</Sans>}
+                  {!!productName && <Sans size="2">{productName}</Sans>}
                   {!hideSizes && item.variants && (
                     <VariantSizes size="2" variants={item.variants} />
                   )}
