@@ -37,6 +37,8 @@ export const OrderConfirmation: React.FC<Props> = ({
 }) => {
   const tracking = useTracking()
 
+  console.log("order", order)
+
   const address = customer?.detail?.shippingAddress
   const productVariantItems = order?.lineItems?.filter(
     (i) => !!i.productVariant
@@ -62,11 +64,11 @@ export const OrderConfirmation: React.FC<Props> = ({
 
   return (
     <Container insetsTop insetsBottom={false} backgroundColor="white100">
-      <Flex style={{ flex: 1 }} px={2}>
-        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-          <Spacer mb={80} />
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+        <Box px={2}>
+          <Spacer mb={90} />
           <CheckCircled backgroundColor={color("green100")} />
-          <Spacer mb={4} />
+          <Spacer mb={3} />
           <Box pb={1}>
             <Sans size="7" color="black100">
               {needsShipping ? "We've got your order" : "It's all yours"}
@@ -76,7 +78,7 @@ export const OrderConfirmation: React.FC<Props> = ({
             <Sans size="4" color="black50">
               {needsShipping
                 ? "We've emailed you a confirmation and we'll notify you when it's out for delivery."
-                : "We've emailed you a confirmation and will reset this slot after processing your return."}
+                : "We've emailed you an order confirmation and cleared this item from your bag."}
             </Sans>
           </Box>
           {!!order && (
@@ -85,6 +87,18 @@ export const OrderConfirmation: React.FC<Props> = ({
                 windowWidth={windowWidth}
                 leftText="Order number:"
                 rightText={order?.orderNumber}
+                color="black100"
+              />
+              <Spacer mb={1} />
+              <Separator />
+              <Spacer mb={2} />
+              <LineItem
+                windowWidth={windowWidth}
+                leftText="Total"
+                rightText={(order?.total / 100).toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
                 color="black100"
               />
               <Spacer mb={1} />
@@ -178,8 +192,8 @@ export const OrderConfirmation: React.FC<Props> = ({
               })}
             </Box>
           </Box>
-        </ScrollView>
-      </Flex>
+        </Box>
+      </ScrollView>
       <FixedButton positionBottom={space(2)} onPress={handleDonePressed} block>
         Done
       </FixedButton>
