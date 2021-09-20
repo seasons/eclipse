@@ -11,7 +11,7 @@ const BROWSE_PRODUCTS_NOTIFICATION = ({
   id: "BROWSE_PRODUCTS_NOTIFICATION",
   web: {
     title:
-      "Apply for membership & get access to over +1,000 styles starting at $65 per month",
+      "Apply for membership & get exclusive rental access to over +1,000 designer styles",
     route: { url: "/signup", dismissable: true },
   },
   underlinedCTAText: "Dismiss",
