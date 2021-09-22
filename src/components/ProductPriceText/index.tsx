@@ -25,7 +25,7 @@ export const ProductPriceText: React.FC<ProductPriceTextProps> = ({
   const { rentalPrice, retailPrice } = product
   return (
     <Sans size={size} color="black50">
-      ${rentalPrice ? rentalPrice : 40} / mo | ${retailPrice} retail
+      ${rentalPrice} / mo | ${retailPrice} retail
     </Sans>
   )
 }
