@@ -36,6 +36,8 @@ export const GET_COLLECTION = gql`
             id
             slug
             name
+            retailPrice
+            rentalPrice
             images(size: Thumb) {
               id
               url
