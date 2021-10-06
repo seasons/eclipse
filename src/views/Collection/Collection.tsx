@@ -45,7 +45,12 @@ export const GET_COLLECTION = gql`
             variants {
               id
               displayShort
+              displayLong
+              total
               reservable
+              nonReservable
+              reserved
+              isSaved
             }
             brand {
               id
