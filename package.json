@@ -74,7 +74,7 @@
     "jest": "^26.0.1",
     "luxon": "^1.25.0",
     "metro-react-native-babel-preset": "^0.65.1",
-    "next": "9.5.3",
+    "next": "10.2.0",
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
     "react": "16.11.0",
@@ -107,7 +107,7 @@
   "peerDependencies": {
     "@apollo/client": "*",
     "luxon": "*",
-    "next": "*",
+    "next": "10.2.0",
     "react": "*",
     "react-content-loader": "*",
     "react-native": "*",
