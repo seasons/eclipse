@@ -110,7 +110,7 @@
     "next": "10.2.0",
     "react": "*",
     "react-content-loader": "*",
-    "react-native": "*",
+    "react-native": "0.63.4",
     "react-native-animatable": "*",
     "react-native-fast-image": "7.0.2",
     "react-native-scroll-bottom-sheet": "*",
