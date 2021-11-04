@@ -155,6 +155,11 @@ export const ReviewOrder: React.FC<Props> = ({
                   windowWidth={windowWidth}
                   rightText={displayCurrency(subTotalDollars)}
                 />
+                <LineItem
+                  leftText="Sales tax"
+                  windowWidth={windowWidth}
+                  rightText={displayCurrency(totalSalesTaxDollars)}
+                />
                 {order?.lineItems?.map((item, index) => {
                   if (item.recordType === "Credit") {
                     const itemPriceInDollars = item?.price / 100
@@ -170,11 +175,6 @@ export const ReviewOrder: React.FC<Props> = ({
                     return null
                   }
                 })}
-                <LineItem
-                  leftText="Sales tax"
-                  windowWidth={windowWidth}
-                  rightText={displayCurrency(totalSalesTaxDollars)}
-                />
                 <LineItem
                   leftText="Total"
                   windowWidth={windowWidth}
