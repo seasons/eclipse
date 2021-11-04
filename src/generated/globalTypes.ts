@@ -51,6 +51,7 @@ export enum OrderLineItemRecordType {
   Package = "Package",
   PhysicalProduct = "PhysicalProduct",
   ProductVariant = "ProductVariant",
+  Credit = "Credit",
 }
 
 export enum OrderStatus {
