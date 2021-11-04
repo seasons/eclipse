@@ -131,10 +131,14 @@ export const ReviewOrder: React.FC<Props> = ({
                 <SectionHeader title="Purchase summary" />
                 {order?.lineItems?.map((item, index) => {
                   const itemPriceInDollars = item?.price / 100
-                  const displayName =
-                    item.recordType === "Package"
-                      ? "Shipping"
-                      : item?.productVariant?.product?.name
+                  let displayName
+                  if (item.recordType === "Package") {
+                    displayName = "Shipping"
+                  } else if (item.recordType === "Credit") {
+                    return null
+                  } else {
+                    displayName = item?.productVariant?.product?.name
+                  }
 
                   return (
                     <LineItem
@@ -151,6 +155,21 @@ export const ReviewOrder: React.FC<Props> = ({
                   windowWidth={windowWidth}
                   rightText={displayCurrency(subTotalDollars)}
                 />
+                {order?.lineItems?.map((item, index) => {
+                  if (item.recordType === "Credit") {
+                    const itemPriceInDollars = item?.price / 100
+                    return (
+                      <LineItem
+                        leftText="Credits"
+                        rightText={displayCurrency(itemPriceInDollars)}
+                        key={item?.productVariant?.id ?? index}
+                        windowWidth={windowWidth}
+                      />
+                    )
+                  } else {
+                    return null
+                  }
+                })}
                 <LineItem
                   leftText="Sales tax"
                   windowWidth={windowWidth}
