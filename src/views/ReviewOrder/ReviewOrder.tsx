@@ -134,7 +134,10 @@ export const ReviewOrder: React.FC<Props> = ({
                   let displayName
                   if (item.recordType === "Package") {
                     displayName = "Shipping"
-                  } else if (item.recordType === "Credit") {
+                  } else if (
+                    item.recordType === "Credit" ||
+                    item.recordType === "MembershipDiscount"
+                  ) {
                     return null
                   } else {
                     displayName = item?.productVariant?.product?.name
@@ -166,6 +169,16 @@ export const ReviewOrder: React.FC<Props> = ({
                     return (
                       <LineItem
                         leftText="Credits"
+                        rightText={displayCurrency(itemPriceInDollars)}
+                        key={item?.productVariant?.id ?? index}
+                        windowWidth={windowWidth}
+                      />
+                    )
+                  } else if (item.recordType === "MembershipDiscount") {
+                    const itemPriceInDollars = item?.price / 100
+                    return (
+                      <LineItem
+                        leftText="Membership discount"
                         rightText={displayCurrency(itemPriceInDollars)}
                         key={item?.productVariant?.id ?? index}
                         windowWidth={windowWidth}
