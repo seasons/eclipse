@@ -136,7 +136,7 @@ export const ReviewOrder: React.FC<Props> = ({
                     displayName = "Shipping"
                   } else if (
                     item.recordType === "Credit" ||
-                    item.recordType === "MembershipDiscount"
+                    item.recordType === "PurchaseCredit"
                   ) {
                     return null
                   } else {
