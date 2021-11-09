@@ -174,7 +174,7 @@ export const ReviewOrder: React.FC<Props> = ({
                         windowWidth={windowWidth}
                       />
                     )
-                  } else if (item.recordType === "MembershipDiscount") {
+                  } else if (item.recordType === "PurchaseCredit") {
                     const itemPriceInDollars = item?.price / 100
                     return (
                       <LineItem
