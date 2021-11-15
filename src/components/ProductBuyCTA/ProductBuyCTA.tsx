@@ -5,6 +5,7 @@ import { Flex, Sans, Spacer } from "@/elements"
 import { Button } from "@/components"
 import { UnderlinedSans } from "./StyledProductBuyCTA"
 import { FlexProps } from "styled-system"
+import { ButtonSize, ButtonVariant } from "../Button/Button.shared"
 
 type ProductBuyNewProps = {
   price: string
@@ -14,6 +15,8 @@ type ProductBuyNewProps = {
   onNavigateToPartner: () => void
   buyButtonMutating: boolean
   flexProps: FlexProps
+  size?: ButtonSize
+  variant?: ButtonVariant
 }
 const ProductBuyNew = React.forwardRef(
   (
@@ -25,6 +28,8 @@ const ProductBuyNew = React.forwardRef(
       availableForSale,
       buyButtonMutating,
       flexProps,
+      size,
+      variant,
     }: ProductBuyNewProps,
     ref
   ) => {
@@ -35,7 +40,8 @@ const ProductBuyNew = React.forwardRef(
         </Sans>
         <Spacer mb={2} />
         <Button
-          variant="primaryBlack"
+          size={size ?? "medium"}
+          variant={variant ?? "primaryBlack"}
           block
           onPress={onBuyNew}
           onClick={onBuyNew}
@@ -65,6 +71,8 @@ type ProductBuyUsedProps = {
   onBuyUsed: () => void
   buyButtonMutating: boolean
   flexProps: FlexProps
+  size?: ButtonSize
+  variant?: ButtonVariant
 }
 const ProductBuyUsed = React.forwardRef(
   (
@@ -74,6 +82,8 @@ const ProductBuyUsed = React.forwardRef(
       onBuyUsed,
       buyButtonMutating,
       flexProps,
+      size,
+      variant,
     }: ProductBuyUsedProps,
     ref
   ) => (
@@ -83,7 +93,8 @@ const ProductBuyUsed = React.forwardRef(
       </Sans>
       <Spacer mb={2} />
       <Button
-        variant="primaryBlack"
+        size={size ?? "medium"}
+        variant={variant ?? "primaryBlack"}
         block
         onPress={onBuyUsed}
         onClick={onBuyUsed}
@@ -109,6 +120,8 @@ export const ProductBuyCTA: React.FC<
     onBuyNew: () => void
     onNavigateToBrand: (href: string) => void
     buyButtonMutating: boolean
+    size?: ButtonSize
+    variant?: ButtonVariant
   } & FlexProps
 > = React.forwardRef(
   (
@@ -119,6 +132,8 @@ export const ProductBuyCTA: React.FC<
       product,
       buyButtonMutating,
       onNavigateToBrand,
+      size,
+      variant,
       ...flexProps
     },
     ref
@@ -137,6 +152,8 @@ export const ProductBuyCTA: React.FC<
 
       return (
         <ProductBuyUsed
+          size={size}
+          variant={variant}
           ref={ref}
           flexProps={flexProps}
           price={price}
@@ -167,6 +184,8 @@ export const ProductBuyCTA: React.FC<
 
       return (
         <ProductBuyNew
+          size={size}
+          variant={variant}
           ref={ref}
           buyButtonMutating={buyButtonMutating}
           price={price}
