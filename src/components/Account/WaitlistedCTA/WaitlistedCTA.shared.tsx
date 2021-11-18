@@ -8,7 +8,6 @@ export const requestAccessMailToLink = "https://szns.co/requestAccess"
 
 export interface WaitlistedCTAProps {
   authorizedAt: DateTime
-  authorizationWindowClosesAt: DateTime
   onPressLearnMore: () => void
   onPressRequestAccess: () => void
   version: "mobile" | "web"
