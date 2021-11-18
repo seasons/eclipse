@@ -1,6 +1,6 @@
-import { Box, Flex, Sans, Spacer } from "@/elements"
+import { Box, Sans, Spacer } from "@/elements"
 import React from "react"
-import { Countdown, ButtonBar } from "@/components"
+import { ButtonBar } from "@/components"
 import type { DateTime } from "luxon"
 
 export const learnMoreMailToLink = "https://szns.co/learnMore"
@@ -18,7 +18,6 @@ export interface WaitlistedCTAProps {
 
 export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
   authorizedAt,
-  authorizationWindowClosesAt,
   onPressLearnMore,
   onPressRequestAccess,
   version,
@@ -26,13 +25,6 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
   detail: _detail,
 }) => {
   const hasBeenAuthorized = !!authorizedAt
-  let targetAuthorizationDate
-  if (hasBeenAuthorized) {
-    targetAuthorizationDate = authorizationWindowClosesAt?.isValid
-      ? authorizationWindowClosesAt
-      : authorizedAt.plus({ days: 7 })
-  }
-
   const waitlistedCopy = `We'll send you ${
     version === "mobile" ? "a notification" : "an email"
   } when your account is ready and you're able to choose your plan. ${
@@ -46,11 +38,6 @@ export const WaitlistedCTATemplate: React.FC<WaitlistedCTAProps> = ({
     _detail || (hasBeenAuthorized ? rewaitlistedCopy : waitlistedCopy)
   return (
     <Box pb={1}>
-      {hasBeenAuthorized && (
-        <Flex alignItems="center" pb={3}>
-          <Countdown targetDate={targetAuthorizationDate} />
-        </Flex>
-      )}
       <Sans
         size="5"
         color="black100"
