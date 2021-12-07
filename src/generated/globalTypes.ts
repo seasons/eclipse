@@ -47,12 +47,15 @@ export enum NotificationBarIcon {
 }
 
 export enum OrderLineItemRecordType {
+  Credit = "Credit",
+  EarlySwap = "EarlySwap",
   ExternalProduct = "ExternalProduct",
+  Fee = "Fee",
   Package = "Package",
   PhysicalProduct = "PhysicalProduct",
   ProductVariant = "ProductVariant",
-  Credit = "Credit",
   PurchaseCredit = "PurchaseCredit",
+  Total = "Total",
 }
 
 export enum OrderStatus {
@@ -73,6 +76,8 @@ export enum ProductOrderByInput {
   architecture_DESC = "architecture_DESC",
   buyNewEnabled_ASC = "buyNewEnabled_ASC",
   buyNewEnabled_DESC = "buyNewEnabled_DESC",
+  computedRentalPrice_ASC = "computedRentalPrice_ASC",
+  computedRentalPrice_DESC = "computedRentalPrice_DESC",
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
   description_ASC = "description_ASC",
@@ -109,6 +114,7 @@ export enum ProductType {
 }
 
 export enum ShippingCode {
+  Pickup = "Pickup",
   UPSGround = "UPSGround",
   UPSSelect = "UPSSelect",
 }

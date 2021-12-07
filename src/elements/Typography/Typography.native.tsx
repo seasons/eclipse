@@ -109,6 +109,8 @@ export interface TextProps
   style?: CSSProperties
   numberOfLines?: number
   underline?: boolean
+  pointer?: boolean
+  inline?: boolean
 }
 
 /** Base Text component for typography */

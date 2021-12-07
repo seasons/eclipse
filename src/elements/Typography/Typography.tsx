@@ -133,6 +133,7 @@ interface StyledTextProps extends Partial<TextProps> {
   italic?: boolean
   underline?: boolean
   inline?: boolean
+  pointer?: boolean
 }
 
 export interface DisplayProps extends Partial<TextProps> {
@@ -172,6 +173,7 @@ function createStyledText<P extends StyledTextProps>(
       element,
       underline,
       inline,
+      pointer,
       ...textProps
     }: StyledTextProps) => {
       const fontFamilyType = selectFontFamilyType(_fontWeight(weight), italic)
@@ -186,6 +188,9 @@ function createStyledText<P extends StyledTextProps>(
       }
       if (inline) {
         styles["display"] = "inline"
+      }
+      if (pointer) {
+        styles["cursor"] = "pointer"
       }
       return (
         <Text

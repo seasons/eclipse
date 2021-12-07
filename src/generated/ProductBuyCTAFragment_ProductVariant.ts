@@ -21,5 +21,6 @@ export interface ProductBuyCTAFragment_ProductVariant_price {
 export interface ProductBuyCTAFragment_ProductVariant {
   __typename: "ProductVariant";
   id: string;
+  hasBuyIntent: boolean;
   price: ProductBuyCTAFragment_ProductVariant_price;
 }
