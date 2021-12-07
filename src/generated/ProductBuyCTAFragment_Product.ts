@@ -10,7 +10,6 @@
 export interface ProductBuyCTAFragment_Product_brand {
   __typename: "Brand";
   id: string;
-  slug: string;
   name: string;
 }
 

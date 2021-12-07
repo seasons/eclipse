@@ -88,7 +88,7 @@ export const ProductBuyCTA: React.FC<
   ) => {
     const isBuyUsed = Boolean(
       productVariant?.price?.buyUsedEnabled &&
-        productVariant?.price?.buyUsedPrice
+        productVariant?.price?.buyUsedAdjustedPrice
     )
     const isBuyNew = Boolean(
       productVariant?.price?.buyNewEnabled && productVariant?.price?.buyNewPrice
@@ -103,7 +103,7 @@ export const ProductBuyCTA: React.FC<
 
     const priceInDollars = isBuyNew
       ? variantPrice?.buyNewPrice / 100
-      : variantPrice?.buyUsedPrice / 100
+      : variantPrice?.buyUsedAdjustedPrice / 100
 
     const brandName = product?.brand?.name
 

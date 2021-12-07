@@ -23,6 +23,7 @@ export const ProductBuyCTAFragment_ProductVariant = gql`
       buyNewEnabled
       buyNewPrice
       buyNewAvailableForSale
+      buyUsedAdjustedPrice
     }
   }
 `
