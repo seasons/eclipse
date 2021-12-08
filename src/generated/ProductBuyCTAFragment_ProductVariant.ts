@@ -22,6 +22,6 @@ export interface ProductBuyCTAFragment_ProductVariant_price {
 export interface ProductBuyCTAFragment_ProductVariant {
   __typename: "ProductVariant";
   id: string;
-  hasBuyIntent: boolean;
+  isInBag: boolean;
   price: ProductBuyCTAFragment_ProductVariant_price;
 }
