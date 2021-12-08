@@ -3,10 +3,10 @@ import gql from "graphql-tag"
 export const ProductBuyCTAFragment_Product = gql`
   fragment ProductBuyCTAFragment_Product on Product {
     id
+    retailPrice
     brand {
       id
       name
-      websiteUrl
     }
   }
 `
@@ -14,6 +14,7 @@ export const ProductBuyCTAFragment_Product = gql`
 export const ProductBuyCTAFragment_ProductVariant = gql`
   fragment ProductBuyCTAFragment_ProductVariant on ProductVariant {
     id
+    isInBag
     price {
       id
       buyUsedEnabled
@@ -22,6 +23,7 @@ export const ProductBuyCTAFragment_ProductVariant = gql`
       buyNewEnabled
       buyNewPrice
       buyNewAvailableForSale
+      buyUsedAdjustedPrice
     }
   }
 `

@@ -16,10 +16,12 @@ export interface ProductBuyCTAFragment_ProductVariant_price {
   buyNewEnabled: boolean;
   buyNewPrice: number | null;
   buyNewAvailableForSale: boolean | null;
+  buyUsedAdjustedPrice: number | null;
 }
 
 export interface ProductBuyCTAFragment_ProductVariant {
   __typename: "ProductVariant";
   id: string;
+  isInBag: boolean;
   price: ProductBuyCTAFragment_ProductVariant_price;
 }

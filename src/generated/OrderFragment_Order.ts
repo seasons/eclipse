@@ -42,7 +42,7 @@ export interface OrderFragment_Order_lineItems {
   __typename: "OrderLineItem";
   id: string;
   price: number;
-  recordID: string;
+  recordID: string | null;
   recordType: OrderLineItemRecordType;
   needShipping: boolean | null;
   taxRate: number | null;

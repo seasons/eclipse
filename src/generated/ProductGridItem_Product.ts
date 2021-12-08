@@ -54,11 +54,12 @@ export interface ProductGridItem_Product {
   __typename: "Product";
   id: string;
   slug: string;
-  retailPrice: number | null;
   brand: ProductGridItem_Product_brand;
   variants: ProductGridItem_Product_variants[] | null;
   extraLargeImages: ProductGridItem_Product_extraLargeImages[];
   description: string | null;
   name: string;
   type: ProductType | null;
+  rentalPrice: number | null;
+  retailPrice: number | null;
 }

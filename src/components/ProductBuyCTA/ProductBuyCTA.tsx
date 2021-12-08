@@ -1,203 +1,167 @@
 import React from "react"
+import { Flex, Sans, Spacer, Box } from "@/elements"
 import { ProductBuyCTAFragment_Product as ProductFragment } from "@/generated/ProductBuyCTAFragment_Product"
 import { ProductBuyCTAFragment_ProductVariant as ProductVariantFragment } from "@/generated/ProductBuyCTAFragment_ProductVariant"
-import { Flex, Sans, Spacer } from "@/elements"
-import { Button } from "@/components"
-import { UnderlinedSans } from "./StyledProductBuyCTA"
 import { FlexProps } from "styled-system"
 import { ButtonSize, ButtonVariant } from "../Button/Button.shared"
+import { Separator } from "../Separator"
+import { Color } from "@/theme/theme"
+import { Button } from "../Button"
 
-type ProductBuyNewProps = {
+const PriceDisplay: React.FC<{
   price: string
-  brandName: string
-  availableForSale: boolean
-  onBuyNew: () => void
-  onNavigateToPartner: () => void
-  buyButtonMutating: boolean
-  flexProps: FlexProps
-  size?: ButtonSize
-  variant?: ButtonVariant
-}
-const ProductBuyNew = React.forwardRef(
-  (
-    {
-      price,
-      brandName,
-      onBuyNew,
-      onNavigateToPartner,
-      availableForSale,
-      buyButtonMutating,
-      flexProps,
-      size,
-      variant,
-    }: ProductBuyNewProps,
-    ref
-  ) => {
-    return (
-      <Flex flexDirection="column" {...flexProps} ref={ref as any}>
-        <Sans color="black100" size="4" weight="medium">
-          Get it new from {brandName}
+  title: string
+  color: Color
+  index: number
+}> = ({ price, title, color, index }) => {
+  return (
+    <Flex flex={2} flexDirection="row">
+      {index === 1 && <Separator height="100%" width="1px" />}
+      <Box pl={index === 1 ? 2 : 0}>
+        <Sans size="9" color={color}>
+          {price}
         </Sans>
-        <Spacer mb={2} />
-        <Button
-          size={size ?? "medium"}
-          variant={variant ?? "primaryBlack"}
-          block
-          onPress={onBuyNew}
-          onClick={onBuyNew}
-          disabled={!availableForSale || buyButtonMutating}
-          loading={buyButtonMutating}
-          style={{ zIndex: 99 }}
-        >
-          {availableForSale ? `Buy for ${price}` : "Sold Out"}
-        </Button>
-        <Spacer mb={2} />
-        <Sans size="3" opacity={0.5} color="black100">
-          Orders fulfilled by{" "}
-          <UnderlinedSans size="3" onPress={() => onNavigateToPartner()}>
-            {brandName}
-          </UnderlinedSans>
-          . Payment & shipping information on file will be used for one-tap
-          checkout.
+        <Sans size="4" color={color}>
+          {title}
         </Sans>
-      </Flex>
-    )
-  }
-)
-
-type ProductBuyUsedProps = {
-  price: string
-  availableForSale: boolean
-  onBuyUsed: () => void
-  buyButtonMutating: boolean
-  flexProps: FlexProps
-  size?: ButtonSize
-  variant?: ButtonVariant
-}
-const ProductBuyUsed = React.forwardRef(
-  (
-    {
-      price,
-      availableForSale,
-      onBuyUsed,
-      buyButtonMutating,
-      flexProps,
-      size,
-      variant,
-    }: ProductBuyUsedProps,
-    ref
-  ) => (
-    <Flex flexDirection="column" {...flexProps} ref={ref as any}>
-      <Sans color="black100" size="4" weight="medium">
-        Available from Seasons
-      </Sans>
-      <Spacer mb={2} />
-      <Button
-        size={size ?? "medium"}
-        variant={variant ?? "primaryBlack"}
-        block
-        onPress={onBuyUsed}
-        onClick={onBuyUsed}
-        loading={buyButtonMutating}
-        disabled={buyButtonMutating || !availableForSale}
-      >
-        {availableForSale ? `Buy for ${price}` : "Sold Out"}
-      </Button>
-      <Spacer mb={2} />
-      <Sans size="3" opacity={0.5} color="black100">
-        Orders fulfilled by Seasons. Payment & shipping information on file will
-        be used for one-tap checkout.
-      </Sans>
+      </Box>
     </Flex>
   )
-)
+}
+
+const Subtext: React.FC<{
+  isBuyNew: boolean
+  onNavigateToBrand: () => void
+  brandName: string
+}> = ({ isBuyNew, onNavigateToBrand, brandName }) => {
+  if (isBuyNew) {
+    return (
+      <Sans size="3" color="black50">
+        Orders fulfilled by{" "}
+        <Sans
+          underline
+          inline
+          pointer
+          size="3"
+          onPress={onNavigateToBrand}
+          onClick={onNavigateToBrand}
+        >
+          {brandName}
+        </Sans>
+        . Payment & shipping information on file will be used for one-tap
+        checkout.
+      </Sans>
+    )
+  } else {
+    return (
+      <Sans size="3" color="black50">
+        All sales fulfilled by Seasons are final. Any available credits will be
+        automatically applied at checkout.
+      </Sans>
+    )
+  }
+}
 
 export const ProductBuyCTA: React.FC<
   {
     product: ProductFragment
-    selectedVariant: ProductVariantFragment
-    onBuyUsed: () => void
-    onBuyNew: () => void
-    onNavigateToBrand: (href: string) => void
-    buyButtonMutating: boolean
-    size?: ButtonSize
-    variant?: ButtonVariant
+    productVariant: ProductVariantFragment
+    onAddToCart: () => void
+    onNavigateToBrand: () => void
+    buttonSize?: ButtonSize
+    buttonVariant?: ButtonVariant
+    isMutating: boolean
   } & FlexProps
 > = React.forwardRef(
   (
     {
-      selectedVariant,
-      onBuyUsed,
-      onBuyNew,
+      productVariant,
+      onAddToCart,
       product,
-      buyButtonMutating,
       onNavigateToBrand,
-      size,
-      variant,
+      buttonSize,
+      buttonVariant,
+      isMutating,
       ...flexProps
     },
     ref
   ) => {
-    if (
-      selectedVariant?.price?.buyUsedEnabled &&
-      selectedVariant?.price?.buyUsedPrice
-    ) {
-      const priceInDollars = selectedVariant?.price?.buyUsedPrice / 100
-      const price = priceInDollars?.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      })
+    const isBuyUsed = Boolean(
+      productVariant?.price?.buyUsedEnabled &&
+        productVariant?.price?.buyUsedAdjustedPrice
+    )
+    const isBuyNew = Boolean(
+      productVariant?.price?.buyNewEnabled && productVariant?.price?.buyNewPrice
+    )
+    const availableForSale = isBuyUsed || isBuyNew
 
-      return (
-        <ProductBuyUsed
-          size={size}
-          variant={variant}
-          ref={ref}
-          flexProps={flexProps}
-          price={price}
-          onBuyUsed={onBuyUsed}
-          availableForSale={selectedVariant?.price?.buyUsedAvailableForSale}
-          buyButtonMutating={buyButtonMutating}
-        />
-      )
-    } else if (
-      selectedVariant?.price?.buyNewEnabled &&
-      selectedVariant?.price?.buyNewPrice
-    ) {
-      const priceInDollars = selectedVariant?.price?.buyNewPrice / 100
-      const price = priceInDollars?.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      })
-      const availableForSale = selectedVariant?.price?.buyNewAvailableForSale
-      const brandName = product?.brand?.name
-      const handleNavigateToPartner = () => {
-        const href = product?.brand?.websiteUrl
-        if (href) {
-          onNavigateToBrand(href)
-        }
-      }
-
-      return (
-        <ProductBuyNew
-          size={size}
-          variant={variant}
-          ref={ref}
-          buyButtonMutating={buyButtonMutating}
-          price={price}
-          brandName={brandName}
-          availableForSale={availableForSale}
-          onBuyNew={onBuyNew}
-          onNavigateToPartner={handleNavigateToPartner}
-          flexProps={flexProps}
-        />
-      )
+    if (!availableForSale) {
+      return null
     }
 
-    return null
+    const variantPrice = productVariant?.price
+
+    const priceInDollars = isBuyNew
+      ? variantPrice?.buyNewPrice / 100
+      : variantPrice?.buyUsedAdjustedPrice / 100
+
+    const brandName = product?.brand?.name
+
+    const price = priceInDollars?.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+    const isInBag = productVariant?.isInBag
+    const retailPrice = product?.retailPrice?.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+
+    return (
+      <Flex flexDirection="column" {...flexProps} ref={ref as any}>
+        <Sans color="black100" size="4" weight="medium">
+          Love it? Buy it
+        </Sans>
+        <Spacer mb={2} />
+        <Separator />
+        <Spacer mb={3} />
+        <Flex flexDirection="row" flexWrap="nowrap">
+          <PriceDisplay
+            price={price}
+            title="Member price"
+            color="black100"
+            index={0}
+          />
+          <PriceDisplay
+            price={retailPrice}
+            title="Retail price"
+            color="black50"
+            index={1}
+          />
+        </Flex>
+        <Spacer mb={3} />
+        <Button
+          size={buttonSize ?? "medium"}
+          variant={buttonVariant ?? "primaryBlack"}
+          block
+          onPress={onAddToCart}
+          onClick={onAddToCart}
+          loading={isMutating}
+          disabled={isMutating || !availableForSale}
+        >
+          {!availableForSale ? "Sold out" : isInBag ? "Added" : "Add to cart"}
+        </Button>
+        <Spacer mb={2} />
+        <Subtext
+          brandName={brandName}
+          onNavigateToBrand={() => onNavigateToBrand()}
+          isBuyNew={isBuyNew}
+        />
+      </Flex>
+    )
   }
 )

@@ -35,7 +35,12 @@ export interface GetCollection_collection_products_edges_node_variants {
   __typename: "ProductVariant";
   id: string;
   displayShort: string | null;
+  displayLong: string | null;
+  total: number;
   reservable: number;
+  nonReservable: number;
+  reserved: number;
+  isSaved: boolean;
 }
 
 export interface GetCollection_collection_products_edges_node_brand {
@@ -49,6 +54,8 @@ export interface GetCollection_collection_products_edges_node {
   id: string;
   slug: string;
   name: string;
+  retailPrice: number | null;
+  rentalPrice: number | null;
   images: GetCollection_collection_products_edges_node_images[];
   variants: GetCollection_collection_products_edges_node_variants[] | null;
   brand: GetCollection_collection_products_edges_node_brand;
@@ -56,17 +63,11 @@ export interface GetCollection_collection_products_edges_node {
 
 export interface GetCollection_collection_products_edges {
   __typename: "ProductEdge";
-  /**
-   * The item at the end of the edge.
-   */
   node: GetCollection_collection_products_edges_node;
 }
 
 export interface GetCollection_collection_products {
   __typename: "ProductConnection";
-  /**
-   * A list of edges.
-   */
   edges: (GetCollection_collection_products_edges | null)[];
 }
 

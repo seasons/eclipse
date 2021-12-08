@@ -4,18 +4,11 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: ProductBuyCTAFragment_Product
+// GraphQL fragment: ProductPriceText_Product
 // ====================================================
 
-export interface ProductBuyCTAFragment_Product_brand {
-  __typename: "Brand";
-  id: string;
-  name: string;
-}
-
-export interface ProductBuyCTAFragment_Product {
+export interface ProductPriceText_Product {
   __typename: "Product";
-  id: string;
+  rentalPrice: number | null;
   retailPrice: number | null;
-  brand: ProductBuyCTAFragment_Product_brand;
 }
