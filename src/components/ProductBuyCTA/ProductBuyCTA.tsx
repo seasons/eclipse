@@ -71,7 +71,6 @@ export const ProductBuyCTA: React.FC<
     buttonSize?: ButtonSize
     buttonVariant?: ButtonVariant
     isMutating: boolean
-    productBuyRef
   } & FlexProps
 > = React.forwardRef(
   (
@@ -79,7 +78,6 @@ export const ProductBuyCTA: React.FC<
       productVariant,
       onAddToCart,
       product,
-      productBuyRef,
       onNavigateToBrand,
       buttonSize,
       buttonVariant,
@@ -147,7 +145,6 @@ export const ProductBuyCTA: React.FC<
         </Flex>
         <Spacer mb={3} />
         <Button
-          ref={productBuyRef}
           size={buttonSize ?? "medium"}
           variant={buttonVariant ?? "primaryBlack"}
           block
