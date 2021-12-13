@@ -14,7 +14,7 @@ export const ProductBuyCTAFragment_Product = gql`
 export const ProductBuyCTAFragment_ProductVariant = gql`
   fragment ProductBuyCTAFragment_ProductVariant on ProductVariant {
     id
-    isInBag
+    isInCart
     price {
       id
       buyUsedEnabled

@@ -113,7 +113,7 @@ export const ProductBuyCTA: React.FC<
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     })
-    const isInBag = productVariant?.isInBag
+    const isInCart = productVariant?.isInCart
     const retailPrice = product?.retailPrice?.toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
@@ -153,7 +153,7 @@ export const ProductBuyCTA: React.FC<
           loading={isMutating}
           disabled={isMutating || !availableForSale}
         >
-          {!availableForSale ? "Sold out" : isInBag ? "Added to cart" : "Buy"}
+          {!availableForSale ? "Sold out" : isInCart ? "Added to cart" : "Buy"}
         </Button>
         <Spacer mb={2} />
         <Subtext
