@@ -153,7 +153,7 @@ export const ProductBuyCTA: React.FC<
           loading={isMutating}
           disabled={isMutating || !availableForSale}
         >
-          {!availableForSale ? "Sold out" : isInBag ? "Added" : "Add to cart"}
+          {!availableForSale ? "Sold out" : isInBag ? "Added to cart" : "Buy"}
         </Button>
         <Spacer mb={2} />
         <Subtext
