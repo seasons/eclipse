@@ -148,7 +148,11 @@ export const ProductGridItem: React.FC<ProductGridItemProps> = ({
             {!hidePrice && (
               <>
                 <Spacer mb={0.5} />
-                <ProductPriceText size="2" product={product} />
+                <ProductPriceText
+                  size="2"
+                  product={product}
+                  showDiscount={true}
+                />
               </>
             )}
             {!hideSizes && (
