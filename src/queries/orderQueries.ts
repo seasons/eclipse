@@ -46,6 +46,7 @@ export const OrderFragment_Order = gql`
 export const OrderFragment_Customer = gql`
   fragment OrderFragment_Customer on Customer {
     id
+    status
     detail {
       id
       phoneNumber
