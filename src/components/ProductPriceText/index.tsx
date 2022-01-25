@@ -25,7 +25,7 @@ export const ProductPriceText: React.FC<ProductPriceTextProps> = ({
   const { rentalPrice, discountedPrice } = product
   let text
   if (discountedPrice && discountedPrice > 0) {
-    text = `$${rentalPrice} / mo | $${discountedPrice / 100} to buy`
+    text = `$${rentalPrice} / mo | $${discountedPrice} to buy`
   } else {
     text = `$${rentalPrice} / mo`
   }
