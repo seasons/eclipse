@@ -96,14 +96,16 @@ export const ReviewOrder: React.FC<Props> = ({
   customer,
   isSubmittingOrder,
 }) => {
-  const phoneNumber = customer.detail?.phoneNumber
-  const address = customer.detail?.shippingAddress
-  const paymentMethod = customer.billingInfo?.last_digits
-  const paymentBrand = customer.billingInfo?.brand
-  const totalInDollars = order.total / 100
-  const subTotalDollars = order.subTotal / 100
-  const totalSalesTaxDollars = order.salesTaxTotal / 100
-  const productVariantItems = order.lineItems?.filter((i) => !!i.productVariant)
+  const phoneNumber = customer?.detail?.phoneNumber
+  const address = customer?.detail?.shippingAddress
+  const paymentMethod = customer?.billingInfo?.last_digits
+  const paymentBrand = customer?.billingInfo?.brand
+  const totalInDollars = order?.total / 100
+  const subTotalDollars = order?.subTotal / 100
+  const totalSalesTaxDollars = order?.salesTaxTotal / 100
+  const productVariantItems = order?.lineItems?.filter(
+    (i) => !!i.productVariant
+  )
   const needsShipping = order?.lineItems?.some((item) => item.needShipping)
 
   return (
@@ -115,7 +117,7 @@ export const ReviewOrder: React.FC<Props> = ({
             <Spacer mb={80} />
             <Box pb={1}>
               <Sans size="7" color="black100">
-                Confirm purchase
+                Order summary
               </Sans>
             </Box>
             <Box mb={4}>
