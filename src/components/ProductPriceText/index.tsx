@@ -6,14 +6,14 @@ import { SansSize } from "@/theme/theme"
 export const ProductPriceText_Product = gql`
   fragment ProductPriceText_Product on Product {
     rentalPrice
-    buyUsedAdjustedPrice
+    discountPrice
   }
 `
 
 interface ProductPriceTextProps {
   product: {
     rentalPrice: number
-    buyUsedAdjustedPrice: number
+    discountPrice: number
   }
   size?: SansSize
 }
@@ -22,10 +22,10 @@ export const ProductPriceText: React.FC<ProductPriceTextProps> = ({
   product,
   size = "3",
 }) => {
-  const { rentalPrice, buyUsedAdjustedPrice } = product
+  const { rentalPrice, discountPrice } = product
   let text
-  if (buyUsedAdjustedPrice && buyUsedAdjustedPrice > 0) {
-    text = `$${rentalPrice} / mo | $${buyUsedAdjustedPrice / 100} to buy`
+  if (discountPrice && discountPrice > 0) {
+    text = `$${rentalPrice} / mo | $${discountPrice / 100} to buy`
   } else {
     text = `$${rentalPrice} / mo`
   }
